@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  displayAuthMenus: {
+    display: 'block',
+  },
 }));
 
 export default useStyles;

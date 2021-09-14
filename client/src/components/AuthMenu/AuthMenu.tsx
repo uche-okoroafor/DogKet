@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
 import Menu from '@material-ui/core/Menu';
@@ -11,9 +11,11 @@ import useStyles from './useStyles';
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { logout } = useAuth();
+  const { loggedInUser, logout } = useAuth();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -39,7 +41,7 @@ const AuthMenu = (): JSX.Element => {
   };
 
   return (
-    <Box className={classes.authMobileMenus}>
+    <Box className={`${classes.authMobileMenus} ${location.pathname === '/dashboard' && classes.displayAuthMenus}`}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
         <MoreHorizIcon />
       </IconButton>
@@ -55,9 +57,14 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <MenuItem onClick={handleLogin}>Login</MenuItem>
-        <MenuItem onClick={handleSignup}>Signup</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        {loggedInUser ? (
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        ) : (
+          <Box>
+            <MenuItem onClick={handleLogin}>Login</MenuItem>
+            <MenuItem onClick={handleSignup}>Signup</MenuItem>
+          </Box>
+        )}
       </Menu>
     </Box>
   );
