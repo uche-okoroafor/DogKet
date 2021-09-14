@@ -4,8 +4,12 @@ import Box from '@material-ui/core/Box';
 import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
-import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import login from '../../../helpers/APICalls/login';
+import { useAuth } from '../../../context/useAuthContext';
+import { useSnackBar } from '../../../context/useSnackbarContext';
+import { demoUser } from '../../../mocks/demoUser';
+import useStyles from './useStyles';
 
 interface Props {
   handleSubmit: (
@@ -28,6 +32,23 @@ interface Props {
 
 export default function Login({ handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
+
+  const { updateLoginContext } = useAuth();
+  const { updateSnackBarMessage } = useSnackBar();
+
+  const handleDemoUserLogin = () => {
+    const { email, password } = demoUser;
+    login(email, password).then((data) => {
+      if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        updateLoginContext(data.success);
+      } else {
+        console.error({ data });
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
 
   return (
     <Formik
@@ -89,8 +110,17 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             placeholder="Enter your password"
           />
           <Box textAlign="center">
+            <Button
+              size="large"
+              className={`${classes.submit} ${classes.demoLoginBtn}`}
+              color="primary"
+              variant="outlined"
+              onClick={handleDemoUserLogin}
+            >
+              DEMO USER LOGIN
+            </Button>
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'LOGIN'}
             </Button>
           </Box>
           <div style={{ height: 95 }} />
