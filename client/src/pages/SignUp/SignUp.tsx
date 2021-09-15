@@ -48,11 +48,11 @@ export default function Register(): JSX.Element {
             <Grid className={classes.signupContainer} container elevation={6} component={Paper}>
               <Grid item xs>
                 <Typography className={classes.welcome} component="h1" variant="h5">
-                  Sign up
+                  Sign Up
                 </Typography>
               </Grid>
               <SignUpForm handleSubmit={handleSubmit} />
-              <Box className={classes.extraSection}>
+              <Box display="flex" justifyContent="space-between" alignItems="center" width="170px" margin="20px auto">
                 <Typography className={classes.alreadyMember} component="p" variant="body1">
                   Already a member?
                 </Typography>

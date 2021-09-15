@@ -58,11 +58,17 @@ const AuthMenu = (): JSX.Element => {
         getContentAnchorEl={null}
       >
         {loggedInUser ? (
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem className={classes.menuItem} onClick={handleLogout}>
+            Logout
+          </MenuItem>
         ) : (
           <Box>
-            <MenuItem onClick={handleLogin}>Login</MenuItem>
-            <MenuItem onClick={handleSignup}>Signup</MenuItem>
+            <MenuItem className={classes.menuItem} onClick={handleLogin}>
+              Login
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={handleSignup}>
+              Sign Up
+            </MenuItem>
           </Box>
         )}
       </Menu>

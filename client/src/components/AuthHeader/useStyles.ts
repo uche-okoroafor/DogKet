@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  link: { textDecoration: 'none' },
   headerBtn: {
     width: 140,
     height: 45,
     borderRadius: theme.shape.borderRadius,
     boxShadow: 'none',
     marginRight: 12,
+    textTransform: 'uppercase',
   },
   loginBtn: {
     backgroundColor: '#ffffff',

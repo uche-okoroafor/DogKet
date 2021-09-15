@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#000000',
     fontWeight: 700,
     paddingLeft: '5px',
+    textTransform: 'uppercase',
   },
   inputs: {
     marginTop: '.8rem',
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     color: '#ffffff',
     fontWeight: 700,
+    textTransform: 'uppercase',
     [theme.breakpoints.down('xs')]: {
       width: '100%',
       margin: '24px auto 0',
