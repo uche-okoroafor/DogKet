@@ -80,6 +80,9 @@ const AuthMenu = (): JSX.Element => {
           </MenuItem>
         ) : (
           <Box>
+            <MenuItem className={classes.menuItem} onClick={handleDemoUserLogin}>
+              Demo User
+            </MenuItem>
             <MenuItem className={classes.menuItem} onClick={handleLogin}>
               Login
             </MenuItem>

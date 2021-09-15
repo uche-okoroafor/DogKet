@@ -117,7 +117,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
               variant="outlined"
               onClick={handleDemoUserLogin}
             >
-              DEMO USER LOGIN
+              Demo User Login
             </Button>
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'LOGIN'}
