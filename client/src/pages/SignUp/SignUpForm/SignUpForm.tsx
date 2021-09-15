@@ -75,7 +75,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
           <TextField
             className={`${!(touched.email && Boolean(errors.email)) && classes.errorOffset}`}
             id="email"
-            label={<Typography className={classes.label}>EMAIL ADDRESS</Typography>}
+            label={<Typography className={classes.label}>Email Address</Typography>}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -96,7 +96,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
           <TextField
             className={`${!(touched.username && Boolean(errors.username)) && classes.errorOffset}`}
             id="username"
-            label={<Typography className={classes.label}>NAME</Typography>}
+            label={<Typography className={classes.label}>Name</Typography>}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -116,7 +116,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
           <TextField
             className={`${!(touched.password && Boolean(errors.password)) && classes.errorOffset}`}
             id="password"
-            label={<Typography className={classes.label}>PASSWORD</Typography>}
+            label={<Typography className={classes.label}>Password</Typography>}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -145,7 +145,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
               DEMO USER LOGIN
             </Button>
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN UP'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Sign Up'}
             </Button>
           </Box>
         </form>

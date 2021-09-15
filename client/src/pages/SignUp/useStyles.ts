@@ -38,13 +38,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "'Open Sans'",
     textAlign: 'center',
   },
-  extraSection: {
-    width: '170px',
-    margin: '20px auto',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   alreadyMember: {
     fontWeight: 700,
   },

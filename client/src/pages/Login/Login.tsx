@@ -46,7 +46,7 @@ export default function Login(): JSX.Element {
             <Grid className={classes.loginContainer} container elevation={6} component={Paper}>
               <Grid item xs>
                 <Typography className={classes.welcome} component="h1" variant="h5">
-                  Welcome back!
+                  Welcome Back!
                 </Typography>
               </Grid>
               <LoginForm handleSubmit={handleSubmit} />

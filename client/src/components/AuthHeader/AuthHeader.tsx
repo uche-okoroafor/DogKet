@@ -22,16 +22,24 @@ const AuthHeader = ({ asideText }: Props): JSX.Element => {
       </Link>
       <Box p={1} className={classes.authMenus}>
         <Typography className={classes.accAside}>{asideText}</Typography>
-        <Link to="/login" className={classes.link}>
-          <Button className={`${classes.headerBtn} ${classes.loginBtn}`} color="primary" variant="outlined">
-            LOGIN
-          </Button>
-        </Link>
-        <Link to="/signup" className={classes.link}>
-          <Button className={`${classes.headerBtn} ${classes.signupBtn}`} color="primary" variant="contained">
-            SIGN UP
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          to="/login"
+          className={`${classes.headerBtn} ${classes.loginBtn}`}
+          color="primary"
+          variant="outlined"
+        >
+          Login
+        </Button>
+        <Button
+          component={Link}
+          to="/signup"
+          className={`${classes.headerBtn} ${classes.signupBtn}`}
+          color="primary"
+          variant="contained"
+        >
+          Sign Up
+        </Button>
       </Box>
       <AuthMenu />
     </Box>

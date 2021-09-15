@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
   displayAuthMenus: {
     display: 'block',
   },
+  menuItem: {
+    textTransform: 'uppercase',
+  },
 }));
 
 export default useStyles;

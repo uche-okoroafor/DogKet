@@ -70,7 +70,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
           <TextField
             className={`${!(touched.email && Boolean(errors.email)) && classes.errorOffset}`}
             id="email"
-            label={<Typography className={classes.label}>EMAIL ADDRESS</Typography>}
+            label={<Typography className={classes.label}>Email Address</Typography>}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -91,7 +91,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
           <TextField
             className={`${!(touched.password && Boolean(errors.password)) && classes.errorOffset}`}
             id="password"
-            label={<Typography className={classes.label}>PASSWORD</Typography>}
+            label={<Typography className={classes.label}>Password</Typography>}
             fullWidth
             margin="normal"
             InputLabelProps={{
