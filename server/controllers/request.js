@@ -6,7 +6,7 @@ const { protect } = require("./middleware/auth");
 // @route POST /request/
 // @desc create a new request 
 // @access Private
-exports.createRequest = asyncHandler(protect, async (req, res, next) => {
+exports.createRequest = asyncHandler(async (req, res, next) => {
    try {
     const user = await User.findById(req.user.id);
 
@@ -46,39 +46,39 @@ exports.createRequest = asyncHandler(protect, async (req, res, next) => {
 });
 
 // @route GET /request
-// @desc list of requests for logged in user
+// @desc list of requests made for logged in user
 // @access Private
-exports.userRequests = asyncHandler(protect, async (req, res, next) => {
-try {
-    const user = await User.findById(req.user.id);
+exports.userRequests = asyncHandler(async (req, res, next) => {
+  try {
+      const user = await User.findById(req.user.id);
 
-    if (!user) {
-      return res
-        .status(401)
-        .json({ message: 'Not authorized' });
-  }
-    // const {  } = req.body;
-
-    const requestsByUser = await Request.find({ user_id: user.id });
-   
-    if (!requestsByUser) {
+      if (!user) {
         return res
-          .status(200)
-          .json({ message: "There are no request"});
+          .status(401)
+          .json({ message: 'Not authorized' });
     }
+      // const {  } = req.body;
 
-    console.log(requestsByUser)
-    res.status(200).json({requestsByUser, message: "Success" });
-  } catch (error) {
-    next(error);
-  } 
+      const requestsByUser = await Request.find({ user_id: user.id });
+    
+      if (!requestsByUser) {
+          return res
+            .status(200)
+            .json({ message: "There are no requests"});
+      }
+
+      console.log(requestsByUser)
+      res.status(200).json({requestsByUser, message: "Success" });
+    } catch (error) {
+      next(error);
+    } 
 
 });
 
 // @route UPDATE /request/accepted
 // @desc Update request with approved or decline
 // @access Private
-exports.updateAccept = asyncHandler(protect, async (req, res, next) => {
+exports.updateAccept = asyncHandler(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
 
