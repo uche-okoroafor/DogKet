@@ -1,4 +1,5 @@
 const Request = require("../models/Request");
+const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const { protect } = require("./middleware/auth");
 
@@ -10,90 +11,103 @@ exports.createRequest = asyncHandler(protect, async (req, res, next) => {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-        res.status(401);
-        throw new Error("Not authorized");
+        return res
+          .status(401)
+          .json({ message: 'Not authorized' });
+        // throw new Error("Not authorized");
     }
 
-    const { sitter_id, start_date, end_date } = req.body;
-    
-    // check if user made a request already?
-    const requestExists = await User.findOne({ sitter_id, start_date, end_date });
+    const { sitterId, startId, endDate } = req.body;
+    const requestModel = {
+        user_id: user.id, 
+        sitter_id: sitterId,
+        start_date: startId,
+        end_date: endDate,
+    }
+    // check if user made a request already? 
+    const requestExists = await Request.findOne(requestModel);
 
     if (requestExists) {
-        res.status(400);
-        throw new Error("You have already made a request");
+      return res
+          .status(400) //?
+          .json({ message: 'You have already made a request' });
     }
 
-
-    const sitterRequest = await Request.create({
-        user_id: new mongoose.Types.ObjectId() ,
-        sitter_id: new mongoose.Types.ObjectId(), 
-        start_date: Date.now(),
-        end_date: Date.now()
-      }) 
+    const sitterRequest = await Request.create(requestModel) 
     
     console.log(sitterRequest);
-    
 
-    res.status(201).json({});
-    } catch(e) {
-        res.status(400);
-        throw new Error(e);
+    res.status(201).json({ sitterRequest });
+    
+    } catch (error) {
+      next(error);
     } 
   
 });
 
-// @route POST /auth/login
-// @desc Login user
-// @access Public
-// exports.loginUser = asyncHandler(async (req, res, next) => {
-//   const { email, password } = req.body;
+// @route GET /request
+// @desc list of requests for logged in user
+// @access Private
+exports.userRequests = asyncHandler(protect, async (req, res, next) => {
+try {
+    const user = await User.findById(req.user.id);
 
-//   const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: 'Not authorized' });
+  }
+    // const {  } = req.body;
 
-//   if (user && (await user.matchPassword(password))) {
-//     const token = generateToken(user._id);
-//     const secondsInWeek = 604800;
+    const requestsByUser = await Request.find({ user_id: user.id });
+   
+    if (!requestsByUser) {
+        return res
+          .status(200)
+          .json({ message: "There are no request"});
+    }
 
-//     res.cookie("token", token, {
-//       httpOnly: true,
-//       maxAge: secondsInWeek * 1000
-//     });
+    console.log(requestsByUser)
+    res.status(200).json({requestsByUser, message: "Success" });
+  } catch (error) {
+    next(error);
+  } 
 
-//     res.status(200).json({
-//       success: {
-//         user: {
-//           id: user._id,
-//           username: user.username,
-//           email: user.email
-//         }
-//       }
-//     });
-//   } else {
-//     res.status(401);
-//     throw new Error("Invalid email or password");
-//   }
-// });
+});
 
 // @route UPDATE /request/accepted
 // @desc Update request with approved or decline
 // @access Private
-exports.loadUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+exports.updateAccept = asyncHandler(protect, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
 
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized");
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: 'Not authorized' });
+      // throw new Error("Not authorized");
   }
 
-  res.status(200).json({
-    success: {
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email
-      }
+    const { id, accepted } = req.body;
+
+    const request = await Request.findOne({ _id: id });
+
+    if (!request) {
+      return res
+      .status(404)
+      .json({ message: "Request does not exists"});
     }
-  });
+
+    request.accepted = accepted;
+    await request.save();
+
+    console.log(request)
+    res.status(200).json({ request });
+
+  } catch (error) {
+    next(error);
+  } 
+  
 });
 
