@@ -7,28 +7,50 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     fontSize: 19,
-    color: 'rgb(0,0,0,0.4)',
+    color: '#000000',
+    fontWeight: 700,
     paddingLeft: '5px',
+    textTransform: 'uppercase',
   },
   inputs: {
     marginTop: '.8rem',
     height: '2rem',
-    padding: '5px',
+    padding: '12px',
+    border: '1px solid #dddddd',
+    borderRadius: theme.shape.borderRadius,
   },
   forgot: {
+    marginTop: '.8rem',
     paddingRight: 10,
     color: '#3a8dff',
   },
   submit: {
     margin: theme.spacing(3, 2, 2),
     padding: 10,
-    width: 160,
-    height: 56,
+    width: 200,
+    height: 45,
     borderRadius: theme.shape.borderRadius,
-    marginTop: 49,
-    fontSize: 16,
-    backgroundColor: '#3a8dff',
-    fontWeight: 'bold',
+    marginTop: 30,
+    fontSize: 14,
+    backgroundColor: theme.palette.primary.main,
+    color: '#ffffff',
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      margin: '24px auto 0',
+    },
+  },
+  underline: {
+    '&&:after': {
+      borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+      width: '99%',
+      margin: '0 auto',
+    },
+  },
+  errorOffset: {
+    paddingBottom: '20px',
+    marginBottom: '8px',
   },
 }));
 
