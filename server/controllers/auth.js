@@ -114,3 +114,10 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
 
   res.send("You have successfully logged out");
 });
+
+// @route POST /auth/logout
+// @desc Ping test with logout controller
+// @access Public
+exports.pingLogout = asyncHandler(async (req, res, next) => {
+  res.send(`Server is running. Message received: ${req.body.message}`);
+});
