@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const protect = require("../middleware/auth");
+
 const { 
     createRequest,
     userRequests,
@@ -8,7 +9,7 @@ const {
     } = require("../controllers/request");
 
 router.route("/create").post(protect, createRequest);
-router.route("/requests").get(protect, userRequests);
+router.route("/list").get(protect, userRequests);
 router.route("/accept").put(protect, updateAccept);
 
 module.exports = router;

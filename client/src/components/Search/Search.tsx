@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { User } from '../../interface/User';
 import { useDebounce } from 'use-debounce';
 import { searchUsers } from '../../helpers/APICalls/searchUsers';
+import { getRequest, updateAccept } from '../../helpers/APICalls/request';
 
 interface Props {
   search: string;
@@ -25,6 +26,10 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
   };
 
   useEffect(() => {
+    // createRequest('6142950d808eba39ecf8532e', new Date() , new Date());
+    // console.log(Date());
+    // updateAccept(true, '61429603af27e54c54acf5f2');
+    // getRequest();
     let active = true;
 
     async function searchAndSaveUsers() {
