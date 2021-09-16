@@ -16,25 +16,25 @@ This is a little description about your project.
 
 ## Server
 
-1. Go into the server directory `cd server`
-2. Run `npm install` to install packages
+1. Go into the server directory ```cd server```
+2. Run ```npm install``` to install packages
 3. Create your environment variable (.env) file
-4. Run `npm run dev` to start the server
+4. Run ```npm run dev``` to start the server
 
 ---
 
 ## Client
 
-1. Go into the client directory `cd client`
-2. Run `npm install` to install packages
-3. Run `npm start` to start the client side
+1. Go into the client directory ```cd client```
+2. Run ```npm install``` to install packages
+3. Run ```npm start``` to start the client side
 
 ---
 
 ## Test
 
-1. Go into the server directory `cd server`
-2. Run `npm test` to run tests
+1. Go into the server directory ```cd server```
+2. Run ```npm test``` to run tests
 ---
 
 ### Demo
