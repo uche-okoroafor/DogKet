@@ -17,7 +17,7 @@ export default function Dashboard(): JSX.Element {
     initSocket();
   }, [initSocket]);
 
-  if (loggedInUser === undefined || !loggedInUser) return <CircularProgress />;
+  if (!loggedInUser) return <CircularProgress />;
 
   return (
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
