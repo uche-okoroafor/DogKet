@@ -14,6 +14,7 @@ let clock;
 const existingUser = {
   username: "test",
   email: "test@gmail.com",
+  invalidEmail: "testgmail.com",
   password: "123123",
   wrongPassword: "wrongPassword"
 };
@@ -42,7 +43,7 @@ describe("Tests for all /auth controllers", () => {
       agent.should.have.cookie("token");
     });
 
-    it("should not be able to login with invalid email", async () => {
+    it("should not be able to login with nonExisting email", async () => {
       const res = await agent
         .post("/auth/login")
         .send({ email: nonExistingUser.email, password: existingUser.password });
@@ -57,6 +58,29 @@ describe("Tests for all /auth controllers", () => {
         .send({ email: existingUser.email, password: existingUser.wrongPassword });
       res.should.have.status(401);
       res.should.have.property("text").contains("Invalid email or password");
+      agent.should.not.have.cookie("token");
+    });
+
+    it("should not be able to login if email field is missing", async () => {
+      const res = await agent.post("/auth/login").send({ password: nonExistingUser.password });
+      res.should.have.status(400);
+      res.should.have.property("text").contains("Please enter a valid email address");
+      agent.should.not.have.cookie("token");
+    });
+
+    it("should not be able to login if email is invalid", async () => {
+      const res = await agent
+        .post("/auth/login")
+        .send({ email: existingUser.invalidEmail, password: nonExistingUser.password });
+      res.should.have.status(400);
+      res.should.have.property("text").contains("Please enter a valid email address");
+      agent.should.not.have.cookie("token");
+    });
+
+    it("should not be able to login if password field is missing", async () => {
+      const res = await agent.post("/auth/login").send({ email: existingUser.email });
+      res.should.have.status(400);
+      res.should.have.property("text").contains("Password is required");
       agent.should.not.have.cookie("token");
     });
   });
