@@ -64,7 +64,7 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
 });
 
 // @route UPDATE /request/accepted
-// @desc Update request with approved or decline
+// @desc Update request with approved or decline by sitter
 // @access Private
 exports.updateAccept = asyncHandler(async (req, res, next) => {
   try {
@@ -82,6 +82,11 @@ exports.updateAccept = asyncHandler(async (req, res, next) => {
       return res
         .status(404)
         .json({ message: "Request does not exists"});
+    }
+    if (request.sitter_id !== user.id) {
+      return res
+        .status(401)
+        .json({ message: 'Not authorized' });
     }
 
     request.accepted = accepted;
