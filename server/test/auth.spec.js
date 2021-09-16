@@ -108,7 +108,7 @@ describe("Tests for all /auth controllers", () => {
     it("should not be able to register if email already exists", async () => {
       const res = await agent.post("/auth/register").send({
         username: testNewUserInfo.username,
-        email: testUserInfo.email,
+        email: createdTestUser.email,
         password: testNewUserInfo.password
       });
       res.should.have.status(400);
