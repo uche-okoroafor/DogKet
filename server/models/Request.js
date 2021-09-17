@@ -1,23 +1,21 @@
 const mongoose = require("mongoose");
-// const Schema = mongoose.Schema;
-// const ObjectId = Schema.Types.ObjectId;
 
 const requestSchema = new mongoose.Schema({
-    user_id: {
+  ownerId: {
     type: mongoose.ObjectId,
     required: true,
     ref: 'User'
   },
-  sitter_id: {
+  sitterId: {
     type: mongoose.ObjectId,
     required: true,
     ref: 'User'
   },
-  start_date: {
+  startDate: {
     type: Date,
     required: true,
   },
-  end_date: {
+  endDate: {
     type: Date,
     required: true
   },
@@ -32,17 +30,3 @@ const requestSchema = new mongoose.Schema({
 });
 
 module.exports = Request = mongoose.model("Request", requestSchema);
-
-
-// async function foo () {
-//   const jj = await Request.create({
-//     user_id: new mongoose.Types.ObjectId() ,
-//     sitter_id: new mongoose.Types.ObjectId(), 
-//     start_date: Date.now(),
-//     end_date: Date.now()
-//   }) 
-
-//   console.log(jj);
-// }
-
-// foo();
