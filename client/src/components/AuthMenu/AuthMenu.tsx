@@ -6,10 +6,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useAuth } from '../../context/useAuthContext';
-import { demoUser } from '../../mocks/demoUser';
-import { useSnackBar } from '../../context/useSnackbarContext';
-import login from '../../helpers/APICalls/login';
 import useStyles from './useStyles';
+import DemoUserLogin from '../DemoUserLogin/DemoUserLogin';
 
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();
@@ -17,8 +15,7 @@ const AuthMenu = (): JSX.Element => {
   const location = useLocation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { updateLoginContext, loggedInUser, logout } = useAuth();
-  const { updateSnackBarMessage } = useSnackBar();
+  const { loggedInUser, logout } = useAuth();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,20 +38,6 @@ const AuthMenu = (): JSX.Element => {
   const handleSignup = () => {
     handleClose();
     history.push('/signup');
-  };
-
-  const handleDemoUserLogin = () => {
-    const { email, password } = demoUser;
-    login(email, password).then((data) => {
-      if (data.error) {
-        updateSnackBarMessage(data.error.message);
-      } else if (data.success) {
-        updateLoginContext(data.success);
-      } else {
-        console.error({ data });
-        updateSnackBarMessage('An unexpected error occurred. Please try again');
-      }
-    });
   };
 
   return (
@@ -80,9 +63,7 @@ const AuthMenu = (): JSX.Element => {
           </MenuItem>
         ) : (
           <Box>
-            <MenuItem className={classes.menuItem} onClick={handleDemoUserLogin}>
-              Demo User
-            </MenuItem>
+            <DemoUserLogin isMenuItem classes={classes.menuItem} />
             <MenuItem className={classes.menuItem} onClick={handleLogin}>
               Login
             </MenuItem>
