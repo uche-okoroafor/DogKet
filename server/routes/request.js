@@ -6,7 +6,7 @@ const {
     createRequest,
     userRequests,
     updateAccept
-    } = require("../controllers/request");
+} = require("../controllers/request");
 
 router.route("/create").post(protect, createRequest);
 router.route("/list").get(protect, userRequests);

@@ -3,37 +3,37 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 
 // @route POST /request/
-// @desc create a new request 
+// @desc create a new request by owner
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
-   try {
-      const user = await User.findById(req.user.id);
-      if (!user) {
-        return res
-          .status(401)
-          .json({ message: 'Not authorized' });
-      }
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: 'Not authorized' });
+    }
 
-      const { sitterId, startDate, endDate } = req.body;
-      const requestModel = {
-          user_id: user._id, 
-          sitter_id: sitterId,
-          start_date: startDate,
-          end_date: endDate,
-      };
+    const { sitterId, startDate, endDate } = req.body;
+    const requestModel = {
+        ownerId: user._id, 
+        sitterId,
+        startDate,
+        endDate,
+    };
 
-      const requestExists = await Request.findOne(requestModel);
-      if (requestExists) {
-        return res
-            .status(400) 
-            .json({ message: 'You have already made a request' });
-      }
+    const requestExists = await Request.findOne(requestModel);
+    if (requestExists) {
+      return res
+          .status(400) 
+          .json({ message: 'You have already made a request' });
+    }
 
-      const sitterRequest = await Request.create(requestModel); 
-      res.status(201).json({ sitterRequest });
-    } catch (error) {
-      next(error);
-    } 
+    const sitterRequest = await Request.create(requestModel); 
+    res.status(201).json({ sitterRequest });
+  } catch (error) {
+    next(error);
+  } 
   
 });
 
@@ -42,24 +42,29 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.userRequests = asyncHandler(async (req, res, next) => {
   try {
-      const user = await User.findById(req.user.id);
-      if (!user) {
-        return res
-          .status(401)
-          .json({ message: 'Not authorized' });
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: 'Not authorized' });
     }
     
-      const requestsByUser = await Request.find({ user_id: user.id });
-      if (!requestsByUser) {
-        return res
-          .status(200)
-          .json({ message: "There are no requests"});
-      }
+    const requestsByUser = await Request.find({ 
+      $or: [
+        { ownerId: user._id },
+        { sitterId: user._id }
+      ] 
+    });
+    if (!requestsByUser) {
+      return res
+        .status(200)
+        .json({ message: "There are no requests"});
+    }
 
       res.status(200).json({ requestsByUser });
-    } catch (error) {
+  } catch (error) {
       next(error);
-    } 
+  } 
 
 });
 
@@ -73,23 +78,25 @@ exports.updateAccept = asyncHandler(async (req, res, next) => {
       return res
         .status(401)
         .json({ message: 'Not authorized' });
-  }
+    }
 
     const { requestId, accepted } = req.body;
 
-    const request = await Request.findOne({ _id: requestId });
+    const request = await Request.findById(requestId);
     if (!request) {
       return res
         .status(404)
         .json({ message: "Request does not exists"});
     }
-    if (request.sitter_id !== user.id) {
+    if (request.sitterId !== user._id) {
       return res
         .status(401)
         .json({ message: 'Not authorized' });
     }
 
-    request.accepted = accepted;
+    if (accepted) request.accepted = true;
+    else request.declined = true;
+    
     await request.save();
 
     res.status(200).json({ request });
