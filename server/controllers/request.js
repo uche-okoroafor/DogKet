@@ -1,5 +1,4 @@
 const Request = require("../models/Request");
-const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
@@ -31,7 +30,6 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   } catch (error) {
     next(error);
   } 
-  
 });
 
 // @route GET /request
@@ -52,7 +50,6 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
   } catch (error) {
       next(error);
   } 
-
 });
 
 // @route UPDATE /request/accepted
@@ -81,7 +78,6 @@ exports.updateStatus = asyncHandler(async (req, res, next) => {
     res.status(200).json({ request });
   } catch (error) {
     next(error);
-  } 
-  
+  }
 });
 
