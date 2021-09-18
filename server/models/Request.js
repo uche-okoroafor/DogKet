@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema
-const ObjectId = Schema.Types.ObjectId
+const { ObjectId } = mongoose.Schema.Types;
 
 const requestSchema = new mongoose.Schema({
   ownerId: {
@@ -33,4 +32,4 @@ const requestSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Request = mongoose.model("Request", requestSchema);
+module.exports = mongoose.model("Request", requestSchema);
