@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
 
 const requestSchema = new mongoose.Schema({
   ownerId: {
-    type: mongoose.ObjectId,
+    type: ObjectId,
     required: true,
-    ref: 'User'
   },
   sitterId: {
-    type: mongoose.ObjectId,
+    type: ObjectId,
     required: true,
-    ref: 'User'
   },
   startDate: {
     type: Date,
@@ -21,7 +21,11 @@ const requestSchema = new mongoose.Schema({
   },
   accepted: {
     type: Boolean,
-    default: null,
+    default: false,
+  },
+  declined: {
+    type: Boolean,
+    default: false,
   },  
   paid: {
     type: Boolean,
