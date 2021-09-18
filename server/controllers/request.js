@@ -66,7 +66,7 @@ exports.updateStatus = asyncHandler(async (req, res, next) => {
         .status(404)
         .json({ message: "Request does not exists"});
     }
-    if (request.sitterId != ObjectId(userId)) {
+    if (request.sitterId !== ObjectId(userId)) {
       return res
         .status(401)
         .json({ message: 'Not authorized' });
