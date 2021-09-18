@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     textTransform: 'uppercase',
+    justifyContent: 'center',
   },
 }));
 

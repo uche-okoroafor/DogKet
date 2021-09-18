@@ -7,12 +7,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles';
+import DemoUserLogin from '../DemoUserLogin/DemoUserLogin';
 
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { loggedInUser, logout } = useAuth();
@@ -63,6 +63,7 @@ const AuthMenu = (): JSX.Element => {
           </MenuItem>
         ) : (
           <Box>
+            <DemoUserLogin isMenuItem classes={classes.menuItem} />
             <MenuItem className={classes.menuItem} onClick={handleLogin}>
               Login
             </MenuItem>

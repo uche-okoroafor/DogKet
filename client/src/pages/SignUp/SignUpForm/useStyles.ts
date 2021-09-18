@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
     color: '#3a8dff',
   },
   submit: {
-    margin: theme.spacing(3, 2, 2),
+    margin: theme.spacing(2),
     padding: 10,
     width: 200,
     height: 45,
     borderRadius: theme.shape.borderRadius,
-    marginTop: 30,
+    marginTop: 10,
     fontSize: 14,
     backgroundColor: theme.palette.primary.main,
     color: '#ffffff',
@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       margin: '24px auto 0',
     },
+  },
+  demoLoginBtn: {
+    backgroundColor: '#ffffff',
+    color: theme.palette.primary.main,
   },
   underline: {
     '&&:after': {
