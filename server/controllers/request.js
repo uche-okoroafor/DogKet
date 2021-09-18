@@ -1,36 +1,33 @@
 const Request = require("../models/Request");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 // @route POST /request/
 // @desc create a new request by owner
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res
-        .status(401)
-        .json({ message: 'Not authorized' });
-    }
+    const userId = req.user.id;
 
     const { sitterId, startDate, endDate } = req.body;
     const requestModel = {
-        ownerId: user._id, 
+        ownerId: ObjectId(userId), 
         sitterId,
         startDate,
         endDate,
     };
 
-    const requestExists = await Request.findOne(requestModel);
-    if (requestExists) {
+    const existingRequest = await Request.findOne(requestModel);
+    if (existingRequest) {
       return res
-          .status(400) 
-          .json({ message: 'You have already made a request' });
+          .status(200) 
+          .json({ message: 'You have already made a request', existingRequest });
     }
 
-    const sitterRequest = await Request.create(requestModel); 
-    res.status(201).json({ sitterRequest });
+    const newRequest = await Request.create(requestModel); 
+    res.status(201).json({ newRequest });
   } catch (error) {
     next(error);
   } 
@@ -42,24 +39,14 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.userRequests = asyncHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res
-        .status(401)
-        .json({ message: 'Not authorized' });
-    }
+    const userId = req.user.id;
     
     const requestsByUser = await Request.find({ 
       $or: [
-        { ownerId: user._id },
-        { sitterId: user._id }
+        { ownerId: ObjectId(userId) },
+        { sitterId: ObjectId(userId) }
       ] 
     });
-    if (!requestsByUser) {
-      return res
-        .status(200)
-        .json({ message: "There are no requests"});
-    }
 
       res.status(200).json({ requestsByUser });
   } catch (error) {
@@ -71,16 +58,10 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
 // @route UPDATE /request/accepted
 // @desc Update request with approved or decline by sitter
 // @access Private
-exports.updateAccept = asyncHandler(async (req, res, next) => {
+exports.updateStatus = asyncHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res
-        .status(401)
-        .json({ message: 'Not authorized' });
-    }
-
-    const { requestId, accepted } = req.body;
+    const userId = req.user.id;
+    const { requestId, status } = req.body;
 
     const request = await Request.findById(requestId);
     if (!request) {
@@ -88,15 +69,13 @@ exports.updateAccept = asyncHandler(async (req, res, next) => {
         .status(404)
         .json({ message: "Request does not exists"});
     }
-    if (request.sitterId !== user._id) {
+    if (request.sitterId != ObjectId(userId)) {
       return res
         .status(401)
         .json({ message: 'Not authorized' });
     }
 
-    if (accepted) request.accepted = true;
-    else request.declined = true;
-    
+    request.status = status;
     await request.save();
 
     res.status(200).json({ request });
