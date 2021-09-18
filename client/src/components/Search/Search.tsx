@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { User } from '../../interface/User';
 import { useDebounce } from 'use-debounce';
 import { searchUsers } from '../../helpers/APICalls/searchUsers';
+
 interface Props {
   search: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>, newInputValue: string) => void;
