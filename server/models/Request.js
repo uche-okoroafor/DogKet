@@ -16,16 +16,13 @@ const requestSchema = new mongoose.Schema({
   },
   endDate: {
     type: Date,
-    required: true
+    required: true,
   },
-  accepted: {
-    type: Boolean,
-    default: false,
-  },
-  declined: {
-    type: Boolean,
-    default: false,
-  },  
+  status: {
+    type: String,
+    enum: ['pending', 'accepted', 'declined'],
+    default: 'pending',
+  }, 
   paid: {
     type: Boolean,
     default: false,
