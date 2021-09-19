@@ -18,7 +18,7 @@ const AuthNavItem = ({ isButton, linkTo, classes, asideText, btnText, variant }:
           component={NavLink}
           to={linkTo}
           className={classes}
-          activeStyle={{ color: '#f04040' }}
+          activeStyle={variant === 'contained' ? { color: '#ffffff' } : { color: '#f04040' }}
           color="primary"
           variant={variant}
         >
