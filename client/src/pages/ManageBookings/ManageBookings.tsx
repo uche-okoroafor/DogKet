@@ -41,10 +41,10 @@ export default function ManageBookings() {
         color: 'black',
       },
       nextBookSubHr: {
-        fontWeight: 500,
+        fontWeight: 600,
         fontSize: '12px',
         color: 'black',
-        marginBottom: '10px',
+        margin: '10px 0px',
       },
       nextBookNameHr: {
         fontWeight: 900,
@@ -66,7 +66,19 @@ export default function ManageBookings() {
       },
       icon: {
         fontSize: '15px',
-        color: 'grey',
+        color: 'rgb(209,209,209)',
+      },
+      statusWrapper: {
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: '8px',
+        color: 'rgb(209,209,209)',
+        fontWeigth: '900',
+      },
+      statusTxt: {
+        fontSize: '10px',
+        color: 'rgb(209,209,209)',
+        fontWeight: 900,
       },
     }),
   );
@@ -76,11 +88,6 @@ export default function ManageBookings() {
     <div className={currentClass.text}>
       <Paper className={currentClass.paper}>
         <Grid container spacing={2}>
-          {/* <Grid item>
-            <ButtonBase className={currentClass.image}>
-              <img className={currentClass.img} alt="complex" src="/static/images/grid/complex.jpg" />
-            </ButtonBase>
-          </Grid> */}
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
@@ -91,20 +98,24 @@ export default function ManageBookings() {
               <Grid item>
                 <Paper variant="outlined" className={currentClass.paperOutlineWrap}>
                   <Grid item container xs={12} sm>
-                    <Grid item xs>
+                    <Grid item xs={9}>
                       <Typography gutterBottom variant="subtitle1" className={currentClass.nextBookSubHr}>
                         Standard license
                       </Typography>
                       <Typography variant="body2" className={currentClass.nextBookNameWrapper}>
+                        {/* TEMP IMG tags */}
                         {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                        {/* <Avatar className={currentClass.orange}>H</Avatar> */}
-                        {/* <img alt="Remy Sharp" src="/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
                         <div className={currentClass.tempImg}></div>
                         <div className={currentClass.nextBookNameHr}>Rebeca Smith</div>
                       </Typography>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1">
+                    <Grid item xs={2} className={currentClass.statusWrapper}>
+                      <Typography variant="subtitle1" className={currentClass.statusTxt}>
+                        ACCEPTED
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                      <Typography>
                         <SettingsIcon className={currentClass.icon} />
                       </Typography>
                     </Grid>
@@ -112,11 +123,6 @@ export default function ManageBookings() {
                 </Paper>
               </Grid>
             </Grid>
-            {/* <Grid item>
-              <Typography variant="subtitle1">
-                <SettingsIcon className={currentClass.icon} />
-              </Typography>
-            </Grid> */}
           </Grid>
         </Grid>
       </Paper>

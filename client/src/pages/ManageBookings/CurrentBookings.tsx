@@ -66,7 +66,7 @@ export default function CurrentBookings() {
       },
       icon: {
         fontSize: '15px',
-        color: 'grey',
+        color: 'rgb(209,209,209)',
       },
     }),
   );
@@ -76,11 +76,6 @@ export default function CurrentBookings() {
     <div className={currentClass.wrapper}>
       <Paper className={currentClass.paper}>
         <Grid container spacing={2}>
-          {/* <Grid item>
-            <ButtonBase className={currentClass.image}>
-              <img className={currentClass.img} alt="complex" src="/static/images/grid/complex.jpg" />
-            </ButtonBase>
-          </Grid> */}
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
@@ -93,9 +88,8 @@ export default function CurrentBookings() {
               </Grid>
               <Grid item>
                 <Typography variant="body2" className={currentClass.nextBookNameWrapper}>
+                  {/* TEMP img tags */}
                   {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                  {/* <Avatar className={currentClass.orange}>H</Avatar> */}
-                  {/* <img alt="Remy Sharp" src="/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
                   <div className={currentClass.tempImg}></div>
                   <div className={currentClass.nextBookNameHr}>Rebeca Smith</div>
                 </Typography>
