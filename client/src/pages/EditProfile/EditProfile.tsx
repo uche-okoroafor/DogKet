@@ -87,7 +87,6 @@ export default function EditProfile(): JSX.Element {
                   variant="outlined"
                   className={classes.textField}
                   defaultValue={selectedDate}
-                  value={selectedDate}
                 />
               </Box>
               <Box className={classes.box}>
