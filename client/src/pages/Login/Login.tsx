@@ -41,7 +41,7 @@ export default function Login(): JSX.Element {
       <CssBaseline />
       <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
         <Box className={classes.authWrapper}>
-          <AuthHeader asideText="DON'T HAVE AN ACCOUNT?" />
+          <AuthHeader asideText="Don't have an account?" linkTo="/signup" />
           <Box className={classes.loginOuterContainer} width="100%" maxWidth={600} p={3} alignSelf="center">
             <Grid className={classes.loginContainer} container elevation={6} component={Paper}>
               <Grid item xs>

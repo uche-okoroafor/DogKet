@@ -8,6 +8,9 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles';
 import DemoUserLogin from '../DemoUserLogin/DemoUserLogin';
+import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
+
+type LinkType = '/login' | '/signup' | '/my-jobs' | '/my-sitters' | '/profile' | '/messages';
 
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();
@@ -30,20 +33,19 @@ const AuthMenu = (): JSX.Element => {
     logout();
   };
 
-  const handleLogin = () => {
+  const handleMenu = (linkTo: LinkType) => {
     handleClose();
-    history.push('/login');
-  };
-
-  const handleSignup = () => {
-    handleClose();
-    history.push('/signup');
+    history.push(linkTo);
   };
 
   return (
-    <Box className={`${classes.authMobileMenus} ${location.pathname === '/dashboard' && classes.displayAuthMenus}`}>
+    <Box className={`${classes.authMobileMenus} ${loggedInUser && classes.displayAuthMenus}`}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-        <MoreHorizIcon />
+        {location.pathname === '/login' || location.pathname === '/signup' ? (
+          <MoreHorizIcon />
+        ) : (
+          <AvatarDisplay loggedIn user={loggedInUser} />
+        )}
       </IconButton>
       <Menu
         id="auth-menu"
@@ -58,16 +60,42 @@ const AuthMenu = (): JSX.Element => {
         getContentAnchorEl={null}
       >
         {loggedInUser ? (
-          <MenuItem className={classes.menuItem} onClick={handleLogout}>
-            Logout
-          </MenuItem>
+          <Box>
+            {loggedInUser.isSitter ? (
+              <MenuItem
+                className={`${classes.menuItem} ${classes.menuItemDesktop}`}
+                onClick={() => handleMenu('/my-jobs')}
+              >
+                My Jobs
+              </MenuItem>
+            ) : (
+              <MenuItem
+                className={`${classes.menuItem} ${classes.menuItemDesktop}`}
+                onClick={() => handleMenu('/my-sitters')}
+              >
+                My Sitters
+              </MenuItem>
+            )}
+            <MenuItem
+              className={`${classes.menuItem} ${classes.menuItemDesktop}`}
+              onClick={() => handleMenu('/messages')}
+            >
+              Messages
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={() => handleMenu('/profile')}>
+              Profile
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={handleLogout}>
+              Logout
+            </MenuItem>
+          </Box>
         ) : (
           <Box>
             <DemoUserLogin isMenuItem classes={classes.menuItem} />
-            <MenuItem className={classes.menuItem} onClick={handleLogin}>
+            <MenuItem className={classes.menuItem} onClick={() => handleMenu('/login')}>
               Login
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleSignup}>
+            <MenuItem className={classes.menuItem} onClick={() => handleMenu('/signup')}>
               Sign Up
             </MenuItem>
           </Box>

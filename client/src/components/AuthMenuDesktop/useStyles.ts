@@ -1,27 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  authHeader: {
-    width: '100%',
-    padding: theme.spacing(1, 3),
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    borderBottom: '1px solid #eee',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    height: '90px',
-  },
-  authMenus: {
-    height: '80px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
   authMenuDesktop: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(600)]: {
       display: 'none',
     },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   accAside: {
     fontSize: 14,
@@ -34,7 +20,23 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: '1rem 0',
     textDecoration: 'underline',
+    textTransform: 'uppercase',
     [theme.breakpoints.down(600)]: {
+      display: 'none',
+    },
+    [theme.breakpoints.down(769)]: {
+      marginRight: 12,
+    },
+  },
+  authNavItemBtn: {
+    fontSize: 16,
+    color: '#000000',
+    fontWeight: 900,
+    marginRight: 35,
+    textDecoration: 'none',
+  },
+  authNavMobile: {
+    [theme.breakpoints.down(768)]: {
       display: 'none',
     },
   },

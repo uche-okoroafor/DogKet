@@ -24,6 +24,8 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
+      // assume the loggedInUser is a pet sitter (for testing purposes only)
+      data.user.isSitter = true;
       setLoggedInUser(data.user);
       history.push('/dashboard');
     },
