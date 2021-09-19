@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import useStyles from './useStyles';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export default function CurrentBookings() {
   const classes = useStyles();
@@ -38,6 +39,7 @@ export default function CurrentBookings() {
         fontWeight: 900,
         fontSize: '9px',
         color: 'black',
+        marginBottom: '10px',
       },
       nextBookSubHr: {
         fontWeight: 600,
@@ -61,6 +63,10 @@ export default function CurrentBookings() {
       },
       mb5: {
         marginBottom: '15px',
+      },
+      icon: {
+        fontSize: '15px',
+        color: 'grey',
       },
     }),
   );
@@ -95,9 +101,11 @@ export default function CurrentBookings() {
                 </Typography>
               </Grid>
             </Grid>
-            {/* <Grid item>
-              <Typography variant="subtitle1">$19.00</Typography>
-            </Grid> */}
+            <Grid item>
+              <Typography variant="subtitle1">
+                <SettingsIcon className={currentClass.icon} />
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>

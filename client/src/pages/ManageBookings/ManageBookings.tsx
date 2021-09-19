@@ -7,6 +7,8 @@ import Avatar from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { deepOrange } from '@material-ui/core/colors';
+import Tooltip from '@material-ui/core/Tooltip';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export default function ManageBookings() {
   const classes = useStyles();
@@ -42,6 +44,7 @@ export default function ManageBookings() {
         fontWeight: 500,
         fontSize: '12px',
         color: 'black',
+        marginBottom: '10px',
       },
       nextBookNameHr: {
         fontWeight: 900,
@@ -61,6 +64,10 @@ export default function ManageBookings() {
         marginBottom: '5px',
         padding: '5px',
       },
+      icon: {
+        fontSize: '15px',
+        color: 'grey',
+      },
     }),
   );
   const currentClass = currentStyles();
@@ -75,7 +82,7 @@ export default function ManageBookings() {
             </ButtonBase>
           </Grid> */}
           <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={1}>
+            <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography variant="body2" gutterBottom className={currentClass.nextBookHr}>
                   CURRENT BOOKINGS
@@ -83,21 +90,32 @@ export default function ManageBookings() {
               </Grid>
               <Grid item>
                 <Paper variant="outlined" className={currentClass.paperOutlineWrap}>
-                  <Typography gutterBottom variant="subtitle1" className={currentClass.nextBookSubHr}>
-                    Standard license
-                  </Typography>
-                  <Typography variant="body2" className={currentClass.nextBookNameWrapper}>
-                    {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                    {/* <Avatar className={currentClass.orange}>H</Avatar> */}
-                    {/* <img alt="Remy Sharp" src="/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                    <div className={currentClass.tempImg}></div>
-                    <div className={currentClass.nextBookNameHr}>Rebeca Smith</div>
-                  </Typography>
+                  <Grid item container xs={12} sm>
+                    <Grid item xs>
+                      <Typography gutterBottom variant="subtitle1" className={currentClass.nextBookSubHr}>
+                        Standard license
+                      </Typography>
+                      <Typography variant="body2" className={currentClass.nextBookNameWrapper}>
+                        {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
+                        {/* <Avatar className={currentClass.orange}>H</Avatar> */}
+                        {/* <img alt="Remy Sharp" src="/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
+                        <div className={currentClass.tempImg}></div>
+                        <div className={currentClass.nextBookNameHr}>Rebeca Smith</div>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="subtitle1">
+                        <SettingsIcon className={currentClass.icon} />
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Paper>
               </Grid>
             </Grid>
             {/* <Grid item>
-              <Typography variant="subtitle1">$19.00</Typography>
+              <Typography variant="subtitle1">
+                <SettingsIcon className={currentClass.icon} />
+              </Typography>
             </Grid> */}
           </Grid>
         </Grid>
