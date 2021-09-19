@@ -57,6 +57,10 @@ const useStyles = makeStyles(() => ({
   select: {
     width: '150%',
   },
+  phone: {
+    display: 'inline-block',
+    fontStyle: 'italic',
+  },
 }));
 
 export default useStyles;
