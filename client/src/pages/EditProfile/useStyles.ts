@@ -1,17 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    margin: 'auto',
   },
   form: {
     width: '100%',
     padding: '0 40px 70px',
   },
-  typo: {
+  typography: {
     margin: 20,
     fontWeight: 700,
   },
@@ -27,18 +24,24 @@ const useStyles = makeStyles((theme) => ({
     width: 150,
     display: 'inline-block',
     textAlign: 'right',
+    textTransform: 'uppercase',
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  textField: {
+    width: '60%',
   },
   box: {
     padding: 10,
+  },
+  boxStyle: {
+    display: 'inline-flex',
+    width: '60%',
+    justifyContent: 'space-between',
   },
   main: {
     padding: '40px',
     minHeight: '100vh',
     background: 'primary',
-    width: '100%',
+    margin: 'auto',
   },
   button: {
     width: 120,
@@ -46,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
     margin: '20px auto',
     alignSelf: 'center',
     display: 'block',
+  },
+  grid: {
+    margin: 'auto',
+  },
+  select: {
+    width: '150%',
   },
 }));
 

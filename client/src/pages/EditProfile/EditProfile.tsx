@@ -13,66 +13,64 @@ import {
   Paper,
   Box,
 } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
 import useStyles from './useStyles';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 export default function EditProfile(): JSX.Element {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  // TODO : to add a function that handle the state of the date change
+  const [selectedDate, setSelectedDate] = useState('1998-0git status6-15');
+
+  // TODO : toggle the gender from male to female on select change
   const [gender, setGender] = useState('male');
-  const optionSelect = [];
-  for (let i = 1; i < 32; i++) {
-    optionSelect.push(
-      <MenuItem value={i} key={i}>
-        {i}
-      </MenuItem>,
-    );
-  }
+
+  // TODO : to change the style of entering phone number textfield from none to block
+  const [block, setBlock] = useState('none');
 
   return (
     <Container component="main" className={classes.main}>
       <CssBaseline />
       <Grid container>
-        <Grid item md={2} sm={12}>
-          <Typography className={classes.typo} variant="h6">
-            Edit Profile
-          </Typography>
-          <Typography className={classes.typo}>Profile Photo</Typography>
-          <Typography className={classes.typo}>Availability</Typography>
-          <Typography className={classes.typo}>Payment</Typography>
-          <Typography className={classes.typo}>Security</Typography>
-          <Typography className={classes.typo}>Settings</Typography>
-        </Grid>
-        <Grid item md={8} sm={12}>
-          <Paper>
+        <Grid item md={8} className={classes.grid}>
+          <Paper className={classes.paper}>
             <Typography variant="h4" className={classes.title}>
               Edit Profile
             </Typography>
             <form className={classes.form} noValidate>
               <Box className={classes.box}>
                 <label htmlFor="first-name" className={classes.label}>
-                  FIRST NAME
+                  first name
                 </label>
-                <TextField type="text" id="first-name" placeholder="john" variant="outlined" style={{ width: '70%' }} />
+                <TextField
+                  type="text"
+                  id="first-name"
+                  placeholder="john"
+                  variant="outlined"
+                  className={classes.textField}
+                />
               </Box>
               <Box className={classes.box}>
                 <label htmlFor="last-name" className={classes.label}>
-                  LAST NAME
+                  last name
                 </label>
-                <TextField type="text" id="last-name" placeholder="john" variant="outlined" style={{ width: '70%' }} />
+                <TextField
+                  type="text"
+                  id="last-name"
+                  placeholder="Doe"
+                  variant="outlined"
+                  className={classes.textField}
+                />
               </Box>
               <Box className={classes.box}>
                 <label htmlFor="first-name" className={classes.label}>
-                  GENDER
+                  gender
                 </label>
                 <FormControl variant="outlined">
                   <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
+                    labelId="select-outlined-label"
+                    id="select-outlined"
                     value={gender}
-                    onChange={() => {}}
-                    style={{ width: '100px' }}
+                    className={classes.select}
                   >
                     <MenuItem value={'male'}>Male</MenuItem>
                     <MenuItem value={'female'}>Female</MenuItem>
@@ -80,70 +78,80 @@ export default function EditProfile(): JSX.Element {
                 </FormControl>
               </Box>
               <Box className={classes.box}>
-                <label htmlFor="first-name" className={classes.label}>
-                  BIRTH DATE
+                <label htmlFor="birth-date" className={classes.label}>
+                  birth date
                 </label>
-                <Box component="span" style={{ width: '70%' }}>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                      views={['month']}
-                      inputVariant="outlined"
-                      value={selectedDate}
-                      onChange={() => {}}
-                      style={{ width: '100px' }}
-                    />
-                  </MuiPickersUtilsProvider>
-                  <FormControl variant="outlined">
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      style={{ width: '100px' }}
-                    >
-                      {optionSelect}
-                    </Select>
-                  </FormControl>{' '}
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                      views={['year']}
-                      inputVariant="outlined"
-                      value={selectedDate}
-                      onChange={() => {}}
-                      style={{ width: '100px' }}
-                    />
-                  </MuiPickersUtilsProvider>
-                </Box>
+                <TextField
+                  type="date"
+                  id="birth-date"
+                  variant="outlined"
+                  className={classes.textField}
+                  defaultValue={selectedDate}
+                  value={selectedDate}
+                />
+              </Box>
+              <Box className={classes.box}>
+                <label htmlFor="email-address" className={classes.label}>
+                  email address
+                </label>
+                <TextField
+                  type="email"
+                  id="email-address"
+                  placeholder="john-doe@gmail.com"
+                  variant="outlined"
+                  className={classes.textField}
+                />
+              </Box>
+              <Box className={classes.box} style={{ display: `${block}` }}>
+                <label htmlFor="last-name" className={classes.label}></label>
+                <TextField
+                  type="text"
+                  id="last-name"
+                  placeholder="enter phone number"
+                  variant="outlined"
+                  className={classes.textField}
+                />
               </Box>
               <Box className={classes.box}>
                 <label htmlFor="phone-number" className={classes.label}>
-                  PHONE NUMBER
+                  phone number
                 </label>
-                <Typography style={{ display: 'inline-block', margin: '10px', fontStyle: 'italic' }}>
-                  No Phone number entered
-                </Typography>
-                <Button variant="outlined" color="secondary" size="large">
-                  Add phone number
-                </Button>
+                <Box className={classes.boxStyle}>
+                  <Typography style={{ display: 'inline-block', fontStyle: 'italic' }}>
+                    No Phone number entered
+                  </Typography>
+                  <Button variant="outlined" color="secondary" size="large">
+                    Add phone number
+                  </Button>
+                </Box>
               </Box>
               <Box className={classes.box}>
                 <label htmlFor="where-live" className={classes.label}>
-                  WHERE YOU LIVE
+                  where you live
                 </label>
                 <TextField
                   type="text"
                   id="where-live"
                   placeholder="Address"
                   variant="outlined"
-                  style={{ width: '70%' }}
+                  className={classes.textField}
                 />
               </Box>
               <Box className={classes.box}>
                 <label htmlFor="describe" className={classes.label}>
-                  DESCRIBE YOUR SELF
+                  describe your self
                 </label>
-                <TextField id="describe" placeholder="About you" variant="outlined" style={{ width: '70%' }} />
+                <TextField
+                  id="describe"
+                  placeholder="About you"
+                  variant="outlined"
+                  className={classes.textField}
+                  multiline
+                  rows={6}
+                />
               </Box>
               <Button variant="contained" color="secondary" size="large" className={classes.button}>
-                SAVE
+                save
               </Button>
             </form>
           </Paper>
