@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
 interface Props {
@@ -14,11 +14,18 @@ const AuthNavItem = ({ isButton, linkTo, classes, asideText, btnText, variant }:
   return (
     <>
       {isButton ? (
-        <Button component={Link} to={linkTo} className={classes} color="primary" variant={variant}>
+        <Button
+          component={NavLink}
+          to={linkTo}
+          className={classes}
+          activeStyle={{ color: '#f04040' }}
+          color="primary"
+          variant={variant}
+        >
           {btnText}
         </Button>
       ) : (
-        <Typography className={classes} component={Link} to={linkTo}>
+        <Typography className={classes} component={NavLink} to={linkTo} activeStyle={{ color: '#f04040' }}>
           {asideText}
         </Typography>
       )}
