@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import useStyles from './useStyles';
 import React from 'react';
 import Calendar from './Calendar';
+import CurrentBookings from './CurrentBookings';
+import ManageBookings from './ManageBookings';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
@@ -13,14 +15,15 @@ export default function Bookings(): JSX.Element {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="lg">
-        <div className={classes.root}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={7}>
-              <Calendar />
+      <Container maxWidth="md">
+        <div className={`${classes.root} ${classes.mt}`}>
+          <Grid container spacing={10}>
+            <Grid item xs={12} sm={6} spacing={10}>
+              <CurrentBookings />
+              <ManageBookings />
             </Grid>
-            <Grid item xs={12} sm={5}>
-              <Paper className={classes.paper}>xs=12 sm=6</Paper>
+            <Grid item xs={12} sm={6}>
+              <Calendar />
             </Grid>
           </Grid>
         </div>

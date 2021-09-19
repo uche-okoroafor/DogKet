@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
+    mt: {
+      marginTop: '50px',
+    },
   }),
 );
 
