@@ -5,7 +5,7 @@ import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
-import Bookings from '../ManageBookings/Bookings';
+import Bookings from '../Bookings/Bookings';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();

@@ -1,17 +1,13 @@
-import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/ButtonBase';
+// import Avatar from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import useStyles from './useStyles';
-import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import { deepOrange } from '@material-ui/core/colors';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-export default function CurrentBookings() {
-  const classes = useStyles();
-  const currentStyles = makeStyles((theme: Theme) =>
+export default function NextBookings({ nextBooking }) {
+  const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         flexGrow: 1,
@@ -35,11 +31,12 @@ export default function CurrentBookings() {
         textAlign: 'left',
         marginBottom: '15px',
       },
-      nextBookHr: {
+      sectionHr: {
         fontWeight: 900,
         fontSize: '9px',
         color: 'black',
         marginBottom: '10px',
+        marginTop: '10px',
       },
       nextBookSubHr: {
         fontWeight: 600,
@@ -70,34 +67,34 @@ export default function CurrentBookings() {
       },
     }),
   );
-  const currentClass = currentStyles();
+  const pageClasses = pageStyles();
 
   return (
-    <div className={currentClass.wrapper}>
-      <Paper className={currentClass.paper}>
+    <div className={pageClasses.wrapper}>
+      <Paper className={pageClasses.paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography variant="body2" gutterBottom className={currentClass.nextBookHr}>
+                <Typography variant="body2" gutterBottom className={pageClasses.sectionHr}>
                   YOUR NEXT BOOKING
                 </Typography>
-                <Typography gutterBottom variant="subtitle1" className={currentClass.nextBookSubHr}>
-                  Standard license
+                <Typography gutterBottom variant="subtitle1" className={pageClasses.nextBookSubHr}>
+                  {nextBooking.date}
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body2" className={currentClass.nextBookNameWrapper}>
+                <Typography variant="body2" className={pageClasses.nextBookNameWrapper}>
                   {/* TEMP img tags */}
                   {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                  <div className={currentClass.tempImg}></div>
-                  <div className={currentClass.nextBookNameHr}>Rebeca Smith</div>
+                  <div className={pageClasses.tempImg}></div>
+                  <div className={pageClasses.nextBookNameHr}>{nextBooking.userName}</div>
                 </Typography>
               </Grid>
             </Grid>
             <Grid item>
               <Typography variant="subtitle1">
-                <SettingsIcon className={currentClass.icon} />
+                <SettingsIcon className={pageClasses.icon} />
               </Typography>
             </Grid>
           </Grid>
