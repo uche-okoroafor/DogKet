@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from 'react';
 import {
   Button,
@@ -14,8 +13,11 @@ import {
   Box,
 } from '@material-ui/core';
 import useStyles from './useStyles';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import * as yup from 'yup';
+import profile from '../../helpers/APICalls/profile';
+import { IProfile } from '../../helpers/APICalls/profile';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 const validationSchema = yup.object({
   firstName: yup.string().required('First Name is required'),
@@ -29,7 +31,24 @@ const validationSchema = yup.object({
 export default function EditProfile(): JSX.Element {
   const classes = useStyles();
 
-  // TODO : to change the style of entering phone number textfield from none to block
+  const { updateSnackBarMessage } = useSnackBar();
+
+  const handleSubmit = (
+    { firstName, lastName, email, phone, address, gender, birth, description }: IProfile,
+    { setSubmitting }: FormikHelpers<IProfile>,
+  ) => {
+    profile(firstName, lastName, email, phone, address, gender, birth, description).then((data) => {
+      if (data.error) {
+        setSubmitting(false);
+        updateSnackBarMessage(data.error.message);
+      } else {
+        setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
+
+  //  To change the style of entering phone number textfield from none to block
   const [block, setBlock] = useState('none');
 
   const formik = useFormik({
@@ -43,19 +62,7 @@ export default function EditProfile(): JSX.Element {
       address: '',
       description: '',
     },
-    onSubmit: async (values) => {
-      console.log(values);
-      const response = await fetch(`http://localhost:3001/profile`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-      const content = await response.json();
-      console.log(content);
-    },
+    onSubmit: handleSubmit,
     validationSchema: validationSchema,
   });
 
