@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { deepOrange } from '@material-ui/core/colors';
-import SettingsIcon from '@material-ui/icons/Settings';
+import EditButton from './EditButton';
 
 interface Booking {
   userName: string;
@@ -14,12 +14,14 @@ interface Booking {
   id: number;
 }
 
-export default function ManageBookings({ bookings, sectionName }) {
-  const currentStyles = makeStyles((theme: Theme) =>
+interface Props {
+  bookings: any;
+  sectionName: string;
+}
+
+export default function ManageBookings({ bookings, sectionName }: Props): JSX.Element {
+  const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
-      root: {
-        flexGrow: 1,
-      },
       paper: {
         padding: theme.spacing(2),
         margin: 'auto',
@@ -47,17 +49,17 @@ export default function ManageBookings({ bookings, sectionName }) {
       sectionWrapper: {
         marginBottom: '-10px',
       },
-      nextBookSubHr: {
+      BookingSubHr: {
         fontWeight: 600,
         fontSize: '12px',
         color: 'black',
         margin: '10px 0px',
       },
-      nextBookNameHr: {
+      bookingNameHr: {
         fontWeight: 900,
         fontSize: '13px',
       },
-      nextBookNameWrapper: {
+      nameWrapper: {
         display: 'flex',
         marginBottom: '15px',
       },
@@ -70,10 +72,6 @@ export default function ManageBookings({ bookings, sectionName }) {
       paperOutlineWrap: {
         marginBottom: '7px',
         padding: '5px 10px',
-      },
-      icon: {
-        fontSize: '15px',
-        color: 'rgb(209,209,209)',
       },
       iconWrapper: {
         display: 'flex',
@@ -93,41 +91,39 @@ export default function ManageBookings({ bookings, sectionName }) {
       },
     }),
   );
-  const currentClass = currentStyles();
+  const pageClasses = pageStyles();
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm container>
         <Grid item xs container direction="column" spacing={2}>
-          <Grid item xs className={currentClass.sectionWrapper}>
-            <Typography variant="body2" gutterBottom className={currentClass.sectionHr}>
+          <Grid item xs className={pageClasses.sectionWrapper}>
+            <Typography variant="body2" gutterBottom className={pageClasses.sectionHr}>
               {sectionName}
             </Typography>
           </Grid>
           <Grid item>
             {bookings.map((booking: Booking) => (
-              <Paper variant="outlined" className={currentClass.paperOutlineWrap} key={bookings.id}>
+              <Paper variant="outlined" className={pageClasses.paperOutlineWrap} key={bookings.id}>
                 <Grid item container xs={12} sm>
                   <Grid item xs={9}>
-                    <Typography gutterBottom variant="subtitle1" className={currentClass.nextBookSubHr}>
+                    <Typography gutterBottom variant="subtitle1" className={pageClasses.BookingSubHr}>
                       {booking.date}
                     </Typography>
-                    <Typography variant="body2" className={currentClass.nextBookNameWrapper}>
+                    <Typography variant="body2" className={pageClasses.nameWrapper}>
                       {/* TEMP IMG tags */}
                       {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                      <div className={currentClass.tempImg}></div>
-                      <div className={currentClass.nextBookNameHr}>{booking.userName}</div>
+                      <div className={pageClasses.tempImg}></div>
+                      <div className={pageClasses.bookingNameHr}>{booking.userName}</div>
                     </Typography>
                   </Grid>
-                  <Grid item xs={2} className={currentClass.statusWrapper}>
-                    <Typography variant="subtitle1" className={currentClass.statusTxt}>
+                  <Grid item xs={2} className={pageClasses.statusWrapper}>
+                    <Typography variant="subtitle1" className={pageClasses.statusTxt}>
                       {booking.status}
                     </Typography>
                   </Grid>
-                  <Grid item xs={1} className={currentClass.iconWrapper}>
-                    <Typography>
-                      <SettingsIcon className={currentClass.icon} />
-                    </Typography>
+                  <Grid item xs={1} className={pageClasses.iconWrapper}>
+                    <EditButton />
                   </Grid>
                 </Grid>
               </Paper>

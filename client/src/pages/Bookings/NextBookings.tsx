@@ -4,14 +4,15 @@ import Paper from '@material-ui/core/Paper';
 // import Avatar from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import { deepOrange } from '@material-ui/core/colors';
-import SettingsIcon from '@material-ui/icons/Settings';
+import EditButton from './EditButton';
 
-export default function NextBookings({ nextBooking }) {
+interface Props {
+  nextBooking: any;
+}
+
+export default function NextBookings({ nextBooking }: Props): JSX.Element {
   const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
-      root: {
-        flexGrow: 1,
-      },
       paper: {
         padding: theme.spacing(2),
         margin: 'auto',
@@ -58,9 +59,6 @@ export default function NextBookings({ nextBooking }) {
         marginRight: '10px',
         backgroundColor: deepOrange[500],
       },
-      mb5: {
-        marginBottom: '15px',
-      },
       icon: {
         fontSize: '15px',
         color: 'rgb(209,209,209)',
@@ -93,9 +91,7 @@ export default function NextBookings({ nextBooking }) {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle1">
-                <SettingsIcon className={pageClasses.icon} />
-              </Typography>
+              <EditButton />
             </Grid>
           </Grid>
         </Grid>
