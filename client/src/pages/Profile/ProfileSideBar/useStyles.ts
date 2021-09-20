@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     right: '10px',
   },
   menuList: {
+    width: '120px',
     height: '280px',
     display: 'flex',
     flexDirection: 'column',

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   profilePhoto: {
-    height: 'calc(100vh - 90px)',
+    height: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
