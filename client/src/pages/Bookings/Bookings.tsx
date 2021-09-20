@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import { getRequests } from '../../helpers/APICalls/request';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -44,6 +46,16 @@ export default function Bookings(): JSX.Element {
       },
     ],
   };
+
+  const fetchRequests = async () => {
+    console.log('h');
+    const requestList = await getRequests();
+    console.log(requestList);
+  } 
+
+  useEffect(() => {
+    fetchRequests();
+  }, );
 
   return (
     <React.Fragment>
