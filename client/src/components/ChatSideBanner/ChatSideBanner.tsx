@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { User } from '../../interface/User';
 import Search from '../Search/Search';
+import Layout from '../../pages/Layout/Layout';
 
 interface Props {
   loggedInUser?: User;
@@ -25,14 +26,23 @@ const ChatSideBanner = ({}: Props): JSX.Element => {
   };
 
   return (
-    <Grid className={classes.chatSideBanner}>
-      <Box>
-        <Typography className={classes.chatTitle} variant="h5">
-          Users
-        </Typography>
-        <Search search={search} handleChange={handleChange} />
-      </Box>
-    </Grid>
+    <Layout>
+      <Grid>
+        <Box
+          height="calc(100vh - 90px)"
+          width="240px"
+          display="flex"
+          flexDirection="column"
+          p="1rem"
+          className={classes.chatSideBanner}
+        >
+          <Typography className={classes.chatTitle} variant="h5">
+            Users
+          </Typography>
+          <Search search={search} handleChange={handleChange} />
+        </Box>
+      </Grid>
+    </Layout>
   );
 };
 

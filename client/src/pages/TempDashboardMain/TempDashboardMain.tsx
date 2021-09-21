@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Layout from '../Layout/Layout';
 import useStyles from './useStyles';
 
-const MyJobs = (): JSX.Element => {
+const TempDashboardMain = (): JSX.Element => {
   // TODO: this will be used in the future
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const classes = useStyles();
@@ -14,7 +14,7 @@ const MyJobs = (): JSX.Element => {
       <Grid>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Typography component="h5" variant="h5" align="center">
-            My Jobs Page Template
+            Temporary Dashboard Main Content
           </Typography>
         </Box>
       </Grid>
@@ -22,4 +22,4 @@ const MyJobs = (): JSX.Element => {
   );
 };
 
-export default MyJobs;
+export default TempDashboardMain;

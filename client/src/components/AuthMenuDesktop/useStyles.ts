@@ -5,9 +5,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(600)]: {
       display: 'none',
     },
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   accAside: {
     fontSize: 14,

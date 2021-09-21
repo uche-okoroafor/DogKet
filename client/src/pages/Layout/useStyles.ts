@@ -9,22 +9,16 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 auto',
     },
   },
-  dashboard: { backgroundColor: '#FFFFFF' },
+  layout: { backgroundColor: '#FFFFFF' },
   authWrapper: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    minHeight: '100vh',
     backgroundColor: '#fff',
   },
-  dashboardOuterContainer: {
-    height: 'calc(100vh - 90px)',
+  layoutOuterContainer: {
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
     },
   },
-  dashboardContainer: {
+  layoutContainer: {
     height: '100%',
     display: 'flex',
     alignItems: 'center',

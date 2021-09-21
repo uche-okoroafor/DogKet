@@ -16,7 +16,7 @@ const AuthMenuDesktop = ({ asideText, linkTo }: Props): JSX.Element => {
   const { loggedInUser } = useAuth();
 
   return (
-    <Box className={classes.authMenuDesktop}>
+    <Box display="flex" justifyContent="center" alignItems="center" className={classes.authMenuDesktop}>
       <AuthNavItem asideText={asideText} classes={`${classes.accAside} ${classes.authNavMobile}`} linkTo={linkTo} />
       {loggedInUser ? (
         <>
