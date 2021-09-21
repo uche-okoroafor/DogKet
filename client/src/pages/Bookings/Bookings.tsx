@@ -63,9 +63,9 @@ export default function Bookings(): JSX.Element {
   const [requests, setRequest] = useState<any>(resModel);
   const fetchRequests = async () => {
     console.log('h');
-    const { success } = await getRequests();
-    console.log(success);
-    setRequest(success['resModel']);
+    const resModel = await getRequests();
+    console.log(resModel);
+    if (resModel) setRequest(resModel);
   };
 
   useEffect(() => {

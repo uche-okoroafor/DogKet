@@ -97,7 +97,7 @@ export default function NextBookings({ nextBooking }: Props): JSX.Element {
               </Grid>
             </Grid>
             <Grid item>
-              <EditButton />
+              <EditButton requestId={nextBooking?._id} />
             </Grid>
           </Grid>
         </Grid>

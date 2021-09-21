@@ -12,7 +12,7 @@ interface Booking {
   startDate: string;
   thumbImg: string;
   status: string;
-  _id: number;
+  _id: string;
 }
 
 interface Props {
@@ -93,7 +93,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
     }),
   );
   const pageClasses = pageStyles();
-
+  console.log(bookings);
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm container>
@@ -124,7 +124,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
                     </Typography>
                   </Grid>
                   <Grid item xs={1} className={pageClasses.iconWrapper}>
-                    <EditButton />
+                    <EditButton requestId={booking._id} />
                   </Grid>
                 </Grid>
               </Paper>

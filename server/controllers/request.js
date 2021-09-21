@@ -39,8 +39,8 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { currentTime }  = req.params;
-    console.log(currentTime);
-    let requestsByUser = await Request.find({ 
+
+    const requestsByUser = await Request.find({ 
       $or: [
         { ownerId: ObjectId(userId) },
         { sitterId: ObjectId(userId) }
@@ -53,9 +53,9 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
       pastBookings: [],
     };
     
-    if(requestsByUser.length === 0) 
+    if (requestsByUser.length === 0) 
       return res.status(200).json({
-        success: {resModel}
+        success: { resModel }
       });   
 
     const separatorIndex = requestsByUser.findIndex(req => req.startDate < currentTime);
@@ -69,7 +69,7 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
      const currentLength = resModel.currentBookings.length;
     if (currentLength > 0 ) {
       const acceptedBookings = resModel.currentBookings.filter(booking => booking.status == 'accepted');
-      if(acceptedBookings.length > 0) {
+      if (acceptedBookings.length > 0) {
         resModel.nextBooking = acceptedBookings[acceptedBookings.length -1];
          
         const nextBookingIndex = resModel.currentBookings.findIndex(booking => booking._id === resModel.nextBooking['_id']);
@@ -78,9 +78,7 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
     }
 
     res.status(200).json({
-      success: {
-        resModel
-      }
+      success: { resModel }
     });
   } catch (error) {
       next(error);
@@ -110,7 +108,9 @@ exports.updateStatus = asyncHandler(async (req, res, next) => {
     request.status = status;
     await request.save();
 
-    res.status(200).json({ request });
+    res.status(200).json({
+      success: { request }
+    });
   } catch (error) {
     next(error);
   }

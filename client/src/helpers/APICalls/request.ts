@@ -1,4 +1,4 @@
-import { RequestApiData } from '../../interface/Requests';
+import { RequestApiData, RequestStatusApiData } from '../../interface/Requests';
 import { FetchOptions } from '../../interface/FetchOptions';
 
 export const createRequest = async (sitterId: any, startDate: number, endDate: number): Promise<RequestApiData> => {
@@ -34,31 +34,31 @@ export const getRequests = async (): Promise<RequestApiData> => {
   const timeStamp = new Date().getTime();
   try {
     const fetchData = await fetch(`/request/list/${timeStamp}`, fetchOptions);
-    const listsResponse = await fetchData.json();
-    console.log(listsResponse);
-    return listsResponse;
+    const { success } = await fetchData.json();
+    console.log(success);
+    return success.resModel;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
   }
 };
 
-// export const updateAccept = async (status: string, requestId: string): Promise<AuthApiData> => {
-//   const fetchOptions: FetchOptions = {
-//     method: 'PATCH',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ status, requestId }),
-//     credentials: 'include',
-//   };
+export const updateAccept = async (status: string, requestId: string): Promise<RequestStatusApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status, requestId }),
+    credentials: 'include',
+  };
 
-//   try {
-//     const fetchData = await fetch(`/request/status`, fetchOptions);
-//     const updateResponse = await fetchData.json();
-//     console.log(updateResponse);
-//     return updateResponse;
-//   } catch (e) {
-//     return { error: { message: 'Unable to connect to server. Please try again' } };
-//   }
-// };
+  try {
+    const fetchData = await fetch(`/request/status`, fetchOptions);
+    const updateResponse = await fetchData.json();
+    console.log(updateResponse);
+    return updateResponse;
+  } catch (e) {
+    return { error: { message: 'Unable to connect to server. Please try again' } };
+  }
+};
 // createRequest();
 
 // export default register;
