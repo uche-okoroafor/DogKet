@@ -7,11 +7,12 @@ import { deepOrange } from '@material-ui/core/colors';
 import EditButton from './EditButton';
 
 interface Booking {
-  userName: string;
-  date: string;
+  ownerId: string;
+  sitterId: string;
+  startDate: string;
   thumbImg: string;
   status: string;
-  id: number;
+  _id: number;
 }
 
 interface Props {
@@ -104,21 +105,21 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
           </Grid>
           <Grid item>
             {bookings.map((booking: Booking) => (
-              <Paper variant="outlined" className={pageClasses.paperOutlineWrap} key={bookings.id}>
+              <Paper variant="outlined" className={pageClasses.paperOutlineWrap} key={bookings._id}>
                 <Grid item container xs={12} sm>
                   <Grid item xs={9}>
                     <Typography gutterBottom variant="subtitle1" className={pageClasses.BookingSubHr}>
-                      {booking.date}
+                      {booking.startDate}
                     </Typography>
                     <Typography variant="body2" className={pageClasses.nameWrapper}>
                       {/* TEMP IMG tags */}
                       {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
                       <div className={pageClasses.tempImg}></div>
-                      <div className={pageClasses.bookingNameHr}>{booking.userName}</div>
+                      <div className={pageClasses.bookingNameHr}>{booking.sitterId}</div>
                     </Typography>
                   </Grid>
                   <Grid item xs={2} className={pageClasses.statusWrapper}>
-                    <Typography variant="subtitle1" className={pageClasses.statusTxt}>
+                    <Typography variant="subtitle1" className={pageClasses.statusTxt.toUpperCase()}>
                       {booking.status}
                     </Typography>
                   </Grid>

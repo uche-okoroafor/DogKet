@@ -8,11 +8,12 @@ import React from 'react';
 import Calendar from './Calendar';
 import NextBookings from './NextBookings';
 import ManageBookings from './ManageBookings';
+import { RequestApiDataSuccess } from '../../interface/Requests';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
   // temp {} to hold data from API request.
-  const requests: any = {
+  const request: any = {
     nextBooking: {
       userName: 'Norma Byers',
       date: '5 April 2020, 10-12PM',
@@ -36,7 +37,7 @@ export default function Bookings(): JSX.Element {
         id: 3,
       },
     ],
-    pastBooking: [
+    pastBookings: [
       {
         userName: 'Michael Carnahan',
         date: '21 March 2020, 8-10PM',
@@ -47,15 +48,29 @@ export default function Bookings(): JSX.Element {
     ],
   };
 
+  const resModel: RequestApiDataSuccess = {
+    nextBooking: {},
+    currentBookings: [],
+    pastBookings: [],
+  };
+
+  interface ResModel {
+    nextBooking: any;
+    currentBookings: any[];
+    pastBookings: any[];
+  }
+
+  const [requests, setRequest] = useState<any>(resModel);
   const fetchRequests = async () => {
     console.log('h');
-    const requestList = await getRequests();
-    console.log(requestList);
-  } 
+    const { success } = await getRequests();
+    console.log(success);
+    setRequest(success['resModel']);
+  };
 
   useEffect(() => {
     fetchRequests();
-  }, );
+  }, []);
 
   return (
     <React.Fragment>
@@ -65,7 +80,7 @@ export default function Bookings(): JSX.Element {
           <Grid container spacing={10}>
             <Grid item xs={12} sm={6} spacing={10}>
               <NextBookings nextBooking={requests.nextBooking} />
-              <ManageBookings currentBookings={requests.currentBookings} pastBookings={requests.pastBooking} />
+              <ManageBookings currentBookings={requests.currentBookings} pastBookings={requests.pastBookings} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Calendar />

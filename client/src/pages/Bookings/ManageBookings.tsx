@@ -3,8 +3,8 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import BookingsTemplate from './BookingsTemplate';
 interface Props {
-  pastBookings: any;
-  currentBookings: string;
+  pastBookings: [];
+  currentBookings: [];
 }
 
 export default function ManageBookings({ pastBookings, currentBookings }: Props): JSX.Element {

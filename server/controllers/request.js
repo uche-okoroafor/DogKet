@@ -9,15 +9,15 @@ const { ObjectId } = mongoose.Types;
 exports.createRequest = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
-
+    console.log(userId);
     const { sitterId, startDate, endDate } = req.body;
     const requestModel = {
         ownerId: ObjectId(userId), 
-        sitterId,
-        startDate,
-        endDate,
+        sitterId: ObjectId(sitterId),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
     };
-
+    
     const existingRequest = await Request.findOne(requestModel);
     if (existingRequest) {
       return res
@@ -38,15 +38,50 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 exports.userRequests = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
-    
-    const requestsByUser = await Request.find({ 
+    const { currentTime }  = req.params;
+    console.log(currentTime);
+    let requestsByUser = await Request.find({ 
       $or: [
         { ownerId: ObjectId(userId) },
         { sitterId: ObjectId(userId) }
       ] 
-    });
+    }).sort({ startDate: 'desc' });
 
-      res.status(200).json({ requestsByUser });
+    const resModel = {
+      nextBooking: {},
+      currentBookings: [],
+      pastBookings: [],
+    };
+    
+    if(requestsByUser.length === 0) 
+      return res.status(200).json({
+        success: {resModel}
+      });   
+
+    const separatorIndex = requestsByUser.findIndex(req => req.startDate < currentTime);
+    if (separatorIndex === -1) {
+      resModel.currentBookings = requestsByUser;
+    } else {
+      resModel.currentBookings = requestsByUser.slice(0, separatorIndex);
+      resModel.pastBookings = requestsByUser.slice(separatorIndex, requestsByUser.length)
+    }
+
+     const currentLength = resModel.currentBookings.length;
+    if (currentLength > 0 ) {
+      const acceptedBookings = resModel.currentBookings.filter(booking => booking.status == 'accepted');
+      if(acceptedBookings.length > 0) {
+        resModel.nextBooking = acceptedBookings[acceptedBookings.length -1];
+         
+        const nextBookingIndex = resModel.currentBookings.findIndex(booking => booking._id === resModel.nextBooking['_id']);
+        resModel.currentBookings.splice(nextBookingIndex, 1);
+      }
+    }
+
+    res.status(200).json({
+      success: {
+        resModel
+      }
+    });
   } catch (error) {
       next(error);
   } 

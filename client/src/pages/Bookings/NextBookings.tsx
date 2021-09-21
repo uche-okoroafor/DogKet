@@ -77,16 +77,22 @@ export default function NextBookings({ nextBooking }: Props): JSX.Element {
                 <Typography variant="body2" gutterBottom className={pageClasses.sectionHr}>
                   YOUR NEXT BOOKING
                 </Typography>
-                <Typography gutterBottom variant="subtitle1" className={pageClasses.nextBookSubHr}>
-                  {nextBooking.date}
-                </Typography>
+                {nextBooking?.startDate ? (
+                  <Typography gutterBottom variant="subtitle1" className={pageClasses.nextBookSubHr}>
+                    nextBooking?.startDate:
+                  </Typography>
+                ) : (
+                  <Typography gutterBottom variant="subtitle1">
+                    No Upcoming booking
+                  </Typography>
+                )}
               </Grid>
               <Grid item>
                 <Typography variant="body2" className={pageClasses.nextBookNameWrapper}>
                   {/* TEMP img tags */}
                   {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
                   <div className={pageClasses.tempImg}></div>
-                  <div className={pageClasses.nextBookNameHr}>{nextBooking.userName}</div>
+                  <div className={pageClasses.nextBookNameHr}>{nextBooking?.sitterId}</div>
                 </Typography>
               </Grid>
             </Grid>
