@@ -15,14 +15,12 @@ import {
 import useStyles from './useStyles';
 import { FormikHelpers, useFormik } from 'formik';
 import * as yup from 'yup';
-import profile from '../../helpers/APICalls/profile';
-import { IProfile } from '../../helpers/APICalls/profile';
+import createPprofile, { IProfile } from '../../helpers/APICalls/createProfile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
 const validationSchema = yup.object({
   firstName: yup.string().required('First Name is required'),
   lastName: yup.string().required('Last Name is required'),
-  email: yup.string().email('Enter a valid email').required('Email is required'),
   phone: yup.string(),
   address: yup.string().required('Address is required'),
   description: yup.string().required('Your description is required'),
@@ -37,7 +35,7 @@ export default function EditProfile(): JSX.Element {
     { firstName, lastName, email, phone, address, gender, birth, description }: IProfile,
     { setSubmitting }: FormikHelpers<IProfile>,
   ) => {
-    profile(firstName, lastName, email, phone, address, gender, birth, description).then((data) => {
+    createPprofile(firstName, lastName, email, phone, address, gender, birth, description).then((data) => {
       if (data.error) {
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);

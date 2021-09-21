@@ -37,7 +37,7 @@ interface ProfileApiData {
   success?: ProfileApiDataSuccess;
 }
 
-const profile = async (
+const createProfile = async (
   firstName: string,
   lastName: string,
   email: string,
@@ -50,7 +50,7 @@ const profile = async (
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ firstName, lastName, email, phone, address, gender, birth, description }),
+    body: JSON.stringify({ firstName, lastName, phone, address, gender, birth, description }),
   };
   return await fetch(`/profile`, fetchOptions)
     .then((res) => res.json())
@@ -59,4 +59,4 @@ const profile = async (
     }));
 };
 
-export default profile;
+export default createProfile;

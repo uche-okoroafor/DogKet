@@ -3,29 +3,56 @@ Schema = mongoose.Schema;
 const User = require("./User");
 
 const profileSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: Schema.Types.ObjectId,
-    ref: User,
+    ref: "user",
+    required: true,
   },
   firstName: {
     type: String,
     required: true,
+    minlength: 3,
+    maxlength: 30,
   },
   lastName: {
     type: String,
     required: true,
+    minlength: 3,
+    maxlength: 30,
   },
-  email: {
+  address: {
     type: String,
-    required: true,
-    unique: true,
+    minlength: 3,
+    maxlength: 200,
   },
-  address: String,
-  phone: String,
-  description: String,
-  birth: String,
+  phone: {
+    type: String,
+    minlength: 5,
+    maxlength: 20,
+  },
+  description: {
+    type: String,
+    minlength: 3,
+    maxlength: 1000,
+  },
+  birth: {
+    type: String,
+    minlength: 3,
+    maxlength: 30,
+  },
   gender: String,
-  availability: [Date],
+  availability: {
+    type: [String],
+    default: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+  },
 });
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
