@@ -1,47 +1,41 @@
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
-import { Typography } from '@material-ui/core';
 import Logo from '../../Images/logo.png';
 import AuthMenu from '../AuthMenu/AuthMenu';
+import { User } from '../../interface/User';
+import AuthMenuDesktop from '../AuthMenuDesktop/AuthMenuDesktop';
+import { useAuth } from '../../context/useAuthContext';
 
 interface Props {
-  linkTo?: string;
+  loggedInUser?: User;
+  linkTo: string;
   asideText: string;
   btnText?: string;
 }
 
-const AuthHeader = ({ asideText }: Props): JSX.Element => {
+const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
 
   return (
-    <Box className={classes.authHeader}>
-      <Link to="/">
+    <Box
+      width="100%"
+      height="90px"
+      display="flex"
+      flexWrap="wrap"
+      justifyContent="space-between"
+      alignItems="center"
+      className={classes.authHeader}
+    >
+      <Link to={loggedInUser ? '/dashboard' : '/login'}>
         <img src={Logo} alt="logo" />
       </Link>
-      <Box p={1} className={classes.authMenus}>
-        <Typography className={classes.accAside}>{asideText}</Typography>
-        <Button
-          component={Link}
-          to="/login"
-          className={`${classes.headerBtn} ${classes.loginBtn}`}
-          color="primary"
-          variant="outlined"
-        >
-          Login
-        </Button>
-        <Button
-          component={Link}
-          to="/signup"
-          className={`${classes.headerBtn} ${classes.signupBtn}`}
-          color="primary"
-          variant="contained"
-        >
-          Sign Up
-        </Button>
+
+      <Box height="80px" display="flex" flexWrap="wrap" alignItems="center" p={1}>
+        <AuthMenuDesktop asideText={asideText} linkTo={linkTo} />
+        <AuthMenu />
       </Box>
-      <AuthMenu />
     </Box>
   );
 };

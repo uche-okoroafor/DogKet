@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
     justifyContent: 'center',
   },
+  menuItemDesktop: {
+    [theme.breakpoints.up(768)]: {
+      display: 'none',
+    },
+  },
 }));
 
 export default useStyles;

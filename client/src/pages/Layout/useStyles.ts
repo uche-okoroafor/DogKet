@@ -9,29 +9,20 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 auto',
     },
   },
+  layout: { backgroundColor: '#FFFFFF' },
   authWrapper: {
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
   },
-  loginOuterContainer: {
+  layoutOuterContainer: {
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
     },
   },
-  loginContainer: {
-    padding: theme.spacing(5, 15),
-    borderRadius: theme.shape.borderRadius,
-    height: '700px',
-    [theme.breakpoints.down(768)]: {
-      padding: theme.spacing(5),
-    },
-  },
-  welcome: {
-    fontSize: 26,
-    paddingBottom: 20,
-    color: '#000000',
-    fontWeight: 700,
-    fontFamily: "'Open Sans'",
-    textAlign: 'center',
+  layoutContainer: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 

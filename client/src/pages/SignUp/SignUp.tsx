@@ -42,8 +42,15 @@ export default function Register(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
-        <Box className={classes.authWrapper}>
-          <AuthHeader asideText="BECOME A SITTER" />
+        <Box
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="space-between"
+          flexDirection="column"
+          minHeight="100vh"
+          className={classes.authWrapper}
+        >
+          <AuthHeader asideText="Become a sitter" linkTo="/login" />
           <Box className={classes.signupOuterContainer} width="100%" maxWidth={600} p={3} alignSelf="center">
             <Grid className={classes.signupContainer} container elevation={6} component={Paper}>
               <Grid item xs>
