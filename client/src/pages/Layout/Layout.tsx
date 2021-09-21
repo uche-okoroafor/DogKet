@@ -10,10 +10,10 @@ import { useEffect } from 'react';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export default function Dashboard({ children }: Props): JSX.Element {
+export default function Layout({ children }: Props): JSX.Element {
   const classes = useStyles();
 
   const { loggedInUser } = useAuth();
@@ -26,19 +26,27 @@ export default function Dashboard({ children }: Props): JSX.Element {
   if (!loggedInUser) return <CircularProgress />;
 
   return (
-    <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
+    <Grid container component="main" className={`${classes.root} ${classes.layout}`}>
       <CssBaseline />
       <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
-        <Box className={classes.authWrapper}>
+        <Box
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="space-between"
+          flexDirection="column"
+          minHeight="100vh"
+          className={classes.authWrapper}
+        >
           <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/profile" />
           <Box
-            className={classes.dashboardOuterContainer}
+            className={classes.layoutOuterContainer}
             width="100%"
+            height="calc(100vh - 90px)"
             display="flex"
             justifyContent="center"
             alignItems="center"
           >
-            <Grid className={classes.dashboardContainer} container elevation={6} square component={Paper}>
+            <Grid className={classes.layoutContainer} container elevation={6} square component={Paper}>
               <Grid item xs>
                 {children}
               </Grid>

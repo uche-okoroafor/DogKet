@@ -10,11 +10,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authWrapper: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    minHeight: '100vh',
     backgroundColor: '#eee',
   },
   signupOuterContainer: {

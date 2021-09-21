@@ -10,9 +10,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tempProfileMainSection: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
   },
 }));

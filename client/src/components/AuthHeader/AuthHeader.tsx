@@ -19,12 +19,20 @@ const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const { loggedInUser } = useAuth();
 
   return (
-    <Box className={classes.authHeader}>
+    <Box
+      width="100%"
+      height="90px"
+      display="flex"
+      flexWrap="wrap"
+      justifyContent="space-between"
+      alignItems="center"
+      className={classes.authHeader}
+    >
       <Link to={loggedInUser ? '/dashboard' : '/login'}>
         <img src={Logo} alt="logo" />
       </Link>
 
-      <Box p={1} className={classes.authMenus}>
+      <Box height="80px" display="flex" flexWrap="wrap" alignItems="center" p={1}>
         <AuthMenuDesktop asideText={asideText} linkTo={linkTo} />
         <AuthMenu />
       </Box>

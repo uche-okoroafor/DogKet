@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
-import Dashboard from './Dashboard';
+import Layout from './Layout';
 import MockAuthProvider from '../../mocks/mockUseAuthProvider';
 
-describe('Dashboard tests', () => {
+describe('Layout tests', () => {
   test('smoke test', () => {
     render(
       <MockAuthProvider>
-        <Dashboard />
+        <Layout />
       </MockAuthProvider>,
     );
   });
@@ -14,7 +14,7 @@ describe('Dashboard tests', () => {
   test('loading snapshot test', () => {
     const { asFragment } = render(
       <MockAuthProvider>
-        <Dashboard />
+        <Layout />
       </MockAuthProvider>,
     );
     expect(asFragment).toMatchSnapshot();
@@ -23,21 +23,21 @@ describe('Dashboard tests', () => {
   test('rendered messages snapshot test', () => {
     const { asFragment } = render(
       <MockAuthProvider>
-        <Dashboard />
+        <Layout />
       </MockAuthProvider>,
     );
     expect(asFragment).toMatchSnapshot();
   });
 
   test('should have loading when waiting for auth provide to check if loggedIn', () => {
-    const { getByRole } = render(<Dashboard />);
+    const { getByRole } = render(<Layout />);
     expect(getByRole('progressbar')).toBeInTheDocument();
   });
 
   test('should have loading when waiting for auth provide to check if loggedIn', async () => {
     const { getAllByText, getByPlaceholderText } = render(
       <MockAuthProvider>
-        <Dashboard />
+        <Layout />
       </MockAuthProvider>,
     );
     expect(getAllByText('Chats')).toHaveLength(1);
