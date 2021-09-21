@@ -9,7 +9,7 @@ const ProfilePhoto = (): JSX.Element => {
 
   return (
     <Grid item xs={12} sm={9} elevation={6} component={Paper} square>
-      <Box className={classes.profilePhoto}>
+      <Box height="100%" display="flex" justifyContent="center" alignItems="center" className={classes.profilePhoto}>
         <Typography component="h5" variant="h5" align="center">
           Profile Photo Page Template
         </Typography>
