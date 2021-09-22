@@ -5,10 +5,12 @@ const requestSchema = new mongoose.Schema({
   ownerId: {
     type: ObjectId,
     required: true,
+    ref: 'User',
   },
   sitterId: {
     type: ObjectId,
     required: true,
+    ref: 'User',
   },
   startDate: {
     type: Date,
