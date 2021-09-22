@@ -36,6 +36,7 @@ export default function EditButton({ requestId }: Props): JSX.Element {
   const updateStatus = async (status: string) => {
     console.log(status);
     const response = await updateAccept(status, requestId);
+    // 
     // set state? make another get request?
   };
 
@@ -61,6 +62,7 @@ export default function EditButton({ requestId }: Props): JSX.Element {
           horizontal: 'center',
         }}
       >
+        {/* I need to have access to Profile user model to know if user is a sitter to only show this to sitters */}
         <Typography className={classes.typography} onClick={() => updateStatus('accepted')}>
           Accept
         </Typography>

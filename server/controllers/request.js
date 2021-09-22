@@ -57,7 +57,8 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
       return res.status(200).json({
         success: { resModel }
       });   
-
+    
+    // current bookings and past bookings list
     const separatorIndex = requestsByUser.findIndex(req => req.startDate < currentTime);
     if (separatorIndex === -1) {
       resModel.currentBookings = requestsByUser;
@@ -66,7 +67,8 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
       resModel.pastBookings = requestsByUser.slice(separatorIndex, requestsByUser.length)
     }
 
-     const currentLength = resModel.currentBookings.length;
+    // next booking object
+    const currentLength = resModel.currentBookings.length;
     if (currentLength > 0 ) {
       const acceptedBookings = resModel.currentBookings.filter(booking => booking.status == 'accepted');
       if (acceptedBookings.length > 0) {
