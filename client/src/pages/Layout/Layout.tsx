@@ -28,7 +28,7 @@ export default function Layout({ children }: Props): JSX.Element {
   return (
     <Grid container component="main" className={`${classes.root} ${classes.layout}`}>
       <CssBaseline />
-      <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
+      <Grid item xs={12} sm={12} md={12}>
         <Box
           display="flex"
           alignItems="flex-start"
@@ -37,7 +37,7 @@ export default function Layout({ children }: Props): JSX.Element {
           minHeight="100vh"
           className={classes.authWrapper}
         >
-          <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/profile" />
+          <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/listings" />
           <Box
             className={classes.layoutOuterContainer}
             width="100%"
@@ -46,10 +46,8 @@ export default function Layout({ children }: Props): JSX.Element {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid className={classes.layoutContainer} container elevation={6} square component={Paper}>
-              <Grid item xs>
-                {children}
-              </Grid>
+            <Grid className={classes.layoutContainer} container>
+              {children}
             </Grid>
           </Box>
         </Box>
