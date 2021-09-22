@@ -1,6 +1,6 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
 import React from 'react';
 import Calendar from './Calendar';
@@ -9,7 +9,7 @@ import ManageBookings from './ManageBookings';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
-  // temp {} to hold data from API request.
+
   const requests: any = {
     nextBooking: {
       userName: 'Norma Byers',
@@ -47,9 +47,8 @@ export default function Bookings(): JSX.Element {
 
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="md" className={classes.container}>
-        <div className={`${classes.root} ${classes.mt}`}>
+        <Box className={`${classes.root} ${classes.mt}`}>
           <Grid container spacing={10}>
             <Grid item xs={12} sm={6} spacing={10}>
               <NextBookings nextBooking={requests.nextBooking} />
@@ -59,7 +58,7 @@ export default function Bookings(): JSX.Element {
               <Calendar />
             </Grid>
           </Grid>
-        </div>
+        </Box>
       </Container>
     </React.Fragment>
   );

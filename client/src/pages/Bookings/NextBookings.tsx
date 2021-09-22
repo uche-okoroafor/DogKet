@@ -3,69 +3,16 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 // import Avatar from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import { deepOrange } from '@material-ui/core/colors';
 import EditButton from './EditButton';
+import { nextBookingClasses } from './BookingStyles/NextBooking';
 
 interface Props {
   nextBooking: any;
 }
 
 export default function NextBookings({ nextBooking }: Props): JSX.Element {
-  const pageStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      paper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 500,
-      },
-      image: {
-        width: 128,
-        height: 128,
-      },
-      img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-      },
-      wrapper: {
-        textAlign: 'left',
-        marginBottom: '15px',
-      },
-      sectionHr: {
-        fontWeight: 900,
-        fontSize: '9px',
-        color: 'black',
-        marginBottom: '10px',
-        marginTop: '10px',
-      },
-      nextBookSubHr: {
-        fontWeight: 600,
-        fontSize: '16px',
-        color: 'black',
-      },
-      nextBookNameHr: {
-        fontWeight: 900,
-        fontSize: '13px',
-        color: 'black',
-      },
-      nextBookNameWrapper: {
-        display: 'flex',
-        marginBottom: '15px',
-      },
-      tempImg: {
-        borderRadius: '50%',
-        width: '20px',
-        marginRight: '10px',
-        backgroundColor: deepOrange[500],
-      },
-      icon: {
-        fontSize: '15px',
-        color: 'rgb(209,209,209)',
-      },
-    }),
-  );
-  const pageClasses = pageStyles();
+
+  const pageClasses = nextBookingClasses();
 
   return (
     <div className={pageClasses.wrapper}>

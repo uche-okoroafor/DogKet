@@ -1,24 +1,12 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import SettingsIcon from '@material-ui/icons/Settings';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    typography: {
-      padding: theme.spacing(2),
-    },
-    icon: {
-      fontSize: '15px',
-      color: 'rgb(209,209,209)',
-    },
-  }),
-);
+import { editButtonStyles } from './BookingStyles/EditButton';
 
 export default function EditButton() {
-  const classes = useStyles();
+  const pageClasses = editButtonStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,9 +21,9 @@ export default function EditButton() {
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div>
+    <Box>
       <Typography onClick={handleClick}>
-        <SettingsIcon className={classes.icon} />
+        <SettingsIcon className={pageClasses.icon} />
       </Typography>
       <Popover
         id={id}
@@ -51,9 +39,9 @@ export default function EditButton() {
           horizontal: 'center',
         }}
       >
-        <Typography className={classes.typography}>Accept</Typography>
-        <Typography className={classes.typography}>Decline</Typography>
+        <Typography className={pageClasses.typography}>Accept</Typography>
+        <Typography className={pageClasses.typography}>Decline</Typography>
       </Popover>
-    </div>
+    </Box>
   );
 }
