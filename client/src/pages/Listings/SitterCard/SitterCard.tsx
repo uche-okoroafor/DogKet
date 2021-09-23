@@ -18,7 +18,7 @@ const SitterCard = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} sm={12} md={4} className={classes.sitterCard}>
+    <Grid item xs={12} sm={5} md={4}>
       <Box
         width="80%"
         display="flex"
@@ -51,7 +51,7 @@ const SitterCard = ({ sitter }: Props): JSX.Element => {
             </Typography>
             <Rating name="read-only" size="small" value={sitter.sitterRating} readOnly className={classes.rating} />
             <Typography variant="body1" align="center" className={classes.sitterAboutMe}>
-              {sitter.sitterAboutMe.slice(0, 80)}
+              {sitter.sitterAboutMe.slice(0, 60)}
             </Typography>
             <Box
               width="95%"

@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     top: '120px',
     left: '50%',
     marginLeft: '-75px',
+    backgroundColor: '#eee',
   },
   sitterName: {
     padding: theme.spacing(10, 0, 1),

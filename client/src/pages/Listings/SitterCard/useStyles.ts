@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  sitterCard: {},
   sitterOuterBox: {
     margin: theme.spacing(3, 'auto'),
   },

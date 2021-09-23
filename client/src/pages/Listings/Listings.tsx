@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { DateRange } from '@mui/lab/DateRangePicker';
@@ -30,9 +30,8 @@ const Listings = (): JSX.Element => {
   };
 
   // TODO: implement this feature later in the future
-  const handleShowMore = () => {
-    console.log('Load More clicked');
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const handleShowMore = () => {};
 
   return (
     <Layout>
@@ -53,11 +52,10 @@ const Listings = (): JSX.Element => {
           <SearchDateRange dateRange={dateRange} handleChange={searchDateRangeHandleChange} />
         </Box>
 
-        <Grid container>
-          {sampleData.slice(0, 6).map((sitter) => {
-            console.log(sitter);
-            return <SitterCard key={sitter.sitterId} sitter={sitter} />;
-          })}
+        <Grid container className={classes.sitterLists} justifyContent="center">
+          {sampleData.slice(0, 6).map((sitter) => (
+            <SitterCard key={sitter.sitterId} sitter={sitter} />
+          ))}
         </Grid>
         <Box display="flex" justifyContent="center" alignItems="center" className={classes.showMoreBox}>
           <Button variant="outlined" onClick={handleShowMore} className={classes.showMoreBtn}>

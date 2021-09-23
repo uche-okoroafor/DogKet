@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '18px',
     width: '300px',
     border: '1px solid #ccc',
+    [theme.breakpoints.down('xs')]: {
+      width: '80vw',
+    },
   },
   searchRoot: {
     color: 'inherit',

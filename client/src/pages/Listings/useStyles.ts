@@ -11,14 +11,20 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   searchBox: {
-    margin: theme.spacing(4, 0),
+    margin: theme.spacing(2, 0),
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+    },
   },
   dateRangeIcon: {
     color: '#aaa',
     marginRight: theme.spacing(1),
   },
+  sitterLists: {
+    maxWidth: '1280px',
+  },
   showMoreBox: {
-    margin: theme.spacing(5, 'auto'),
+    margin: theme.spacing(1, 'auto', 4),
   },
   showMoreBtn: {
     width: '150px',
