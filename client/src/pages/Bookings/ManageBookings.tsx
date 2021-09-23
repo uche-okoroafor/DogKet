@@ -2,9 +2,11 @@ import 'date-fns';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import BookingsTemplate from './BookingsTemplate';
+import { Booking } from '../../interface/Requests';
+
 interface Props {
-  pastBookings: [];
-  currentBookings: [];
+  pastBookings: Booking[];
+  currentBookings: Booking[];
 }
 
 export default function ManageBookings({ pastBookings, currentBookings }: Props): JSX.Element {

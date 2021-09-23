@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  requestId: string;
+  requestId?: string;
 }
 
 export default function EditButton({ requestId }: Props): JSX.Element {
@@ -36,7 +36,6 @@ export default function EditButton({ requestId }: Props): JSX.Element {
   const updateStatus = async (status: string) => {
     console.log(status);
     const response = await updateAccept(status, requestId);
-    // 
     // set state? make another get request?
   };
 

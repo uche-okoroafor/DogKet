@@ -5,9 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { deepOrange } from '@material-ui/core/colors';
 import EditButton from './EditButton';
+import { Booking } from '../../interface/Requests';
 
 interface Props {
-  nextBooking: any;
+  nextBooking: Booking;
 }
 
 export default function NextBookings({ nextBooking }: Props): JSX.Element {
@@ -79,7 +80,7 @@ export default function NextBookings({ nextBooking }: Props): JSX.Element {
                 </Typography>
                 {nextBooking?.startDate ? (
                   <Typography gutterBottom variant="subtitle1" className={pageClasses.nextBookSubHr}>
-                    nextBooking?.startDate:
+                    {nextBooking?.startDate}
                   </Typography>
                 ) : (
                   <Typography gutterBottom variant="subtitle1">

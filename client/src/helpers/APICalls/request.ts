@@ -36,13 +36,13 @@ export const getRequests = async (): Promise<RequestApiData> => {
     const fetchData = await fetch(`/request/list/${timeStamp}`, fetchOptions);
     const { success } = await fetchData.json();
     console.log(success);
-    return success.resModel;
+    return success;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
   }
 };
 
-export const updateAccept = async (status: string, requestId: string): Promise<RequestStatusApiData> => {
+export const updateAccept = async (status: string, requestId: string | undefined): Promise<RequestStatusApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },

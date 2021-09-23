@@ -1,7 +1,17 @@
+
+export interface Booking {
+  ownerId?: string;
+  sitterId?: string;
+  startDate?: Date;
+  endDate?: Date;
+  status?: string; 
+  paid?: boolean;
+  _id?: string;
+}
 export interface RequestApiDataSuccess {
-    nextBooking: any;
-    currentBookings: any[];
-    pastBookings: any[];
+  nextBooking: Booking;
+  currentBookings: Booking[];
+  pastBookings: Booking[];
 }
   
 export interface RequestApiData {

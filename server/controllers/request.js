@@ -9,7 +9,7 @@ const { ObjectId } = mongoose.Types;
 exports.createRequest = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
-    console.log(userId);
+    
     const { sitterId, startDate, endDate } = req.body;
     const requestModel = {
         ownerId: ObjectId(userId), 

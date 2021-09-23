@@ -5,18 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { deepOrange } from '@material-ui/core/colors';
 import EditButton from './EditButton';
-
-interface Booking {
-  ownerId: string;
-  sitterId: string;
-  startDate: string;
-  thumbImg: string;
-  status: string;
-  _id: string;
-}
+import { Booking } from '../../interface/Requests';
 
 interface Props {
-  bookings: any;
+  bookings: Booking[];
   sectionName: string;
 }
 
@@ -93,7 +85,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
     }),
   );
   const pageClasses = pageStyles();
-  console.log(bookings);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm container>
@@ -105,7 +97,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
           </Grid>
           <Grid item>
             {bookings.map((booking: Booking) => (
-              <Paper variant="outlined" className={pageClasses.paperOutlineWrap} key={bookings._id}>
+              <Paper variant="outlined" className={pageClasses.paperOutlineWrap} key={booking._id}>
                 <Grid item container xs={12} sm>
                   <Grid item xs={9}>
                     <Typography gutterBottom variant="subtitle1" className={pageClasses.BookingSubHr}>

@@ -8,67 +8,27 @@ import React from 'react';
 import Calendar from './Calendar';
 import NextBookings from './NextBookings';
 import ManageBookings from './ManageBookings';
-import { RequestApiDataSuccess } from '../../interface/Requests';
+import { RequestApiDataSuccess, RequestApiData } from '../../interface/Requests';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
-  // temp {} to hold data from API request.
-  const request: any = {
-    nextBooking: {
-      userName: 'Norma Byers',
-      date: '5 April 2020, 10-12PM',
-      status: 'ACCEPTED',
-      thumbImg: 'img.png',
-      id: 1,
-    },
-    currentBookings: [
-      {
-        userName: 'Charles Compton',
-        date: '8 April 2020, 7-9PM',
-        status: 'ACCEPTED',
-        thumbImg: 'img.png',
-        id: 2,
-      },
-      {
-        userName: 'Joan Blakeney',
-        date: '30 March 2020, 8-12AM',
-        status: 'DECLINED',
-        thumbImg: 'img.png',
-        id: 3,
-      },
-    ],
-    pastBookings: [
-      {
-        userName: 'Michael Carnahan',
-        date: '21 March 2020, 8-10PM',
-        status: 'ACCEPTED',
-        thumbImg: 'img.png',
-        id: 4,
-      },
-    ],
-  };
 
   const resModel: RequestApiDataSuccess = {
     nextBooking: {},
     currentBookings: [],
     pastBookings: [],
   };
-
-  interface ResModel {
-    nextBooking: any;
-    currentBookings: any[];
-    pastBookings: any[];
-  }
-
-  const [requests, setRequest] = useState<any>(resModel);
-  const fetchRequests = async () => {
-    console.log('h');
-    const resModel = await getRequests();
-    console.log(resModel);
-    if (resModel) setRequest(resModel);
-  };
+  const returnRequestType = (success): RequestApiDataSuccess => success.resModel;
+  const [requests, setRequest] = useState<RequestApiDataSuccess>(resModel);
 
   useEffect(() => {
+    const fetchRequests = async () => {
+      // console.log('h');
+      const success = await getRequests();
+      const resModelSuccess = returnRequestType(success);
+      console.log(success);
+      if (resModelSuccess) setRequest(resModelSuccess);
+    };
     fetchRequests();
   }, []);
 
@@ -83,7 +43,7 @@ export default function Bookings(): JSX.Element {
               <ManageBookings currentBookings={requests.currentBookings} pastBookings={requests.pastBookings} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Calendar />
+              <Calendar currentBookings={requests.currentBookings} />
             </Grid>
           </Grid>
         </div>
