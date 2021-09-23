@@ -42,18 +42,7 @@ const profileSchema = new mongoose.Schema({
   },
   photos: [String],
   gender: String,
-  availability: {
-    type: [String],
-    default: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-  },
+  availability: [String],
 });
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
