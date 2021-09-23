@@ -11,10 +11,9 @@ import { petImageInfo, Sitter } from '../sampleData';
 
 interface Props {
   sitter: Sitter;
-  matches: boolean;
 }
 
-const ProfileDetailCard = ({ sitter, matches }: Props): JSX.Element => {
+const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -57,7 +56,6 @@ const ProfileDetailCard = ({ sitter, matches }: Props): JSX.Element => {
               className={classes.sitterLocation}
             >
               <LocationOnIcon className={classes.locationIcon} />
-              &nbsp;
               <Typography component="h6" variant="h6" align="center" className={classes.sitterLocationText}>
                 {`${sitter.sitterCity}, ${sitter.sitterProvince}`}
               </Typography>
@@ -70,7 +68,7 @@ const ProfileDetailCard = ({ sitter, matches }: Props): JSX.Element => {
             <Typography component="p" variant="body1" className={classes.aboutMeDesc}>
               {sitter.sitterAboutMe}
             </Typography>
-            <ImageList className={classes.imageList} cols={matches ? 2 : 4} rowHeight={125}>
+            <ImageList className={classes.imageList} rowHeight={125}>
               {sitter.sitterPetImages.map((item: petImageInfo) => (
                 <ImageListItem key={item.img}>
                   <img

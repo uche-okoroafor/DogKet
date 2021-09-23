@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Layout from '../../Layout/Layout';
@@ -28,10 +26,6 @@ const ProfileDetail = (): JSX.Element => {
     setSitter(sitter);
   }, [sitterId]);
 
-  const theme = useTheme();
-
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
-
   if (!sitter) return <CircularProgress />;
 
   return (
@@ -44,7 +38,7 @@ const ProfileDetail = (): JSX.Element => {
           justifyContent="space-evenly"
           alignItems="flex-start"
         >
-          <ProfileDetailCard sitter={sitter} matches={matches} />
+          <ProfileDetailCard sitter={sitter} />
           <BookingCard sitter={sitter} />
         </Grid>
       </Box>

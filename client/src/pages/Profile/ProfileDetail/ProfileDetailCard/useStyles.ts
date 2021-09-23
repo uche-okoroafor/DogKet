@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   locationIcon: {
     color: '#f04040',
+    marginRight: theme.spacing(0.5),
   },
   sitterLocationText: {
     color: '#aaa',
@@ -60,9 +61,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
   },
   imageList: {
-    height: '160px',
     [theme.breakpoints.down('sm')]: {
-      height: '370px',
+      height: '365px',
+    },
+    [theme.breakpoints.between('sm', 'md')]: {
+      height: '340px',
+    },
+    [theme.breakpoints.up('md')]: {
+      height: '145px',
+      gridTemplateColumns: 'repeat(4, 1fr) !important',
     },
   },
   imageItem: {
