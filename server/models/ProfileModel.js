@@ -40,6 +40,7 @@ const profileSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 30,
   },
+  photos: [String],
   gender: String,
   availability: {
     type: [String],
