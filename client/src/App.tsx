@@ -25,6 +25,7 @@ function App(): JSX.Element {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/dashboard" component={TempDashboardMain} />
                 <Route exact path="/profile" component={Profile} />
+                <Route path="/profile/:setting" component={Profile} />
                 <Route exact path="/messages" component={ChatSideBanner} />
                 <Route exact path="/my-sitters" component={MySitters} />
                 <Route exact path="/my-jobs" component={MyJobs} />
