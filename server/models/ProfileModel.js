@@ -1,69 +1,59 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+Schema = mongoose.Schema;
+const User = require("./User");
 
 const profileSchema = new mongoose.Schema({
   userId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "user",
     required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
   },
   firstName: {
     type: String,
     required: true,
+    minlength: 3,
+    maxlength: 30,
   },
   lastName: {
     type: String,
     required: true,
+    minlength: 3,
+    maxlength: 30,
   },
-  email: {
+  address: {
     type: String,
-    required: true,
-    unique: true,
+    minlength: 3,
+    maxlength: 200,
   },
-  password: {
+  phone: {
     type: String,
-    required: true,
+    minlength: 5,
+    maxlength: 20,
   },
-  register_date: {
-    type: Date,
-    default: Date.now,
+  description: {
+    type: String,
+    minlength: 3,
+    maxlength: 1000,
   },
-  admin: {
-    type: Boolean,
-    default: false,
+  birth: {
+    type: String,
+    minlength: 3,
+    maxlength: 30,
   },
-  address: String,
-  city: String,
-  phone: String,
-  profileImage: String,
-  photos: [],
-  jop: String,
-  description: String,
-  birth: String,
+  photos: [String],
   gender: String,
-  availability: Boolean,
-  rating: Number,
-  salary: Number,
-  lastSeen: String,
-  hiring: Boolean,
-  paymentToken: String,
-});
-
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
-
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  availability: {
+    type: [String],
+    default: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+  },
 });
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
