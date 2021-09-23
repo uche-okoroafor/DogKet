@@ -4,7 +4,6 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { DateRange } from '@mui/lab/DateRangePicker';
 import Layout from '../../Layout/Layout';
 import { sampleData } from './sampleData';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -30,7 +29,7 @@ const ProfileDetail = (): JSX.Element => {
   }, [sitterId]);
 
   const theme = useTheme();
-  const [dateRange, setDateRange] = useState<DateRange<Date>>([null, null]);
+
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (!sitter) return <CircularProgress />;
@@ -46,7 +45,7 @@ const ProfileDetail = (): JSX.Element => {
           alignItems="flex-start"
         >
           <ProfileDetailCard sitter={sitter} matches={matches} />
-          <BookingCard sitter={sitter} dateRange={dateRange} setDateRange={setDateRange} />
+          <BookingCard sitter={sitter} />
         </Grid>
       </Box>
     </Layout>
