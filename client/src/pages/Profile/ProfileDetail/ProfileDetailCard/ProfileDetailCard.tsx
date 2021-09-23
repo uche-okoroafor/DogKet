@@ -18,7 +18,7 @@ const ProfileDetailCard = ({ sitter, matches }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} sm={7} md={7} lg={6} xl={5}>
+    <Grid item xs={12} sm={7} md={7} lg={6} xl={5} className={classes.root}>
       <Box
         width="100%"
         height="100%"

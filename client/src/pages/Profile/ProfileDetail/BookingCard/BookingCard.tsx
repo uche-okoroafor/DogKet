@@ -28,7 +28,7 @@ const BookingCard = ({ sitter }: Props): JSX.Element => {
   };
 
   return (
-    <Grid item xs={12} sm={5} md={4} lg={4} xl={3}>
+    <Grid item xs={12} sm={5} md={4} lg={4} xl={3} className={classes.root}>
       <Box
         width="100%"
         height="100%"

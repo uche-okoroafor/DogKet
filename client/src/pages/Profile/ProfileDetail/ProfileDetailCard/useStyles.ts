@@ -1,6 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.down('xs')]: {
+      '& .MuiPaper-rounded': {
+        borderRadius: 0,
+      },
+    },
+  },
   profileDetailBox: {
     [theme.breakpoints.up('sm')]: {
       padding: theme.spacing(3),
