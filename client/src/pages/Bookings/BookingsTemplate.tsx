@@ -6,13 +6,15 @@ import Typography from '@material-ui/core/Typography';
 import { deepOrange } from '@material-ui/core/colors';
 import EditButton from './EditButton';
 import { Booking } from '../../interface/Requests';
+import TimeDisplay from './TimeDisplay';
 
 interface Props {
   bookings: Booking[];
   sectionName: string;
+  updateStatusState: (id: string, status: string, sectionName: string) => void;
 }
 
-export default function ManageBookings({ bookings, sectionName }: Props): JSX.Element {
+export default function ManageBookings({ bookings, sectionName, updateStatusState }: Props): JSX.Element {
   const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
       paper: {
@@ -41,6 +43,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
       },
       sectionWrapper: {
         marginBottom: '-10px',
+        textTransform: 'uppercase',
       },
       BookingSubHr: {
         fontWeight: 600,
@@ -55,6 +58,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
       nameWrapper: {
         display: 'flex',
         marginBottom: '15px',
+        marginTop: '15px',
       },
       tempImg: {
         borderRadius: '50%',
@@ -100,9 +104,7 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
               <Paper variant="outlined" className={pageClasses.paperOutlineWrap} key={booking._id}>
                 <Grid item container xs={12} sm>
                   <Grid item xs={9}>
-                    <Typography gutterBottom variant="subtitle1" className={pageClasses.BookingSubHr}>
-                      {booking.startDate}
-                    </Typography>
+                    <TimeDisplay endTime={booking.startDate} startTime={booking.startDate} />
                     <Typography variant="body2" className={pageClasses.nameWrapper}>
                       {/* TEMP IMG tags */}
                       {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
@@ -116,7 +118,11 @@ export default function ManageBookings({ bookings, sectionName }: Props): JSX.El
                     </Typography>
                   </Grid>
                   <Grid item xs={1} className={pageClasses.iconWrapper}>
-                    <EditButton requestId={booking._id} />
+                    <EditButton
+                      sectionName={sectionName}
+                      updateStatusState={updateStatusState}
+                      requestId={booking._id}
+                    />
                   </Grid>
                 </Grid>
               </Paper>

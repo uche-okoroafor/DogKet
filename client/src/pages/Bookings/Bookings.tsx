@@ -8,25 +8,38 @@ import React from 'react';
 import Calendar from './Calendar';
 import NextBookings from './NextBookings';
 import ManageBookings from './ManageBookings';
-import { RequestApiDataSuccess, RequestApiData } from '../../interface/Requests';
+import { RequestApiDataSuccess } from '../../interface/Requests';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
-
   const resModel: RequestApiDataSuccess = {
     nextBooking: {},
     currentBookings: [],
     pastBookings: [],
   };
-  const returnRequestType = (success): RequestApiDataSuccess => success.resModel;
   const [requests, setRequest] = useState<RequestApiDataSuccess>(resModel);
+  const returnRequestType = (success): RequestApiDataSuccess => success.resModel;
+
+  const updateStatusState = (id: string, status: string, sectionName: string) => {
+    const requestCopy = { ...requests };
+    if (id == requestCopy.nextBooking?._id) {
+      requestCopy.nextBooking.status = status;
+      setRequest(requestCopy);
+      return;
+    }
+
+    const index = requestCopy[sectionName].findIndex((booking) => booking._id === id);
+    if (index >= 0) {
+      requestCopy[sectionName][index].status = status;
+      setRequest(requestCopy);
+      return;
+    }
+  };
 
   useEffect(() => {
     const fetchRequests = async () => {
-      // console.log('h');
       const success = await getRequests();
       const resModelSuccess = returnRequestType(success);
-      console.log(success);
       if (resModelSuccess) setRequest(resModelSuccess);
     };
     fetchRequests();
@@ -39,8 +52,12 @@ export default function Bookings(): JSX.Element {
         <div className={`${classes.root} ${classes.mt}`}>
           <Grid container spacing={10}>
             <Grid item xs={12} sm={6} spacing={10}>
-              <NextBookings nextBooking={requests.nextBooking} />
-              <ManageBookings currentBookings={requests.currentBookings} pastBookings={requests.pastBookings} />
+              <NextBookings nextBooking={requests.nextBooking} updateStatusState={updateStatusState} />
+              <ManageBookings
+                currentBookings={requests.currentBookings}
+                pastBookings={requests.pastBookings}
+                updateStatusState={updateStatusState}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Calendar currentBookings={requests.currentBookings} />

@@ -1,17 +1,18 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-// import Avatar from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import { deepOrange } from '@material-ui/core/colors';
 import EditButton from './EditButton';
 import { Booking } from '../../interface/Requests';
+import TimeDisplay from './TimeDisplay';
 
 interface Props {
   nextBooking: Booking;
+  updateStatusState: (id: string, status: string, sectionName: string) => void;
 }
 
-export default function NextBookings({ nextBooking }: Props): JSX.Element {
+export default function NextBookings({ nextBooking, updateStatusState }: Props): JSX.Element {
   const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
       paper: {
@@ -79,9 +80,7 @@ export default function NextBookings({ nextBooking }: Props): JSX.Element {
                   YOUR NEXT BOOKING
                 </Typography>
                 {nextBooking?.startDate ? (
-                  <Typography gutterBottom variant="subtitle1" className={pageClasses.nextBookSubHr}>
-                    {nextBooking?.startDate}
-                  </Typography>
+                  <TimeDisplay endTime={nextBooking.startDate} startTime={nextBooking.startDate} />
                 ) : (
                   <Typography gutterBottom variant="subtitle1">
                     No Upcoming booking
@@ -98,7 +97,11 @@ export default function NextBookings({ nextBooking }: Props): JSX.Element {
               </Grid>
             </Grid>
             <Grid item>
-              <EditButton requestId={nextBooking?._id} />
+              <EditButton
+                sectionName={'nextBooking'}
+                updateStatusState={updateStatusState}
+                requestId={nextBooking?._id}
+              />
             </Grid>
           </Grid>
         </Grid>

@@ -3,7 +3,9 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { updateAccept } from '../../helpers/APICalls/request';
+import { updateStatus } from '../../helpers/APICalls/request';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,14 +16,20 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '15px',
       color: 'rgb(209,209,209)',
     },
+    popoverWrapper: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   }),
 );
 
 interface Props {
   requestId?: string;
+  updateStatusState: (id: string, status: string, sectionName: string) => void;
+  sectionName: string;
 }
 
-export default function EditButton({ requestId }: Props): JSX.Element {
+export default function EditButton({ requestId, updateStatusState, sectionName }: Props): JSX.Element {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -33,10 +41,15 @@ export default function EditButton({ requestId }: Props): JSX.Element {
     setAnchorEl(null);
   };
 
-  const updateStatus = async (status: string) => {
-    console.log(status);
-    const response = await updateAccept(status, requestId);
-    // set state? make another get request?
+  const onClickHandler = async (status: string) => {
+    const { success } = await updateStatus(status, requestId);
+    if (success) {
+      const id = success['request']._id;
+      if (sectionName === 'nextBooking') updateStatusState(id, status, 'nextBooking');
+      else if (sectionName == 'current bookings') updateStatusState(id, status, 'currentBookings');
+      else if (sectionName == 'past bookings') updateStatusState(id, status, 'pastBookings');
+      handleClose();
+    }
   };
 
   const open = Boolean(anchorEl);
@@ -62,12 +75,10 @@ export default function EditButton({ requestId }: Props): JSX.Element {
         }}
       >
         {/* I need to have access to Profile user model to know if user is a sitter to only show this to sitters */}
-        <Typography className={classes.typography} onClick={() => updateStatus('accepted')}>
-          Accept
-        </Typography>
-        <Typography className={classes.typography} onClick={() => updateStatus('declined')}>
-          Decline
-        </Typography>
+        <Box className={classes.popoverWrapper}>
+          <Button onClick={() => onClickHandler('accepted')}>Accept</Button>
+          <Button onClick={() => onClickHandler('declined')}>Decline</Button>
+        </Box>
       </Popover>
     </div>
   );

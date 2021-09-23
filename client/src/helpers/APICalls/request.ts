@@ -42,7 +42,7 @@ export const getRequests = async (): Promise<RequestApiData> => {
   }
 };
 
-export const updateAccept = async (status: string, requestId: string | undefined): Promise<RequestStatusApiData> => {
+export const updateStatus = async (status: string, requestId: string | undefined): Promise<RequestStatusApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },

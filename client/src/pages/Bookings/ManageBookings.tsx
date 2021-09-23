@@ -7,9 +7,10 @@ import { Booking } from '../../interface/Requests';
 interface Props {
   pastBookings: Booking[];
   currentBookings: Booking[];
+  updateStatusState: (id: string, status: string, sectionName: string) => void;
 }
 
-export default function ManageBookings({ pastBookings, currentBookings }: Props): JSX.Element {
+export default function ManageBookings({ pastBookings, currentBookings, updateStatusState }: Props): JSX.Element {
   const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
       paper: {
@@ -27,8 +28,12 @@ export default function ManageBookings({ pastBookings, currentBookings }: Props)
   return (
     <div className={pageClasses.text}>
       <Paper className={pageClasses.paper}>
-        <BookingsTemplate sectionName={'CURRENT BOOKINGS'} bookings={currentBookings} />
-        <BookingsTemplate sectionName={'PAST BOOKINGS'} bookings={pastBookings} />
+        <BookingsTemplate
+          updateStatusState={updateStatusState}
+          sectionName={'current bookings'}
+          bookings={currentBookings}
+        />
+        <BookingsTemplate updateStatusState={updateStatusState} sectionName={'past bookings'} bookings={pastBookings} />
       </Paper>
     </div>
   );
