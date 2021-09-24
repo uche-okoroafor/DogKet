@@ -1,4 +1,5 @@
 const Profile = require("../models/ProfileModel");
+const User = require("../models/User");
 const mongoose = require("mongoose");
 
 const toObjectId = mongoose.Types.ObjectId;
@@ -9,16 +10,33 @@ exports.createProfile = async (req, res, next) => {
   try {
     const { firstName, lasttName, phone, address, gender, description } =
       req.body;
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(401).json({ message: "Not Authorized" });
+    }
+
+    if (
+      firstName === undefined ||
+      lasttName === undefined ||
+      phone === undefined ||
+      address === undefined ||
+      gender === undefined ||
+      description === undefined
+    ) {
+      res.status(401).json({ message: "Complete the form please" });
+    }
     const data = {
-      userId: toObjectId(req.params.id) || "",
-      firstName: firstName.trim().toString() || "",
-      lasttName: lasttName.trim().toString() || "",
-      phone: phone.trim().toString() || "",
-      address: address.trim().toString() || "",
-      gender: gender.trim().toString() || "",
-      description: description.trim().toString() || "",
+      userId: toObjectId(userId),
+      firstName: firstName.trim().toString(),
+      lasttName: lasttName.trim().toString(),
+      phone: phone.trim().toString(),
+      address: address.trim().toString(),
+      gender: gender.trim().toString(),
+      description: description.trim().toString(),
     };
-    const newProfile = await new Profile(data);
+    const newProfile = new Profile(data);
     const profile = await newProfile.save();
     res.status(201).json(profile);
   } catch (err) {
@@ -32,27 +50,49 @@ exports.updateProfile = async (req, res, next) => {
   try {
     const { firstName, lasttName, phone, address, gender, description } =
       req.body;
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(401).json({ message: "Not Authorized" });
+    }
+
+    if (
+      firstName === undefined ||
+      lasttName === undefined ||
+      phone === undefined ||
+      address === undefined ||
+      gender === undefined ||
+      description === undefined
+    ) {
+      res.status(401).json({ message: "Complete the form please" });
+    }
     const data = {
-      userId: toObjectId(req.params.id) || "",
-      firstName: firstName.trim().toString() || "",
-      lasttName: lasttName.trim().toString() || "",
-      phone: phone.trim().toString() || "",
-      address: address.trim().toString() || "",
-      gender: gender.trim().toString() || "",
-      description: description.trim().toString() || "",
+      userId: toObjectId(userId),
+      firstName: firstName.trim().toString(),
+      lasttName: lasttName.trim().toString(),
+      phone: phone.trim().toString(),
+      address: address.trim().toString(),
+      gender: gender.trim().toString(),
+      description: description.trim().toString(),
     };
-    await Profile.findByIdAndUpdate(req.params.id, data);
+    await Profile.findOneAndUpdate({ userId }, data);
     res.status(200).json({ message: " your profile is updated" });
   } catch (err) {
     next(err);
   }
 };
 
-// find a profile using its id
+// find a profile using user id
 
 exports.findProfile = async (req, res, next) => {
   try {
-    const profile = await Profile.findById(req.params.id);
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(401).json({ message: "Not Authorized" });
+    }
+    const profile = await Profile.findOne({ userId });
     res.status(200).json(profile);
   } catch (err) {
     next(err);
