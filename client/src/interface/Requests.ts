@@ -27,4 +27,3 @@ export interface RequestStatusApiData {
   error?: { message: string };
   success?: RequestApiDataSuccess;
 }
-  

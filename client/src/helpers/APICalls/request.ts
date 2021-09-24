@@ -18,12 +18,6 @@ export const createRequest = async (sitterId: any, startDate: number, endDate: n
   }
 };
 
-// const d = new Date();
-// const lastMonth = d.setMonth(d.getMonth() +1);
-// const lastWeek = Date.now() + 604800000;
-// createRequest('6142950d808eba39ecf8532e', lastWeek, lastWeek);
-// createRequest('6142950d808eba39ecf8532e', lastMonth, lastMonth);
-// console.log('new');
 export const getRequests = async (): Promise<RequestApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
@@ -59,6 +53,3 @@ export const updateStatus = async (status: string, requestId: string | undefined
     return { error: { message: 'Unable to connect to server. Please try again' } };
   }
 };
-// createRequest();
-
-// export default register;
