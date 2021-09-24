@@ -7,7 +7,7 @@ export const editButtonStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       fontSize: '15px',
-      color: 'rgb(209,209,209)',
+      color: theme.palette.text.secondary,
     },
   }),
 );

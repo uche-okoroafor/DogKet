@@ -23,7 +23,7 @@ export const bookingStyles = makeStyles((theme: Theme) =>
     sectionHr: {
       fontWeight: 900,
       fontSize: '9px',
-      color: 'black',
+      color: theme.palette.text.primary,
       marginTop: '8px',
       textTransform: 'uppercase',
     },
@@ -33,7 +33,7 @@ export const bookingStyles = makeStyles((theme: Theme) =>
     BookingSubHr: {
       fontWeight: 600,
       fontSize: '12px',
-      color: 'black',
+      color: theme.palette.text.primary,
       margin: '10px 0px',
     },
     bookingNameHr: {
@@ -48,7 +48,7 @@ export const bookingStyles = makeStyles((theme: Theme) =>
       borderRadius: '50%',
       width: '20px',
       marginRight: '10px',
-      backgroundColor: 'orange',
+      backgroundColor: theme.palette.background.default,
     },
     paperOutlineWrap: {
       marginBottom: '7px',
@@ -62,12 +62,11 @@ export const bookingStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       fontSize: '8px',
-      color: 'rgb(209,209,209)',
       fontWeigth: '900',
     },
     statusTxt: {
       fontSize: '10px',
-      color: 'rgb(209,209,209)',
+      color: theme.palette.text.secondary,
       fontWeight: 900,
     },
   }),

@@ -1,7 +1,6 @@
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-// import Avatar from '@material-ui/core/ButtonBase';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import EditButton from './EditButton';
 import { nextBookingClasses } from './BookingStyles/NextBooking';
@@ -11,18 +10,17 @@ interface Props {
 }
 
 export default function NextBookings({ nextBooking }: Props): JSX.Element {
-
   const pageClasses = nextBookingClasses();
 
   return (
-    <div className={pageClasses.wrapper}>
+    <Box className={pageClasses.wrapper}>
       <Paper className={pageClasses.paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography variant="body2" gutterBottom className={pageClasses.sectionHr}>
-                  YOUR NEXT BOOKING
+                  your next booking
                 </Typography>
                 <Typography gutterBottom variant="subtitle1" className={pageClasses.nextBookSubHr}>
                   {nextBooking.date}
@@ -43,6 +41,6 @@ export default function NextBookings({ nextBooking }: Props): JSX.Element {
           </Grid>
         </Grid>
       </Paper>
-    </div>
+    </Box>
   );
 }

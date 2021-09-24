@@ -1,4 +1,3 @@
-import 'date-fns';
 import { bookingStyles } from './BookingStyles/BookingsTemplate';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
