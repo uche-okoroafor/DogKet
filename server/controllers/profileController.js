@@ -62,7 +62,7 @@ exports.findProfile = async (req, res, next) => {
 // Get All profiles
 exports.getAllProfiles = async (req, res, next) => {
   try {
-    let profiles = await Profile.find();
+    const profiles = await Profile.find();
     res.status(200).json(profiles);
   } catch (err) {
     next(err);
