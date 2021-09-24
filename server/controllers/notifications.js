@@ -16,7 +16,7 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
         date: new Date(date),
         type,
         title,
-        description
+        description,
     };
     
     const notification = await Notification.create(notificatonModel); 
@@ -34,12 +34,12 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
 exports.notificationList = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const { unread } = req.query; // query = {unread:"true"}
+    const { unread } = req.query;
     
     const options = { userId: ObjectId(userId) };
     if (unread == 'true') options.read = true;
   
-    const notifications = await Notification.find( options );
+    const notifications = await Notification.find(options);
     res.status(200).json({
       success: { notifications }
     });
