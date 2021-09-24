@@ -5,7 +5,6 @@ import Layout from '../Layout/Layout';
 import useStyles from './useStyles';
 
 const TempDashboardMain = (): JSX.Element => {
-  // TODO: this will be used in the future
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const classes = useStyles();
 

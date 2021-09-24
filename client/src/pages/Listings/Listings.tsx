@@ -29,7 +29,6 @@ const Listings = (): JSX.Element => {
     setDateRange(newDateRange);
   };
 
-  // TODO: implement this feature later in the future
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleShowMore = () => {};
 
