@@ -1,8 +1,8 @@
-import 'date-fns';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import BookingsTemplate from './BookingsTemplate';
 import { Booking } from '../../interface/Requests';
+import { bookingStyles } from './BookingStyles/BookingsTemplate';
 
 interface Props {
   pastBookings: Booking[];
@@ -11,22 +11,10 @@ interface Props {
 }
 
 export default function ManageBookings({ pastBookings, currentBookings, updateStatusState }: Props): JSX.Element {
-  const pageStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      paper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 500,
-      },
-      text: {
-        textAlign: 'left',
-      },
-    }),
-  );
-  const pageClasses = pageStyles();
+  const pageClasses = bookingStyles();
 
   return (
-    <div className={pageClasses.text}>
+    <Box className={pageClasses.text}>
       <Paper className={pageClasses.paper}>
         <BookingsTemplate
           updateStatusState={updateStatusState}
@@ -35,6 +23,6 @@ export default function ManageBookings({ pastBookings, currentBookings, updateSt
         />
         <BookingsTemplate updateStatusState={updateStatusState} sectionName={'past bookings'} bookings={pastBookings} />
       </Paper>
-    </div>
+    </Box>
   );
 }

@@ -23,7 +23,7 @@ function App(): JSX.Element {
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
-                <Route exact path="/mysitter" component={Bookings} />
+                <Route exact path="/my-sitter" component={Bookings} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>

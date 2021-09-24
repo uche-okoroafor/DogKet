@@ -1,6 +1,7 @@
 import 'date-fns';
 import useStyles from './useStyles';
 import MultipleDatesPicker from '@randex/material-ui-multiple-dates-picker';
+import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 
 interface Props {
@@ -11,7 +12,7 @@ export default function Calendar({ currentBookings }: Props): JSX.Element {
   const selectedDates = currentBookings.map((booking) => new Date(booking.startDate));
 
   return (
-    <div className={'calendarWrapper'}>
+    <Box className={'calendarWrapper'}>
       <Paper className={classes.paper}>
         <MultipleDatesPicker
           readOnly={true}
@@ -20,6 +21,6 @@ export default function Calendar({ currentBookings }: Props): JSX.Element {
           onSubmit={(dates: any) => console.log('selected dates', dates)}
         />
       </Paper>
-    </div>
+    </Box>
   );
 }
