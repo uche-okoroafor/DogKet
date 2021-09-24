@@ -18,7 +18,6 @@ const BookingCard = ({ sitter }: Props): JSX.Element => {
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
 
   const handleSubmit = (
-    // TODO: dateRange will be used in the future
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { dateRange }: { dateRange: DateRange<Date> },
     { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
