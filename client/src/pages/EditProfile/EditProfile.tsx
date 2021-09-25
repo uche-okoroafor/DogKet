@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   CssBaseline,
@@ -28,8 +28,24 @@ const validationSchema = yup.object({
 
 export default function EditProfile(): JSX.Element {
   const classes = useStyles();
-
   const { updateSnackBarMessage } = useSnackBar();
+
+  const [fetchedProfile, setFetchedProfile] = useState({
+    firstName: '',
+    lastName: '',
+    gender: 'male',
+    birth: '',
+    email: '',
+    phone: '',
+    address: '',
+    description: '',
+  });
+
+  useEffect(() => {
+    fetch(`/profile`)
+      .then((response) => response.json())
+      .then((data) => setFetchedProfile(data));
+  }, []);
 
   const handleSubmit = (
     { firstName, lastName, email, phone, address, gender, birth, description }: IProfile,
@@ -50,16 +66,7 @@ export default function EditProfile(): JSX.Element {
   const [block, setBlock] = useState('none');
 
   const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      gender: 'male',
-      birth: '',
-      email: '',
-      phone: '',
-      address: '',
-      description: '',
-    },
+    initialValues: fetchedProfile,
     onSubmit: handleSubmit,
     validationSchema: validationSchema,
   });
