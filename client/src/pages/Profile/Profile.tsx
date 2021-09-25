@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import ProfileSideBar from './ProfileSideBar/ProfileSideBar';
-import useStyles from './useStyles';
 import Layout from '../Layout/Layout';
 import TempProfileMain from './TempProfileMain/TempProfileMain';
 import EditProfile from './EditProfile/EditProfile';
@@ -9,6 +8,7 @@ import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 import Payment from './Payment/Payment';
 import Security from './Security/Security';
 import Settings from './Settings/Settings';
+import useStyles from './useStyles';
 
 const Profile = (): JSX.Element => {
   const classes = useStyles();
