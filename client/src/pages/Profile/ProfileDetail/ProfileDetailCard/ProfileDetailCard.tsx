@@ -1,11 +1,5 @@
-import Grid from '@mui/material/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import { Grid, Box, Avatar, Typography, Paper, ImageList, ImageListItem } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Box from '@mui/material/Box';
 import useStyles from './useStyles';
 import { petImageInfo, Sitter } from '../sampleData';
 
@@ -45,7 +39,7 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
             <Typography component="h5" variant="h5" align="center" className={classes.sitterName}>
               {`${sitter.sitterFirstName} ${sitter.sitterLastName}`}
             </Typography>
-            <Typography component="h6" variant="h6" align="center" className={classes.sitterShortDesc}>
+            <Typography component="p" variant="body1" align="center" className={classes.sitterShortDesc}>
               {sitter.sitterShortDesc}
             </Typography>
             <Box
@@ -56,13 +50,13 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
               className={classes.sitterLocation}
             >
               <LocationOnIcon className={classes.locationIcon} />
-              <Typography component="h6" variant="h6" align="center" className={classes.sitterLocationText}>
+              <Typography component="p" variant="body1" align="center" className={classes.sitterLocationText}>
                 {`${sitter.sitterCity}, ${sitter.sitterProvince}`}
               </Typography>
             </Box>
           </Box>
           <Box className={classes.profileDetailBottom}>
-            <Typography component="h5" variant="h5" className={classes.aboutMeTitle}>
+            <Typography component="h6" variant="h6" className={classes.aboutMeTitle}>
               About me
             </Typography>
             <Typography component="p" variant="body1" className={classes.aboutMeDesc}>

@@ -56,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   errorHelperText: {
-    color: 'red',
+    color: 'red !important',
+    margin: '0 0 8px !important',
   },
 }));
 

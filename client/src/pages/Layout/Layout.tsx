@@ -1,13 +1,9 @@
-import Grid from '@material-ui/core/Grid';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import useStyles from './useStyles';
+import { Grid, CssBaseline, CircularProgress, Box } from '@mui/material';
 import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useEffect } from 'react';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import useStyles from './useStyles';
 
 interface Props {
   children?: React.ReactNode;

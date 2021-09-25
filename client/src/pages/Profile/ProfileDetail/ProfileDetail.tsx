@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { Grid, Box, CircularProgress } from '@mui/material';
 import Layout from '../../Layout/Layout';
-import { sampleData } from './sampleData';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import ProfileDetailCard from './ProfileDetailCard/ProfileDetailCard';
 import BookingCard from './BookingCard/BookingCard';
-import { Sitter } from './sampleData';
+import { sampleData, Sitter } from './sampleData';
 import useStyles from './useStyles';
 
 const ProfileDetail = (): JSX.Element => {

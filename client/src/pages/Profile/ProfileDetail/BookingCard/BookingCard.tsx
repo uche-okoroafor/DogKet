@@ -1,9 +1,4 @@
-import { useState } from 'react';
-import Grid from '@mui/material/Grid';
-import Paper from '@material-ui/core/Paper';
-import Box from '@mui/material/Box';
-import { DateRange } from '@mui/lab/DateRangePicker';
-import { FormikHelpers } from 'formik';
+import { Grid, Box, Paper } from '@mui/material';
 import BookingForm from './BookingForm/BookingForm';
 import { Sitter } from '../sampleData';
 import useStyles from './useStyles';
@@ -14,18 +9,6 @@ interface Props {
 
 const BookingCard = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
-
-  const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
-
-  const handleSubmit = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    { dateRange }: { dateRange: DateRange<Date> },
-    { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
-  ) => {
-    setSubmitting(false);
-    setDateRange([null, null]);
-    resetForm({ values: { dateRange: [null, null] } });
-  };
 
   return (
     <Grid item xs={12} sm={5} md={4} lg={4} xl={3} className={classes.root}>
@@ -46,7 +29,7 @@ const BookingCard = ({ sitter }: Props): JSX.Element => {
             alignItems="center"
             className={classes.bookingContainer}
           >
-            <BookingForm sitter={sitter} dateRange={dateRange} setDateRange={setDateRange} onSubmit={handleSubmit} />
+            <BookingForm sitter={sitter} />
           </Box>
         </Paper>
       </Box>

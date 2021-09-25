@@ -1,33 +1,16 @@
-import { Dispatch, SetStateAction } from 'react';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Rating from '@mui/material/Rating';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import Box from '@mui/material/Box';
-import MobileDateRangePicker from '@mui/lab/MobileDateRangePicker';
-import DateRangeIcon from '@mui/icons-material/DateRange';
+import { useState } from 'react';
+import { Box, Typography, Button, Rating, TextField, CircularProgress, FormHelperText } from '@mui/material';
+import { TimePicker, LocalizationProvider, MobileDateRangePicker } from '@mui/lab';
 import { DateRange } from '@mui/lab/DateRangePicker';
-import TimePicker from '@mui/lab/TimePicker';
-import { Sitter } from '../../sampleData';
-import useStyles from './useStyles';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
-import { CircularProgress, FormHelperText } from '@material-ui/core';
+import { Sitter } from '../../sampleData';
+import useStyles from './useStyles';
 
 interface Props {
   sitter: Sitter;
-  dateRange: DateRange<Date>;
-  setDateRange: Dispatch<SetStateAction<DateRange<Date>>>;
-  onSubmit: (
-    { dateRange }: { dateRange: DateRange<Date | null> },
-    {
-      setSubmitting,
-    }: FormikHelpers<{
-      dateRange: DateRange<Date | null>;
-    }>,
-  ) => void;
 }
 
 const formSchema: { dateRange: DateRange<Date | null> } = { dateRange: [null, null] };
@@ -36,8 +19,28 @@ const validationSchema = Yup.object().shape({
   dateRange: Yup.array().of(Yup.date().typeError('Wrong Date Type').required('Required').nullable()),
 });
 
-const BookingForm = ({ sitter, dateRange, setDateRange, onSubmit }: Props): JSX.Element => {
+const BookingForm = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
+
+  const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
+
+  const handleSubmit = (
+    // 'dateRange' will be used when we send 'submit request' to backend
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { dateRange }: { dateRange: DateRange<Date> },
+    { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
+  ) => {
+    // 'setSubmitting' will be used when we send 'submit request' to backend
+    // I guess it's related to 'isSubmitting' and 'onSubmit' in Formik
+    setSubmitting(false);
+    setDateRange([null, null]);
+    // resetForm is used in the current version. Assume you submit the form with valid date range inputs successfully.
+    // After that, when you try to submit "again" with empty input fields,
+    // the form won't show error messages without 'resetForm()' (it should display error messages on UI)
+    // and it will submit the previous date range inputs that you already submitted successfully
+    // (it shouldn't submit because you try to submit with invalid inputs)
+    resetForm({ values: { dateRange: [null, null] } });
+  };
 
   const handleChange = (newDateRange: DateRange<Date>) => {
     setDateRange(newDateRange);
@@ -52,7 +55,12 @@ const BookingForm = ({ sitter, dateRange, setDateRange, onSubmit }: Props): JSX.
   };
 
   return (
-    <Formik initialValues={formSchema} validationSchema={validationSchema} onSubmit={onSubmit} validate={onValidate}>
+    <Formik
+      initialValues={formSchema}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+      validate={onValidate}
+    >
       {({ handleSubmit, values, touched, errors, isSubmitting }) => (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <MobileDateRangePicker

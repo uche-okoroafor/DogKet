@@ -20,22 +20,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
   },
   avatar: {
-    width: '150px',
-    height: '150px',
+    width: '150px !important',
+    height: '150px !important',
     border: '5px solid #ffffff',
-    position: 'absolute',
-    top: '120px',
-    left: '50%',
-    marginLeft: '-75px',
+    margin: theme.spacing(-11.5, 'auto', 0),
   },
   sitterName: {
-    padding: theme.spacing(10, 0, 1),
-    fontWeight: 700,
+    padding: theme.spacing(1, 0),
   },
   sitterShortDesc: {
     color: '#aaa',
-    fontSize: '14px',
-    fontWeight: 700,
   },
   sitterLocation: {
     margin: '0 auto',
@@ -47,14 +41,11 @@ const useStyles = makeStyles((theme) => ({
   },
   sitterLocationText: {
     color: '#aaa',
-    fontSize: '14px',
-    fontWeight: 700,
   },
   profileDetailBottom: {
     padding: theme.spacing(2, 4),
   },
   aboutMeTitle: {
-    fontWeight: 700,
     paddingBottom: theme.spacing(2),
   },
   aboutMeDesc: {
