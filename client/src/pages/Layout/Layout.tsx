@@ -1,13 +1,9 @@
-import Grid from '@material-ui/core/Grid';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import useStyles from './useStyles';
+import { Grid, CssBaseline, CircularProgress, Box } from '@mui/material';
 import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useEffect } from 'react';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import useStyles from './useStyles';
 
 interface Props {
   children?: React.ReactNode;
@@ -28,7 +24,7 @@ export default function Layout({ children }: Props): JSX.Element {
   return (
     <Grid container component="main" className={`${classes.root} ${classes.layout}`}>
       <CssBaseline />
-      <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
+      <Grid item xs={12} sm={12} md={12}>
         <Box
           display="flex"
           alignItems="flex-start"
@@ -37,7 +33,7 @@ export default function Layout({ children }: Props): JSX.Element {
           minHeight="100vh"
           className={classes.authWrapper}
         >
-          <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/profile" />
+          <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/listings" />
           <Box
             className={classes.layoutOuterContainer}
             width="100%"
@@ -46,10 +42,8 @@ export default function Layout({ children }: Props): JSX.Element {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid className={classes.layoutContainer} container elevation={6} square component={Paper}>
-              <Grid item xs>
-                {children}
-              </Grid>
+            <Grid className={classes.layoutContainer} container>
+              {children}
             </Grid>
           </Box>
         </Box>

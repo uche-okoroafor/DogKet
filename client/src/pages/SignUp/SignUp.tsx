@@ -50,7 +50,7 @@ export default function Register(): JSX.Element {
           minHeight="100vh"
           className={classes.authWrapper}
         >
-          <AuthHeader asideText="Become a sitter" linkTo="/login" />
+          <AuthHeader asideText="Become a sitter" linkTo="/listings" />
           <Box className={classes.signupOuterContainer} width="100%" maxWidth={600} p={3} alignSelf="center">
             <Grid className={classes.signupContainer} container elevation={6} component={Paper}>
               <Grid item xs>

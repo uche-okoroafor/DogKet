@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
       padding: '2rem 2rem',
       width: '300px',
     },
+    backgroundColor: '#fff',
   },
   userPanel: {
     display: 'flex',

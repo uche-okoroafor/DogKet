@@ -27,7 +27,7 @@ const ChatSideBanner = ({}: Props): JSX.Element => {
 
   return (
     <Layout>
-      <Grid>
+      <Grid item xs>
         <Box
           height="calc(100vh - 90px)"
           width="240px"

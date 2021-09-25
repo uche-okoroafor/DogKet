@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
-  // TODO: this useStyles will be used in the future
+  outerContainer: {
+    backgroundColor: '#eee',
+  },
 }));
 
 export default useStyles;

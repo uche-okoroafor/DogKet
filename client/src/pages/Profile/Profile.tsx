@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Box, Typography } from '@mui/material';
 import ProfileSideBar from './ProfileSideBar/ProfileSideBar';
 import useStyles from './useStyles';
 import Layout from '../Layout/Layout';

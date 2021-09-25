@@ -10,7 +10,7 @@ import useStyles from './useStyles';
 import DemoUserLogin from '../DemoUserLogin/DemoUserLogin';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 
-type LinkType = '/login' | '/signup' | '/my-jobs' | '/my-sitters' | '/profile' | '/messages';
+type LinkType = '/login' | '/signup' | '/my-jobs' | '/my-sitters' | '/profile' | '/messages' | '/listings';
 
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();
@@ -61,6 +61,12 @@ const AuthMenu = (): JSX.Element => {
       >
         {loggedInUser ? (
           <Box>
+            <MenuItem
+              className={`${classes.menuItem} ${classes.menuItemDesktop}`}
+              onClick={() => handleMenu('/listings')}
+            >
+              Listings
+            </MenuItem>
             {loggedInUser.isSitter ? (
               <MenuItem
                 className={`${classes.menuItem} ${classes.menuItemDesktop}`}
