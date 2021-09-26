@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   dateRangeIcon: {
-    color: '#aaa',
+    color: '#000',
     marginRight: theme.spacing(1),
   },
   fakePlaceholder: {
@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme) => ({
     top: '18px',
     left: '48px',
     font: 'inherit',
-    fontSize: '14px',
+    fontSize: '16px',
     color: '#aaa',
-    fontWeight: 700,
   },
   formattedDateRangeText: {
     position: 'absolute',

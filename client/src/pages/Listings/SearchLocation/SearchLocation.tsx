@@ -14,7 +14,7 @@ const SearchLocation = ({ search, handleChange }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   // this will be used when implementing search functionality
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [options, setOptions] = useState<Sitter[]>(sampleData);
+  const [options, setOptions] = useState<Sitter[]>([]);
   // this will be used when implementing search functionality
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);

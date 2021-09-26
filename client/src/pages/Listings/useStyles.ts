@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
   showMoreBtn: {
     width: '150px',
+    color: '#0a0a0a !important',
+    borderColor: '#aaa !important',
     textTransform: 'uppercase',
     padding: theme.spacing(1),
   },
