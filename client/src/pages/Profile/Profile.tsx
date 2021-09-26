@@ -11,6 +11,7 @@ import Settings from './Settings/Settings';
 import useStyles from './useStyles';
 
 const Profile = (): JSX.Element => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const classes = useStyles();
   const location = useLocation();
 
