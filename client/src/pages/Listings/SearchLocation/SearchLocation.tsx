@@ -1,19 +1,22 @@
-import { ChangeEvent, useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent } from 'react';
+import { Box, InputBase, Autocomplete } from '@mui/material';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Sitter } from '../../Profile/ProfileDetail/sampleData';
+import { Sitter, sampleData } from '../../Profile/ProfileDetail/sampleData';
 import useStyles from './useStyles';
 
 interface Props {
   search: string;
-  handleChange: (event: ChangeEvent<HTMLInputElement>, newInputValue: string) => void;
+  handleChange: (event: SyntheticEvent<Element, Event>, newInputValue: string) => void;
 }
 
 const SearchLocation = ({ search, handleChange }: Props): JSX.Element => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<Sitter[]>([]);
+  // this will be used when implementing search functionality
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [options, setOptions] = useState<Sitter[]>(sampleData);
+  // this will be used when implementing search functionality
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
 
   return (
@@ -31,36 +34,26 @@ const SearchLocation = ({ search, handleChange }: Props): JSX.Element => {
         onClose={() => {
           setOpen(false);
         }}
-        getOptionSelected={(option, value) => option.sitterCity === value.sitterCity}
         getOptionLabel={(option) => option.sitterCity}
         options={options}
         loading={loading}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         onInputChange={handleChange}
         inputValue={search}
         noOptionsText="No Sitters Found"
         freeSolo
         renderInput={(params) => (
-          <div className={classes.search}>
+          <Box width="300px" height="56px" className={classes.search}>
             <InputBase
-              {...params.inputProps}
+              ref={params.InputProps.ref}
+              inputProps={params.inputProps}
               placeholder="Search"
               classes={{
                 root: classes.searchRoot,
                 input: classes.searchInput,
               }}
-              inputProps={{
-                'aria-label': 'search',
-                ref: params.InputProps.ref,
-              }}
-              startAdornment={
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-              }
+              startAdornment={<SearchIcon className={classes.searchIcon} />}
             />
-          </div>
+          </Box>
         )}
       />
     </form>

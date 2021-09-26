@@ -10,10 +10,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ProfileDetailCard from './ProfileDetailCard/ProfileDetailCard';
 import BookingCard from './BookingCard/BookingCard';
 import { Sitter } from './sampleData';
-import useStyles from './useStyles';
 
 const ProfileDetail = (): JSX.Element => {
-  const classes = useStyles();
   const params: { sitterId: string } = useParams();
   const { sitterId } = params;
 
@@ -36,7 +34,7 @@ const ProfileDetail = (): JSX.Element => {
 
   return (
     <Layout>
-      <Box width="100%" className={classes.outerContainer}>
+      <Box width="100%">
         <Grid
           maxWidth="2160px"
           container

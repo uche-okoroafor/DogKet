@@ -1,15 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiCardContent-root:last-child': {
+      paddingBottom: theme.spacing(1.5),
+    },
+  },
   sitterOuterBox: {
     margin: theme.spacing(3, 'auto'),
-  },
-  sitterBox: {
-    margin: theme.spacing(2, 0, 0),
+    [theme.breakpoints.down('xs')]: {
+      width: '70% !important',
+    },
   },
   avatar: {
-    width: '100px',
-    height: '100px',
+    width: '100px !important',
+    height: '100px !important',
     border: '5px solid #ffffff',
     '&:hover': {
       opacity: '0.8',
@@ -17,21 +22,12 @@ const useStyles = makeStyles((theme) => ({
   },
   sitterName: {
     padding: theme.spacing(1),
-    fontWeight: 700,
   },
   sitterShortDesc: {
     color: '#aaa',
-    fontSize: '12px',
-    fontWeight: 700,
   },
   sitterAboutMe: {
     padding: theme.spacing(0, 2),
-  },
-  sitterLocation: {},
-  sitterLocationText: {
-    color: '#aaa',
-    fontSize: '14px',
-    fontWeight: 700,
   },
   profileDetailBottom: {
     padding: theme.spacing(2, 4),
@@ -47,12 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
   locationWage: {
     borderTop: '1px solid #ccc',
-    padding: theme.spacing(1, 2, 0),
-    margin: theme.spacing(2),
+    padding: theme.spacing(1, 0, 0),
+    margin: theme.spacing(2, 0, 0),
   },
   locationText: {
     color: '#aaa',
-    fontSize: '13px',
   },
   wage: {
     fontWeight: 700,

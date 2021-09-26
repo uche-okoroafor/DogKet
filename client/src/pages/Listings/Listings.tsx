@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@material-ui/core/Button';
@@ -18,7 +18,7 @@ const Listings = (): JSX.Element => {
   const [newSitter, setNewSitter] = useState<Sitter | null>(null);
   const classes = useStyles();
 
-  const searchLocationHandleChange = (e: ChangeEvent<HTMLInputElement>, newInputValue: string) => {
+  const searchLocationHandleChange = (e: SyntheticEvent<Element, Event>, newInputValue: string) => {
     setSearch(newInputValue);
     if (newSitter) {
       setNewSitter(null);
@@ -51,7 +51,7 @@ const Listings = (): JSX.Element => {
           <SearchDateRange dateRange={dateRange} handleChange={searchDateRangeHandleChange} />
         </Box>
 
-        <Grid container className={classes.sitterLists} justifyContent="center">
+        <Grid container className={classes.sitterLists} justifyContent="space-evenly">
           {sampleData.slice(0, 6).map((sitter) => (
             <SitterCard key={sitter.sitterId} sitter={sitter} />
           ))}
