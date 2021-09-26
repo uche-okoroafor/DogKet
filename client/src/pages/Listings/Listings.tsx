@@ -1,8 +1,31 @@
-import { Grid, Box, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useState, SyntheticEvent } from 'react';
+import { Grid, Box, Typography, Button } from '@mui/material';
+import { DateRange } from '@mui/lab/DateRangePicker';
 import Layout from '../Layout/Layout';
+import SearchLocation from './SearchLocation/SearchLocation';
+import SearchDateRange from './SearchDateRange/SearchDateRange';
+import SitterCard from './SitterCard/SitterCard';
+import { Sitter, sampleData } from '../Profile/ProfileDetail/sampleData';
 
 const Listings = (): JSX.Element => {
+  const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
+  const [search, setSearch] = useState<string>('test');
+  const [newSitter, setNewSitter] = useState<Sitter | null>(null);
+
+  const searchLocationHandleChange = (e: SyntheticEvent<Element, Event>, newInputValue: string) => {
+    setSearch(newInputValue);
+    if (newSitter) {
+      setNewSitter(null);
+    }
+  };
+
+  const searchDateRangeHandleChange = (newDateRange: DateRange<Date>) => {
+    setDateRange(newDateRange);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const handleShowMore = () => {};
+
   return (
     <Layout>
       <Grid>
