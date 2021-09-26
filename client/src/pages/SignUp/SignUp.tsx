@@ -48,7 +48,6 @@ export default function Register(): JSX.Element {
           justifyContent="space-between"
           flexDirection="column"
           minHeight="100vh"
-          className={classes.authWrapper}
         >
           <AuthHeader asideText="Become a sitter" linkTo="/listings" />
           <Box className={classes.signupOuterContainer} width="100%" maxWidth={600} p={3} alignSelf="center">

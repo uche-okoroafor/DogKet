@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1, 'auto', 4),
   },
   showMoreBtn: {
+    color: '#616161 !important',
+    border: '1px solid #616161 !important',
     width: '150px',
     textTransform: 'uppercase',
     padding: theme.spacing(1),
