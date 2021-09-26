@@ -9,9 +9,8 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 auto',
     },
   },
-  layout: { backgroundColor: '#FFFFFF' },
-  authWrapper: {
-    backgroundColor: '#fff',
+  layout: {
+    backgroundColor: '#FFFFFF',
   },
   layoutOuterContainer: {
     [theme.breakpoints.down('sm')]: {
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#eee',
   },
 }));
 

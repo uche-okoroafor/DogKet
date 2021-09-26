@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     textTransform: 'uppercase',
+    backgroundColor: '#f04040 !important',
     margin: theme.spacing(2, 'auto', 3),
     width: '180px',
     height: '50px',

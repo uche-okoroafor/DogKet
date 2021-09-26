@@ -1,7 +1,7 @@
 import { useState, SyntheticEvent } from 'react';
 import { Box, InputBase, Autocomplete } from '@mui/material';
 import SearchIcon from '@material-ui/icons/Search';
-import { Sitter, sampleData } from '../../Profile/ProfileDetail/sampleData';
+import { Sitter } from '../../Profile/ProfileDetail/sampleData';
 import useStyles from './useStyles';
 
 interface Props {

@@ -9,9 +9,6 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 auto',
     },
   },
-  authWrapper: {
-    backgroundColor: '#eee',
-  },
   signupOuterContainer: {
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
