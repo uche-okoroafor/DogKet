@@ -1,6 +1,6 @@
 const aws = require("aws-sdk");
 const multer = require("multer");
-const multers3 = require("multer-s3");
+const multerS3 = require("multer-s3");
 const Profile = require("../models/ProfileModel");
 
 const s3 = new aws.S3({
@@ -10,27 +10,30 @@ const s3 = new aws.S3({
 });
 
 exports.setUpload = (req, res, next) => {
-  console.log(req.file);
   const upload = multer({
-    storage: multers3({
-      s3,
+    storage: multerS3({
+      s3: s3,
       bucket: "breadsticks",
       metadata: function (req, file, cb) {
-        cb(null, { fieldName: file.fieldName });
+        cb(null, { fieldName: file.fieldname });
       },
       key: function (req, file, cb) {
-        cb(null, `image-${Date.now()}.jpeg`);
+        cb(null, (img = Date.now() + file.originalname));
       },
     }),
   });
-  const multipleUpload = upload.array("image-upload", 12);
-  multipleUpload(req, re, async (err) => {
+  const multipleUpload = upload.array("photos", 3);
+
+  multipleUpload(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ success: false, message: err.message });
     }
-    await Profile.findByIdAndUpdate(req.params.id, {
-      photos: req.file.location,
-    });
-    res.status(200).json({ data: req.file.location });
+    await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      {
+        $addToSet: { photos: img },
+      }
+    );
+    res.status(200).json({ data: "files uploaded and db is updated" });
   });
 };
