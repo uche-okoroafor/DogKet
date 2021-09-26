@@ -46,6 +46,7 @@ export default function Login(): JSX.Element {
           justifyContent="space-between"
           flexDirection="column"
           minHeight="100vh"
+          className={classes.authWrapper}
         >
           <AuthHeader asideText="Don't have an account?" linkTo="/signup" />
           <Box className={classes.loginOuterContainer} width="100%" maxWidth={600} p={3} alignSelf="center">

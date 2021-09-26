@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    backgroundColor: '#eee',
     marginTop: theme.spacing(10),
     [theme.breakpoints.down('xs')]: {
       display: 'none',

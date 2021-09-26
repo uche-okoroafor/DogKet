@@ -31,6 +31,7 @@ export default function Layout({ children }: Props): JSX.Element {
           justifyContent="space-between"
           flexDirection="column"
           minHeight="100vh"
+          className={classes.authWrapper}
         >
           <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/listings" />
           <Box
