@@ -12,12 +12,13 @@ import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import Dog from '../../Images/landing-dog.jpg';
 
 export default function Landing(): JSX.Element {
   const classes = useStyles();
   const linkTo = '';
   return (
-    <Box className={classes.authWrapper}>
+    <Box className={classes.imageSideWrapper}>
       <Box p={1} className={classes.authHeader}>
         <Link>
           <Button className={`${classes.sitter}`}>Become a sitter</Button>

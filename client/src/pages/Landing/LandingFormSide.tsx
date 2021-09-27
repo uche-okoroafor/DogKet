@@ -10,6 +10,7 @@ import login from '../../helpers/APICalls/login';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import Logo from '../../Images/logo.png';
 
 export default function Landing(): JSX.Element {
   const classes = useStyles();
@@ -24,7 +25,7 @@ export default function Landing(): JSX.Element {
     <Box className={classes.authWrapper}>
       {/* <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" /> */}
       <Box className={classes.logoWrapper}>
-        <img src={`../../Images/logo.png`} alt={'logo'} />
+        <img src={Logo} alt={'logo'} />
       </Box>
       <Box width="100%" maxWidth={450} p={3} alignSelf="center">
         <Grid container>

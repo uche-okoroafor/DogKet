@@ -1,5 +1,6 @@
 import { red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
+import Dog from '../../../Images/landing-dog-sqr.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,7 +9,11 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
   },
-  authWrapper: {
+  imageSideWrapper: {
+    backgroundImage: `url(${Dog})`,
+    width: '100%',
+    height: '100%',
+    backgroundSize: 'cover',
     display: 'flex',
     alignItems: 'flex-end',
     flexDirection: 'column',
@@ -20,8 +25,10 @@ const useStyles = makeStyles((theme) => ({
     width: '400px',
     marginRight: '50px',
     flexDirection: 'row',
-    minHeight: '100vh',
     paddingTop: 23,
+  },
+  link: {
+    margin: '0px',
   },
   sitter: {
     color: 'black',
