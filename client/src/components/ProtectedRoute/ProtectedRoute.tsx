@@ -12,7 +12,7 @@ const ProtectedRoute: React.FC<IProps> = props => {
   const { loggedInUser } = useAuth();
 
   return loggedInUser ? (
-    <Route path={props.path} exact={props.exact} component={props.component} />
+    <Route {...props} />
   ) : (
     <Redirect to='/login' />
   );
