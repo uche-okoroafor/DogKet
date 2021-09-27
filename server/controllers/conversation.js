@@ -60,3 +60,49 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
     next(error);
   }
 });
+
+// @route POST /conversations
+// @desc Create a conversation between a logged-in user and the other user (recipient)
+// @access private
+exports.createConversation = asyncHandler(async (req, res, next) => {
+  try {
+    const { recipientId } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(recipientId)) {
+      res.status(400);
+      throw new Error("Invalid recipientId");
+    }
+
+    const userId = req.user.id;
+
+    let conversation;
+
+    conversation = await Conversation.findOne({
+      $or: [
+        { $and: [{ user1: userId }, { user2: recipientId }] },
+        { $and: [{ user1: recipientId }, { user2: userId }] },
+      ],
+    });
+
+    if (conversation) {
+      res.status(404);
+      throw new Error(
+        "Conversation between this user and recipient already exists."
+      );
+    }
+
+    conversation = await Conversation.create({
+      user1: userId,
+      user2: recipientId,
+    });
+
+    conversation = await conversation
+      .populate("user1", "-password -register_date")
+      .populate("user2", "-password -register_date")
+      .execPopulate();
+
+    res.status(200).json(conversation);
+  } catch (error) {
+    next(error);
+  }
+});
