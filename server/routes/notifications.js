@@ -10,6 +10,6 @@ const {
 
 router.route("/create").post(protect, createNotification);
 router.route("/all").get(protect, notificationList);
-router.route("/read").patch(protect, updateReadStatus);
+router.route("/read/:notification_id").patch(protect, updateReadStatus);
 
 module.exports = router;
