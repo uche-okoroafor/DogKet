@@ -41,7 +41,10 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
     conversation = await Conversation.findOne({
       _id: conversationId,
       $or: [{ user1: userId }, { user2: userId }],
-    });
+    })
+      .populate("messages")
+      .populate("user1", "-password -register_date")
+      .populate("user2", "-password -register_date");
 
     if (!conversation) {
       res.status(404);
@@ -49,11 +52,6 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
         "Couldn't find a conversation for the user with the conversationId"
       );
     }
-
-    conversation = await Conversation.findById(conversationId)
-      .populate("messages")
-      .populate("user1", "-password -register_date")
-      .populate("user2", "-password -register_date");
 
     res.status(200).json(conversation);
   } catch (error) {
