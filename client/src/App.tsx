@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import TempDashboardMain from './pages/TempDashboardMain/TempDashboardMain';
@@ -26,7 +27,7 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard" component={TempDashboardMain} />
+                <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/listings" component={Listings} />
                 <Route path="/listings/:sitterId" component={ProfileDetail} />
                 <Route exact path="/profile" component={Profile} />

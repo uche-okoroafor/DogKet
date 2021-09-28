@@ -7,7 +7,7 @@ const {
   loginUser,
   loadUser,
   logoutUser,
-  pingLogout
+  pingLogout,
 } = require("../controllers/auth");
 
 router.route("/register").post(validateRegister, registerUser);
