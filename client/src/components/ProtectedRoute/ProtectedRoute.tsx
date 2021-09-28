@@ -8,13 +8,9 @@ interface IProps {
   exact: boolean;
 }
 
-const ProtectedRoute: React.FC<IProps> = props => {
+const ProtectedRoute: React.FC<IProps> = (props) => {
   const { loggedInUser } = useAuth();
 
-  return loggedInUser ? (
-    <Route {...props} />
-  ) : (
-    <Redirect to='/login' />
-  );
+  return loggedInUser ? <Route {...props} /> : <Redirect to="/login" />;
 };
 export default ProtectedRoute;
