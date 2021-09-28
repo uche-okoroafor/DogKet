@@ -1,18 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   chatSideBanner: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    padding: '1rem 1rem',
-    width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       padding: '2rem 2rem',
       width: '300px',
     },
+    backgroundColor: '#fff',
   },
   userPanel: {
     display: 'flex',
