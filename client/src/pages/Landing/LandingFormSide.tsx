@@ -1,21 +1,12 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { FormikHelpers } from 'formik';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './Styles/Landing';
-import login from '../../helpers/APICalls/login';
-// import LoginForm from './LoginForm/LoginForm';
-import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import { useAuth } from '../../context/useAuthContext';
-import { useSnackBar } from '../../context/useSnackbarContext';
+import LandingForm from './LandingForm';
 import Logo from '../../Images/logo.png';
 
 export default function Landing(): JSX.Element {
   const classes = useStyles();
-  const { updateLoginContext } = useAuth();
-  const { updateSnackBarMessage } = useSnackBar();
 
   const handleSubmit = () => {
     console.log('submited');
@@ -23,7 +14,6 @@ export default function Landing(): JSX.Element {
 
   return (
     <Box className={classes.authWrapper}>
-      {/* <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" /> */}
       <Box className={classes.logoWrapper}>
         <img src={Logo} alt={'logo'} />
       </Box>
@@ -35,7 +25,7 @@ export default function Landing(): JSX.Element {
             </Typography>
           </Grid>
         </Grid>
-        {/* <LoginForm handleSubmit={handleSubmit} /> */}
+        <LandingForm />
       </Box>
       <Box p={1} alignSelf="center" />
     </Box>

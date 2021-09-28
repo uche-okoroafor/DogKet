@@ -13,6 +13,7 @@ import MySitters from './pages/MySitters/MySitters';
 import MyJobs from './pages/MyJobs/MyJobs';
 import Profile from './pages/Profile/Profile';
 import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
+import Landing from './pages/Landing/Landing';
 import './App.css';
 
 function App(): JSX.Element {
@@ -33,6 +34,7 @@ function App(): JSX.Element {
                 <Route exact path="/messages" component={ChatSideBanner} />
                 <Route exact path="/my-sitters" component={MySitters} />
                 <Route exact path="/my-jobs" component={MyJobs} />
+                <Route exact path="/home" component={Landing} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>
