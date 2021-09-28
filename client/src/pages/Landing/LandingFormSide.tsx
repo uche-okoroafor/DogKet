@@ -8,10 +8,6 @@ import Logo from '../../Images/logo.png';
 export default function Landing(): JSX.Element {
   const classes = useStyles();
 
-  const handleSubmit = () => {
-    console.log('submited');
-  };
-
   return (
     <Box className={classes.authWrapper}>
       <Box className={classes.logoWrapper}>
