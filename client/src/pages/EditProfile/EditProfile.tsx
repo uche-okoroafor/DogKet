@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   CssBaseline,
@@ -14,18 +13,83 @@ import {
   Box,
 } from '@material-ui/core';
 import useStyles from './useStyles';
+import { FormikHelpers, useFormik } from 'formik';
+import * as yup from 'yup';
+import createUpdateProfile, { IProfile } from '../../helpers/APICalls/createProfile';
+import { useSnackBar } from '../../context/useSnackbarContext';
+
+const validationSchema = yup.object({
+  firstName: yup.string().required('First Name is required'),
+  lastName: yup.string().required('Last Name is required'),
+  phone: yup.string(),
+  address: yup.string().required('Address is required'),
+  description: yup.string().required('Your description is required'),
+});
 
 export default function EditProfile(): JSX.Element {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
 
-  // TODO : to add a function that handle the state of the date change
-  const [selectedDate, setSelectedDate] = useState('1998-0git status6-15');
+  const [fetchedProfile, setFetchedProfile] = useState({
+    firstName: '',
+    lastName: '',
+    gender: 'male',
+    birth: '',
+    email: '',
+    phone: '',
+    address: '',
+    description: '',
+  });
 
-  // TODO : toggle the gender from male to female on select change
-  const [gender, setGender] = useState('male');
+  const [fetchMethod, setFetchMethod] = useState({ method: 'POST', path: `/profile` });
 
-  // TODO : to change the style of entering phone number textfield from none to block
+  useEffect(() => {
+    fetch(`/profile`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFetchedProfile(data);
+        setFetchMethod({ method: 'PUT', path: `/profile/update` });
+      });
+  }, []);
+
+  const handleSubmit = (
+    { firstName, lastName, email, phone, address, gender, birth, description }: IProfile,
+    { setSubmitting }: FormikHelpers<IProfile>,
+  ) => {
+    createUpdateProfile(
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      gender,
+      birth,
+      description,
+      fetchMethod.method,
+      fetchMethod.path,
+    ).then((data) => {
+      if (data.error) {
+        setSubmitting(false);
+        updateSnackBarMessage(data.error.message);
+      } else {
+        setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
+
+  //  To change the style of entering phone number textfield from none to block
   const [block, setBlock] = useState('none');
+
+  const formik = useFormik({
+    initialValues: fetchedProfile,
+    onSubmit: handleSubmit,
+    validationSchema: validationSchema,
+  });
+
+  const handleClick = () => {
+    setBlock('block');
+  };
 
   return (
     <Container component="main" className={classes.main}>
@@ -36,7 +100,7 @@ export default function EditProfile(): JSX.Element {
             <Typography variant="h4" className={classes.title}>
               Edit Profile
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
               <Box className={classes.box}>
                 <label htmlFor="first-name" className={classes.label}>
                   first name
@@ -46,7 +110,13 @@ export default function EditProfile(): JSX.Element {
                   id="first-name"
                   placeholder="john"
                   variant="outlined"
+                  name="firstName"
                   className={classes.textField}
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                  error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                  helperText={formik.touched.firstName && formik.errors.firstName}
+                  onBlur={formik.handleBlur}
                 />
               </Box>
               <Box className={classes.box}>
@@ -59,17 +129,24 @@ export default function EditProfile(): JSX.Element {
                   placeholder="Doe"
                   variant="outlined"
                   className={classes.textField}
+                  name="lastName"
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                  error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                  helperText={formik.touched.lastName && formik.errors.lastName}
+                  onBlur={formik.handleBlur}
                 />
               </Box>
               <Box className={classes.box}>
-                <label htmlFor="first-name" className={classes.label}>
+                <label htmlFor="select-outlined" className={classes.label}>
                   gender
                 </label>
                 <FormControl variant="outlined">
                   <Select
                     labelId="select-outlined-label"
                     id="select-outlined"
-                    value={gender}
+                    value={formik.values.gender}
+                    onChange={formik.handleChange}
                     className={classes.select}
                   >
                     <MenuItem value={'male'}>Male</MenuItem>
@@ -86,8 +163,9 @@ export default function EditProfile(): JSX.Element {
                   id="birth-date"
                   variant="outlined"
                   className={classes.textField}
-                  defaultValue={selectedDate}
-                  value={selectedDate}
+                  name="birth"
+                  value={formik.values.birth}
+                  onChange={formik.handleChange}
                 />
               </Box>
               <Box className={classes.box}>
@@ -100,16 +178,23 @@ export default function EditProfile(): JSX.Element {
                   placeholder="john-doe@gmail.com"
                   variant="outlined"
                   className={classes.textField}
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  onBlur={formik.handleBlur}
                 />
               </Box>
               <Box className={classes.box} style={{ display: `${block}` }}>
-                <label htmlFor="last-name" className={classes.label}></label>
+                <label className={classes.label}></label>
                 <TextField
                   type="text"
-                  id="last-name"
-                  placeholder="enter phone number"
+                  placeholder="Enter phone number"
                   variant="outlined"
                   className={classes.textField}
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
                 />
               </Box>
               <Box className={classes.box}>
@@ -117,10 +202,8 @@ export default function EditProfile(): JSX.Element {
                   phone number
                 </label>
                 <Box className={classes.boxStyle}>
-                  <Typography style={{ display: 'inline-block', fontStyle: 'italic' }}>
-                    No Phone number entered
-                  </Typography>
-                  <Button variant="outlined" color="secondary" size="large">
+                  <Typography className={classes.phone}>No Phone number entered</Typography>
+                  <Button variant="outlined" color="secondary" size="large" onClick={handleClick}>
                     Add phone number
                   </Button>
                 </Box>
@@ -135,6 +218,12 @@ export default function EditProfile(): JSX.Element {
                   placeholder="Address"
                   variant="outlined"
                   className={classes.textField}
+                  name="address"
+                  value={formik.values.address}
+                  onChange={formik.handleChange}
+                  error={formik.touched.address && Boolean(formik.errors.address)}
+                  helperText={formik.touched.address && formik.errors.address}
+                  onBlur={formik.handleBlur}
                 />
               </Box>
               <Box className={classes.box}>
@@ -148,9 +237,15 @@ export default function EditProfile(): JSX.Element {
                   className={classes.textField}
                   multiline
                   rows={6}
+                  name="description"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  error={formik.touched.description && Boolean(formik.errors.description)}
+                  helperText={formik.touched.description && formik.errors.description}
+                  onBlur={formik.handleBlur}
                 />
               </Box>
-              <Button variant="contained" color="secondary" size="large" className={classes.button}>
+              <Button variant="contained" color="secondary" size="large" className={classes.button} type="submit">
                 save
               </Button>
             </form>

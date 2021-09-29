@@ -9,8 +9,10 @@ const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+const protect = require("./middleware/auth");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const profileRouter = require("./routes/profileRouter");
 
 const { json, urlencoded } = express;
 
@@ -41,6 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/profile", protect, profileRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 
