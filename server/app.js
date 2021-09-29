@@ -13,6 +13,7 @@ const protect = require("./middleware/auth");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profileRouter");
+const notificationRouter = require("./routes/notifications");
 
 const { json, urlencoded } = express;
 
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 app.use("/profile", protect, profileRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use("/notification", notificationRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
