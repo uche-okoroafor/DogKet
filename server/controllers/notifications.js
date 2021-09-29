@@ -10,10 +10,9 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
 
-    const { type, date, title, description } = req.body;
+    const { type, title, description } = req.body;
     const notificatonModel = {
       userId: ObjectId(userId),
-      date: new Date(date),
       type,
       title,
       description,
