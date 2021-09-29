@@ -1,26 +1,41 @@
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
-import { Typography } from '@material-ui/core';
+import Logo from '../../Images/logo.png';
+import AuthMenu from '../AuthMenu/AuthMenu';
+import { User } from '../../interface/User';
+import AuthMenuDesktop from '../AuthMenuDesktop/AuthMenuDesktop';
+import { useAuth } from '../../context/useAuthContext';
 
 interface Props {
+  loggedInUser?: User;
   linkTo: string;
   asideText: string;
-  btnText: string;
+  btnText?: string;
 }
 
-const AuthHeader = ({ linkTo, asideText, btnText }: Props): JSX.Element => {
+const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
 
   return (
-    <Box p={1} className={classes.authHeader}>
-      <Typography className={classes.accAside}>{asideText}</Typography>
-      <Link to={linkTo} className={classes.link}>
-        <Button color="inherit" className={classes.accBtn} variant="contained">
-          {btnText}
-        </Button>
+    <Box
+      width="100%"
+      height="90px"
+      display="flex"
+      flexWrap="wrap"
+      justifyContent="space-between"
+      alignItems="center"
+      className={classes.authHeader}
+    >
+      <Link to={loggedInUser ? '/dashboard' : '/login'}>
+        <img src={Logo} alt="logo" />
       </Link>
+
+      <Box height="80px" display="flex" flexWrap="wrap" alignItems="center" p={1}>
+        <AuthMenuDesktop asideText={asideText} linkTo={linkTo} />
+        <AuthMenu />
+      </Box>
     </Box>
   );
 };

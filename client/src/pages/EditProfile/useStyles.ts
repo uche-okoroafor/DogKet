@@ -49,12 +49,17 @@ const useStyles = makeStyles(() => ({
     margin: '20px auto',
     alignSelf: 'center',
     display: 'block',
+    textTransform: 'uppercase',
   },
   grid: {
     margin: 'auto',
   },
   select: {
     width: '150%',
+  },
+  phone: {
+    display: 'inline-block',
+    fontStyle: 'italic',
   },
 }));
 
