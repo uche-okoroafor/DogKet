@@ -4,7 +4,6 @@ const useStyles = makeStyles(() => ({
     margin: 'auto',
   },
   main: {
-    // height: '70vh',
     background: 'primary',
     margin: ' 20vh auto',
     width: '60vw',
