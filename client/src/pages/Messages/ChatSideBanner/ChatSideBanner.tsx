@@ -3,10 +3,14 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import Search from './Search/Search';
 import ChatBox from './ChatBox/ChatBox';
 import { User } from '../../../interface/User';
-import { mockTest1Convos } from '../../../mocks/mockConversation';
+import { Conversation } from '../../../interface/Conversation';
 import useStyles from './useStyles';
 
-const ChatSideBanner = (): JSX.Element => {
+interface Props {
+  conversations: Conversation[] | null | undefined;
+}
+
+const ChatSideBanner = ({ conversations }: Props): JSX.Element => {
   const [search, setSearch] = useState<string>('test');
   const [newChatUser, setNewChatUser] = useState<User | null>(null);
   const classes = useStyles();
@@ -20,7 +24,7 @@ const ChatSideBanner = (): JSX.Element => {
   };
 
   return (
-    <Grid item sm={4} md={3} className={classes.chatSideBanner}>
+    <Grid item sm={4} className={classes.chatSideBanner}>
       <Box display="flex" flexDirection="column">
         <Box className={classes.chatSideBannerBox}>
           <Typography className={classes.inboxMessages} variant="h5">
@@ -28,7 +32,7 @@ const ChatSideBanner = (): JSX.Element => {
           </Typography>
           <Search search={search} handleChange={handleChange} />
         </Box>
-        {mockTest1Convos.map((conversation) => (
+        {conversations?.map((conversation: Conversation) => (
           <ChatBox conversation={conversation} key={conversation._id} />
         ))}
       </Box>

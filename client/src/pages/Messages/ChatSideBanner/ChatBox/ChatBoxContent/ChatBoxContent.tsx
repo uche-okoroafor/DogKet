@@ -12,10 +12,15 @@ const ChatBoxContent = ({ username, latestMessageText }: Props): JSX.Element => 
   return (
     <Box display="flex" justifyContent="space-between" className={classes.chatBoxContent}>
       <Box className={classes.chatInfo}>
-        <Typography className={classes.username}>{username}</Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography className={classes.username}>{username}</Typography>
+          <Typography className={classes.smallScreenTime}>Yesterday</Typography>
+        </Box>
         <Typography className={classes.previewText}>{latestMessageText}</Typography>
       </Box>
-      <Typography className={classes.receivedTime}>Yesterday</Typography>
+      <Box display="flex" justifyContent="flex-end" alignItems="center" className={classes.timeInfo}>
+        <Typography className={classes.receivedTime}>Yesterday</Typography>
+      </Box>
     </Box>
   );
 };

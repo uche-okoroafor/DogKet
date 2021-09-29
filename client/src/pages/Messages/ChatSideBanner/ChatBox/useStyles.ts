@@ -5,6 +5,10 @@ const useStyles = makeStyles((theme) => ({
     outline: '1px solid #eee',
     marginBottom: '1px',
     paddingLeft: theme.spacing(2),
+    '&:hover': {
+      backgroundColor: '#E9EEF9',
+      cursor: 'pointer',
+    },
   },
 }));
 

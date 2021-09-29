@@ -12,7 +12,7 @@ const InputMessage = ({ conversationId, recipientId }: Props): JSX.Element => {
   const classes = useStyles();
 
   const handleSubmit = (
-    values: { conversationId: string; text: string; recipientId: string },
+    _values: { conversationId: string; text: string; recipientId: string },
     {
       setSubmitting,
       resetForm,
@@ -22,7 +22,6 @@ const InputMessage = ({ conversationId, recipientId }: Props): JSX.Element => {
       recipientId: string;
     }>,
   ) => {
-    console.log(values);
     setSubmitting(false);
     resetForm();
   };

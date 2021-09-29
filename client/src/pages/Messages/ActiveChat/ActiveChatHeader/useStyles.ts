@@ -5,9 +5,22 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 124,
+    height: 125,
     paddingRight: theme.spacing(3),
-    boxShadow: '0 2px 20px 0 rgba(88,133,196,0.10)',
+    borderBottom: '1px solid #eee',
+    [theme.breakpoints.down('sm')]: {
+      height: '82px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100vw',
+    },
+  },
+  mobileActiveChatHeader: {
+    backgroundColor: '#fff',
+
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
   content: {
     display: 'flex',
@@ -19,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     fontWeight: 700,
     margin: theme.spacing(0, 1.5),
+    [theme.breakpoints.down('sm')]: {
+      color: 'black',
+    },
   },
   ellipsis: {
     color: '#0a0a0a',

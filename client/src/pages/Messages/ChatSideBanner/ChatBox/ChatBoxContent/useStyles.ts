@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
   },
   chatInfo: {
     width: 'calc(100% - 72px)',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   username: {
     fontSize: 16,
@@ -17,20 +20,33 @@ const useStyles = makeStyles((theme) => ({
   previewText: {
     fontSize: 12,
     color: '#9CADC8',
+    height: 18,
+    overflow: 'hidden',
   },
   boldingText: {
     fontSize: 13,
     fontWeight: 700,
     color: 'Black',
   },
-  receivedTime: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+  smallScreenTime: {
     width: '72px',
     fontSize: 12,
     color: '#9CADC8',
-    marginRight: theme.spacing(0.5),
+    textAlign: 'right',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+  timeInfo: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  receivedTime: {
+    width: '72px',
+    fontSize: 12,
+    color: '#9CADC8',
+    textAlign: 'right',
   },
 }));
 

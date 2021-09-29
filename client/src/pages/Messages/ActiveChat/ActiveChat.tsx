@@ -1,24 +1,25 @@
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box, SwipeableDrawer } from '@material-ui/core';
 import ActiveChatHeader from './ActiveChatHeader/ActiveChatHeader';
 import InputMessage from './InputMessage/InputMessage';
-import { Conversation } from '../../../interface/Conversation';
+import ActiveChatMessages from './ActiveChatMessages/ActiveChatMessages';
+import { useConvo } from '../../../context/useConvoContext';
 import useStyles from './useStyles';
 
 interface Props {
-  conversation: Conversation;
+  userId: string;
 }
 
-const ActiveChat = ({ conversation }: Props): JSX.Element => {
+const ActiveChat = ({ userId }: Props): JSX.Element => {
   const classes = useStyles();
-  console.log(conversation);
+  const { activeConvo, mobileOpen, toggleDrawer } = useConvo();
 
-  return (
-    <Grid item sm={8} md={9} className={classes.activeChat}>
-      {conversation.otherUser && conversation.otherUser._id && (
+  const activeChatContents = (
+    <>
+      {activeConvo?.otherUser && activeConvo.otherUser._id && (
         <Box className={classes.activeChatOuterBox}>
           <ActiveChatHeader
-            username={conversation.otherUser.username}
-            profileImg={conversation.otherUser.profileImg}
+            username={activeConvo.otherUser.username}
+            profileImg={activeConvo.otherUser.profileImg}
             isOnline={true}
           />
           <Box
@@ -28,17 +29,37 @@ const ActiveChat = ({ conversation }: Props): JSX.Element => {
             alignItems="center"
             className={classes.chatContainer}
           >
-            {/* TODO: Create 'Messages', 'SenderBubble', and 'OtherUserBubble' */}
-            {/* <Messages
-                messages={conversation.messages}
-                otherUser={conversation.otherUser}
-                userId={user.id}
-              />*/}
-            <InputMessage conversationId={conversation._id} recipientId={conversation.otherUser._id} />
+            <ActiveChatMessages messages={activeConvo.messages} otherUser={activeConvo.otherUser} userId={userId} />
+            <InputMessage conversationId={activeConvo._id} recipientId={activeConvo.otherUser._id} />
           </Box>
         </Box>
       )}
-    </Grid>
+    </>
+  );
+
+  return (
+    <>
+      <Grid item sm={8} className={classes.activeChat}>
+        {activeChatContents}
+      </Grid>
+
+      <SwipeableDrawer
+        className={classes.mobileActiveChat}
+        anchor="right"
+        open={mobileOpen}
+        onClose={toggleDrawer(false, activeConvo)}
+        onOpen={toggleDrawer(true, activeConvo)}
+      >
+        <Box
+          width="100vw"
+          role="presentation"
+          onClick={toggleDrawer(false, activeConvo)}
+          onKeyDown={toggleDrawer(false, activeConvo)}
+        >
+          {activeChatContents}
+        </Box>
+      </SwipeableDrawer>
+    </>
   );
 };
 
