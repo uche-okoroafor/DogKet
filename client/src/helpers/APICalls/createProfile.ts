@@ -37,7 +37,7 @@ interface ProfileApiData {
   success?: ProfileApiDataSuccess;
 }
 
-const createProfile = async (
+const createUpdateProfile = async (
   firstName: string,
   lastName: string,
   email: string,
@@ -46,17 +46,19 @@ const createProfile = async (
   gender: string,
   birth: string,
   description: string,
+  method: string,
+  path: string,
 ): Promise<ProfileApiData> => {
   const fetchOptions: FetchOptions = {
-    method: 'POST',
+    method: method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ firstName, lastName, phone, address, gender, birth, description }),
   };
-  return await fetch(`/profile`, fetchOptions)
+  return await fetch(path, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
 
-export default createProfile;
+export default createUpdateProfile;

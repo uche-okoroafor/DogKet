@@ -15,7 +15,7 @@ import {
 import useStyles from './useStyles';
 import { FormikHelpers, useFormik } from 'formik';
 import * as yup from 'yup';
-import createPprofile, { IProfile } from '../../helpers/APICalls/createProfile';
+import createUpdateProfile, { IProfile } from '../../helpers/APICalls/createProfile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
 const validationSchema = yup.object({
@@ -41,17 +41,33 @@ export default function EditProfile(): JSX.Element {
     description: '',
   });
 
+  const [fetchMethod, setFetchMethod] = useState({ method: 'POST', path: `/profile` });
+
   useEffect(() => {
     fetch(`/profile`)
       .then((response) => response.json())
-      .then((data) => setFetchedProfile(data));
+      .then((data) => {
+        setFetchedProfile(data);
+        setFetchMethod({ method: 'PUT', path: `/profile/update` });
+      });
   }, []);
 
   const handleSubmit = (
     { firstName, lastName, email, phone, address, gender, birth, description }: IProfile,
     { setSubmitting }: FormikHelpers<IProfile>,
   ) => {
-    createPprofile(firstName, lastName, email, phone, address, gender, birth, description).then((data) => {
+    createUpdateProfile(
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      gender,
+      birth,
+      description,
+      fetchMethod.method,
+      fetchMethod.path,
+    ).then((data) => {
       if (data.error) {
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
