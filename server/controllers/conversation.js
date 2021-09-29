@@ -12,7 +12,7 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
     const conversations = await Conversation.find({
       $or: [{ user1: userId }, { user2: userId }],
     })
-      .populate("messages")
+      .populate("latestMessage")
       .populate("user1", "-password -register_date -__v")
       .populate("user2", "-password -register_date -__v");
 
@@ -36,15 +36,10 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
 
     const userId = req.user.id;
 
-    let conversation;
-
-    conversation = await Conversation.findOne({
+    const conversation = await Conversation.findOne({
       _id: conversationId,
       $or: [{ user1: userId }, { user2: userId }],
-    })
-      .populate("messages")
-      .populate("user1", "-password -register_date")
-      .populate("user2", "-password -register_date");
+    });
 
     if (!conversation) {
       res.status(404);
@@ -53,7 +48,11 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
       );
     }
 
-    res.status(200).json(conversation);
+    const messages = await Message.find({
+      conversation: conversation._id,
+    }).populate("sender", "-password -register_date");
+
+    res.status(200).json(messages);
   } catch (error) {
     next(error);
   }

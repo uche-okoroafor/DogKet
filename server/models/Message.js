@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const messageSchema = new Schema(
   {
+    conversation: {
+      type: Schema.Types.ObjectId,
+      ref: "conversation",
+    },
     text: {
       type: String,
       required: true,

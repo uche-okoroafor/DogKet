@@ -58,133 +58,136 @@ async function seed() {
   });
 
   // mock conversation between test1 and test2
+  const test1Convo = await Conversation.create({
+    user1: test1._id,
+    user2: test2._id,
+  });
+
   const test1test2Message1 = await Message.create({
+    conversation: test1Convo._id,
     sender: test1.id,
     text: "test1 ---> test2",
     recipientRead: false,
   });
 
   const test1test2Message2 = await Message.create({
+    conversation: test1Convo._id,
     sender: test1.id,
     text: "test1 ---> test2 (2nd)",
     recipientRead: false,
   });
 
   const test2test1Message1 = await Message.create({
+    conversation: test1Convo._id,
     sender: test2.id,
     text: "test2 ---> test1",
     recipientRead: false,
   });
 
   const test2test1Message2 = await Message.create({
+    conversation: test1Convo._id,
     sender: test2.id,
     text: "test2 ---> test1 (2nd)",
     recipientRead: false,
   });
 
   const test1test2Message3 = await Message.create({
+    conversation: test1Convo._id,
     sender: test1.id,
     text: "test1 ---> test2 (3rd)",
     recipientRead: false,
   });
 
-  const test1Convo = await Conversation.create({
-    user1: test1._id,
-    user2: test2._id,
-    messages: [
-      test1test2Message1._id,
-      test1test2Message2._id,
-      test2test1Message1._id,
-      test2test1Message2._id,
-      test1test2Message3._id,
-    ],
-  });
+  test1Convo.latestMessage = test1test2Message3._id;
+  await test1Convo.save();
 
   // mock conversation between test1 and test3
+  const test1Convo2 = await Conversation.create({
+    user1: test1._id,
+    user2: test3._id,
+  });
+
   const test1test3Message1 = await Message.create({
+    conversation: test1Convo2._id,
     sender: test1.id,
     text: "test1 ---> test3",
     recipientRead: false,
   });
 
   const test1test3Message2 = await Message.create({
+    conversation: test1Convo2._id,
     sender: test1.id,
     text: "test1 ---> test3 (2nd)",
     recipientRead: false,
   });
 
   const test1test3Message3 = await Message.create({
+    conversation: test1Convo2._id,
     sender: test1.id,
     text: "test1 ---> test3 (3rd)",
     recipientRead: false,
   });
 
   const test3test1Message1 = await Message.create({
+    conversation: test1Convo2._id,
     sender: test3.id,
     text: "test3 ---> test1",
     recipientRead: false,
   });
 
   const test3test1Message2 = await Message.create({
+    conversation: test1Convo2._id,
     sender: test3.id,
     text: "test3 ---> test1 (2nd)",
     recipientRead: false,
   });
 
   const test1test3Message4 = await Message.create({
+    conversation: test1Convo2._id,
     sender: test1.id,
     text: "test1 ---> test3 (4th)",
     recipientRead: false,
   });
 
-  const test1Convo2 = await Conversation.create({
-    user1: test1._id,
-    user2: test3._id,
-    messages: [
-      test1test3Message1._id,
-      test1test3Message2._id,
-      test1test3Message3._id,
-      test3test1Message1._id,
-      test3test1Message2._id,
-      test1test3Message4._id,
-    ],
-  });
+  test1Convo2.latestMessage = test1test3Message4._id;
+  await test1Convo2.save();
 
   // mock conversation between test2 and test3
+  const test2Convo = await Conversation.create({
+    user1: test2._id,
+    user2: test3._id,
+  });
+
   const test2test3Message1 = await Message.create({
+    conversation: test2Convo._id,
     sender: test2.id,
     text: "test2 ---> test3",
     recipientRead: false,
   });
 
   const test2test3Message2 = await Message.create({
+    conversation: test2Convo._id,
     sender: test2.id,
     text: "test2 ---> test3 (2nd)",
     recipientRead: false,
   });
 
   const test3test2Message1 = await Message.create({
+    conversation: test2Convo._id,
     sender: test3.id,
     text: "test3 ---> test2",
     recipientRead: false,
   });
 
   const test3test2Message2 = await Message.create({
+    conversation: test2Convo._id,
     sender: test3.id,
     text: "test3 ---> test2 (2nd)",
     recipientRead: false,
   });
 
-  const test2Convo = await Conversation.create({
-    user1: test2._id,
-    user2: test3._id,
-    messages: [
-      test2test3Message1._id,
-      test2test3Message2._id,
-      test3test2Message1._id,
-      test3test2Message2._id,
-    ],
-  });
+  test2Convo.latestMessage = test3test2Message2._id;
+  await test2Convo.save();
 }
 
 async function runSeed() {

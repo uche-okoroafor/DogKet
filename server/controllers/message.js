@@ -38,12 +38,13 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     }
 
     let message = await Message.create({
+      conversation: conversation._id,
       sender: userId,
       text,
       recipientRead: false,
     });
 
-    conversation.messages.push(message._id);
+    conversation.latestMessage = message._id;
     await conversation.save();
     message = await message
       .populate("sender", "-password -register_date")
