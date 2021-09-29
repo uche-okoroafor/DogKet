@@ -4,13 +4,13 @@ const useStyles = makeStyles(() => ({
     margin: 'auto',
   },
   main: {
-    minHeight: '70vh',
+    // height: '70vh',
     background: 'primary',
-    margin: ' 15vh auto',
+    margin: ' 20vh auto',
     width: '60vw',
   },
   box: {
-    minHeight: '70vh',
+    height: '60vh',
     display: 'flex',
     flexDirection: 'column',
     padding: '5%',
@@ -22,17 +22,19 @@ const useStyles = makeStyles(() => ({
     padding: 30,
   },
   avatar: {
-    margin: 'auto',
-    width: 100,
-    height: 100,
+    margin: '10px auto',
+    width: 120,
+    height: 120,
   },
   typography: {
     textAlign: 'center',
     color: 'primary',
   },
+  input: {
+    display: 'none',
+  },
   button: {
     margin: 'auto',
-    display: 'block',
   },
 }));
 
