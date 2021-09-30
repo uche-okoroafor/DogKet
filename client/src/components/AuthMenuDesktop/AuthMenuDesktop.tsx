@@ -3,7 +3,7 @@ import { User } from '../../interface/User';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles';
 import AuthNavItem from '../AuthNavItem/AuthNavItem';
-
+import NotificationButton from '../Notification/NotificationButton';
 interface Props {
   loggedInUser?: User;
   linkTo: string;
@@ -20,6 +20,7 @@ const AuthMenuDesktop = ({ asideText, linkTo }: Props): JSX.Element => {
       <AuthNavItem asideText={asideText} classes={`${classes.accAside} ${classes.authNavMobile}`} linkTo={linkTo} />
       {loggedInUser ? (
         <>
+          <NotificationButton />
           {loggedInUser.isSitter ? (
             <AuthNavItem
               isButton

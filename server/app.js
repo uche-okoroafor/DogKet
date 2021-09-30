@@ -16,7 +16,7 @@ const profileRouter = require("./routes/profileRouter");
 const notificationRouter = require("./routes/notifications");
 
 const { json, urlencoded } = express;
-
+console.log("connecting");
 connectDB();
 const app = express();
 const server = http.createServer(app);
