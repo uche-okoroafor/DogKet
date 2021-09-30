@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { validateSendMessage } = require("../validate");
-const protect = require("../middleware/auth");
 const { sendMessage } = require("../controllers/message");
 
-router.route("/").post(protect, validateSendMessage, sendMessage);
+router.route("/").post(validateSendMessage, sendMessage);
 
 module.exports = router;
