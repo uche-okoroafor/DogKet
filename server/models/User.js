@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now
+  },
+  stripeId: {
+    type: String,
+    required: false
   }
 });
 
