@@ -4,36 +4,36 @@ const User = require('../models/User')
 
 exports.createCustomer = asyncHandler(async (req, res) => {
   const { billing_details, id } = req.body
-
+  const { userId } = req.params
   try {
     const customer = await stripe.customers.create(billing_details)
 
-    const paymentMethods = await stripe.paymentMethods.attach(id, {
-      customer: customer.id
-    })
+    await stripe.paymentMethods
+      .attach(id, {
+        customer: customer.id
+      })
+      .catch(err => res.status(404).json({ err: err.message }))
 
- await Users.updateOne(
-      { _id: req.params.userId },
+    await User.updateOne(
+      { _id: userId },
       {
         $set: {
-          stripeId:customer.id,
-        },
+          stripeId: customer.id
+        }
       }
-    );
+    ).catch(err => res.status(404).json({ err: err.message }))
 
-    res.status(201).json(paymentMethods)
+    res.status(201).json({ stripeId: customer.id })
   } catch (err) {
     res.status(400).json({ err: err.message })
   }
 })
 
-
-exports.addPaymentprofile= asyncHandler(async (req, res) => {
-  const { id ,stripeId} = req.body
-
+exports.addPaymentprofile = asyncHandler(async (req, res) => {
+  const { paymentMethodId, userStripeId } = req.body
   try {
-    const paymentMethods = await stripe.paymentMethods.attach(id, {
-      customer: stripeId
+    const paymentMethods = await stripe.paymentMethods.attach(paymentMethodId, {
+      customer: userStripeId
     })
 
     res.status(201).json(paymentMethods)
@@ -41,17 +41,16 @@ exports.addPaymentprofile= asyncHandler(async (req, res) => {
     res.status(400).json({ err: err.message })
   }
 })
-
 
 exports.retrieveCustomer = asyncHandler(async (req, res) => {
   const { customerId } = req.params
 
-  try {
+  try {   
     if (customerId) {
       const paymentMethods = await stripe.paymentMethods.list({
         customer: customerId,
         type: 'card'
-      })
+      }) 
       res.status(200).json(paymentMethods)
     } else {
       res.status(400).json({ err: 'customerId undefined' })

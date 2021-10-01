@@ -8,7 +8,7 @@ const {
 } = require('../controllers/customer')
 
 router.post('/create/:userId', createCustomer)
-router.get('/add-payment-profile', raddPaymentprofile)
+router.post('/add-payment-profile',addPaymentprofile)
 router.get('/retrieve/:customerId', retrieveCustomer)
 router.get('/user-stripe-id/:userId', getUserStripeId)
 
