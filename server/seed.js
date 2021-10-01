@@ -87,16 +87,16 @@ async function seed() {
 
   const demoUserProfile = await Profile.create({
     userId: demoUser._id,
-    firstName: "demoFname",
-    lastName: "demoLname",
-    address: "toronto, ontario",
+    firstName: "DemoFname",
+    lastName: "DemoLname",
+    address: "Toronto, Ontario",
     phone: "123-123-1234",
     description:
-      "Hello! I am a demoUser. Hello! I am a demoUser. Hello! I am a demoUser. Hello! I am a demoUser. ",
+      "Hello! I am a DemoUser. Hello! I am a DemoUser. Hello! I am a DemoUser. Hello! I am a DemoUser. ",
     birth: "2021-01-01",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sky",
-      "https://robohash.org/test-sitter-1.png",
+      "https://robohash.org/demo-user.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -106,16 +106,16 @@ async function seed() {
 
   const test1Profile = await Profile.create({
     userId: test1._id,
-    firstName: "test1Fname",
-    lastName: "test1Lname",
-    address: "montreal, quebec",
+    firstName: "Test1Fname",
+    lastName: "Test1Lname",
+    address: "Montreal, Quebec",
     phone: "111-222-3333",
     description:
-      "Hello! I am TEST1. Hello! I am TEST1. Hello! I am TEST1. Hello! I am TEST1. ",
+      "Hello! I am Test1. Hello! I am Test1. Hello! I am Test1. Hello! I am Test1. ",
     birth: "2021-02-02",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-1.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -128,12 +128,12 @@ async function seed() {
 
   const test2Profile = await Profile.create({
     userId: test2._id,
-    firstName: "test2Fname",
-    lastName: "test2Lname",
-    address: "ottawa, ontario",
+    firstName: "Test2Fname",
+    lastName: "Test2Lname",
+    address: "Ottawa, Ontario",
     phone: "111-222-3333",
     description:
-      "Hello! I am test2. Hello! I am test2. Hello! I am test2. Hello! I am test2. ",
+      "Hello! I am Test2. Hello! I am Test2. Hello! I am Test2. Hello! I am Test2. ",
     birth: "2021-02-02",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
@@ -150,16 +150,16 @@ async function seed() {
 
   const test3Profile = await Profile.create({
     userId: test3._id,
-    firstName: "test3Fname",
-    lastName: "test3Lname",
-    address: "ottawa, ontario",
+    firstName: "Test3Fname",
+    lastName: "Test3Lname",
+    address: "Ottawa, Ontario",
     phone: "222-333-4444",
     description:
-      "Hello! I am test3. Hello! I am test3. Hello! I am test3. Hello! I am test3. ",
+      "Hello! I am Test3. Hello! I am Test3. Hello! I am Test3. Hello! I am Test3. ",
     birth: "2021-03-03",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-3.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -172,16 +172,16 @@ async function seed() {
 
   const test4Profile = await Profile.create({
     userId: test4._id,
-    firstName: "test4Fname",
-    lastName: "test4Lname",
-    address: "toronto, ontario",
+    firstName: "Test4Fname",
+    lastName: "Test4Lname",
+    address: "Toronto, Ontario",
     phone: "222-333-4444",
     description:
-      "Hello! I am test4. Hello! I am test4. Hello! I am test4. Hello! I am test4. ",
+      "Hello! I am Test4. Hello! I am Test4. Hello! I am Test4. Hello! I am Test4. ",
     birth: "2021-03-03",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-4.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -194,16 +194,16 @@ async function seed() {
 
   const test5Profile = await Profile.create({
     userId: test5._id,
-    firstName: "test5Fname",
-    lastName: "test5Lname",
-    address: "ottawa, ontario",
+    firstName: "Test5Fname",
+    lastName: "Test5Lname",
+    address: "Ottawa, Ontario",
     phone: "222-333-4444",
     description:
-      "Hello! I am test5. Hello! I am test5. Hello! I am test5. Hello! I am test5. ",
+      "Hello! I am Test5. Hello! I am Test5. Hello! I am Test5. Hello! I am Test5. ",
     birth: "2021-03-03",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-5.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -216,16 +216,16 @@ async function seed() {
 
   const test6Profile = await Profile.create({
     userId: test6._id,
-    firstName: "test6Fname",
-    lastName: "test6Lname",
-    address: "vancouver, british columbia",
+    firstName: "Test6Fname",
+    lastName: "Test6Lname",
+    address: "Vancouver, British columbia",
     phone: "222-333-4444",
     description:
-      "Hello! I am test6. Hello! I am test6. Hello! I am test6. Hello! I am test6. ",
+      "Hello! I am Test6. Hello! I am Test6. Hello! I am Test6. Hello! I am Test6. ",
     birth: "2021-03-03",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-6.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -238,16 +238,16 @@ async function seed() {
 
   const test7Profile = await Profile.create({
     userId: test7._id,
-    firstName: "test7Fname",
-    lastName: "test7Lname",
+    firstName: "Test7Fname",
+    lastName: "Test7Lname",
     address: "Burnaby, British columbia",
     phone: "222-333-4444",
     description:
-      "Hello! I am test7. Hello! I am test7. Hello! I am test7. Hello! I am test7. ",
+      "Hello! I am Test7. Hello! I am Test7. Hello! I am Test7. Hello! I am Test7. ",
     birth: "2021-03-03",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-7.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
@@ -260,16 +260,16 @@ async function seed() {
 
   const test8Profile = await Profile.create({
     userId: test8._id,
-    firstName: "test8Fname",
-    lastName: "test8Lname",
-    address: "toronto, ontario",
+    firstName: "Test8Fname",
+    lastName: "Test8Lname",
+    address: "Toronto, Ontario",
     phone: "222-333-4444",
     description:
-      "Hello! I am test8. Hello! I am test8. Hello! I am test8. Hello! I am test8. ",
+      "Hello! I am Test8. Hello! I am Test8. Hello! I am Test8. Hello! I am Test8. ",
     birth: "2021-03-03",
     photos: [
       "https://source.unsplash.com/600x200/?nature,sea",
-      "https://robohash.org/test-sitter-2.png",
+      "https://robohash.org/test-sitter-8.png",
       "https://source.unsplash.com/125x125/?animal,puppy",
       "https://source.unsplash.com/125x125/?animal,cat",
       "https://source.unsplash.com/125x125/?animal,dog",
