@@ -1,5 +1,3 @@
-profileController.js;
-
 const Profile = require("../models/ProfileModel");
 const mongoose = require("mongoose");
 const { capitalize, formatAddress } = require("../utils/helperFunctions");

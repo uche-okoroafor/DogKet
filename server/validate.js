@@ -22,7 +22,28 @@ exports.validateLogin = [
   check("password", "Password is required").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
 
+exports.validateSendMessage = [
+  check("conversationId", "conversationId is required").not().isEmpty(),
+  check("text", "text is required").not().isEmpty(),
+  check("recipientId", "recipientId is required").not().isEmpty(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
+exports.validateCreateConversation = [
+  check("recipientId", "recipientId is required").not().isEmpty(),
+  (req, res, next) => {
+    const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();
@@ -51,7 +72,6 @@ exports.validateProfile = [
   }),
   (req, res, next) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();
@@ -87,7 +107,6 @@ exports.validateSitterProfile = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();

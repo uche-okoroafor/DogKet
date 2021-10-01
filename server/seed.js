@@ -7,6 +7,7 @@ const connectDB = require("./db");
 const User = require("./models/User");
 const Conversation = require("./models/Conversation");
 const Message = require("./models/Message");
+const Profile = require("./models/ProfileModel");
 
 async function deleteData() {
   try {
@@ -18,6 +19,9 @@ async function deleteData() {
 
     await Message.deleteMany();
     console.log("Messages are deleted..");
+
+    await Profile.deleteMany();
+    console.log("Profiles are deleted..");
   } catch (err) {
     console.error(err);
   }
@@ -55,6 +59,225 @@ async function seed() {
     username: "test4",
     email: "test4@gmail.com",
     password: "123123",
+  });
+
+  const test5 = await User.create({
+    username: "test5",
+    email: "test5@gmail.com",
+    password: "123123",
+  });
+
+  const test6 = await User.create({
+    username: "test6",
+    email: "test6@gmail.com",
+    password: "123123",
+  });
+
+  const test7 = await User.create({
+    username: "test7",
+    email: "test7@gmail.com",
+    password: "123123",
+  });
+
+  const test8 = await User.create({
+    username: "test8",
+    email: "test8@gmail.com",
+    password: "123123",
+  });
+
+  const demoUserProfile = await Profile.create({
+    userId: demoUser._id,
+    firstName: "demoFname",
+    lastName: "demoLname",
+    address: "toronto, ontario",
+    phone: "123-123-1234",
+    description:
+      "Hello! I am a demoUser. Hello! I am a demoUser. Hello! I am a demoUser. Hello! I am a demoUser. ",
+    birth: "2021-01-01",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sky",
+      "https://robohash.org/test-sitter-1.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Male",
+  });
+
+  const test1Profile = await Profile.create({
+    userId: test1._id,
+    firstName: "test1Fname",
+    lastName: "test1Lname",
+    address: "montreal, quebec",
+    phone: "111-222-3333",
+    description:
+      "Hello! I am TEST1. Hello! I am TEST1. Hello! I am TEST1. Hello! I am TEST1. ",
+    birth: "2021-02-02",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Female",
+    isSitter: true,
+    title: "I love pets1",
+    hourlyWage: 11,
+  });
+
+  const test2Profile = await Profile.create({
+    userId: test2._id,
+    firstName: "test2Fname",
+    lastName: "test2Lname",
+    address: "ottawa, ontario",
+    phone: "111-222-3333",
+    description:
+      "Hello! I am test2. Hello! I am test2. Hello! I am test2. Hello! I am test2. ",
+    birth: "2021-02-02",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Other",
+    isSitter: true,
+    title: "I love pets2",
+    hourlyWage: 12,
+  });
+
+  const test3Profile = await Profile.create({
+    userId: test3._id,
+    firstName: "test3Fname",
+    lastName: "test3Lname",
+    address: "ottawa, ontario",
+    phone: "222-333-4444",
+    description:
+      "Hello! I am test3. Hello! I am test3. Hello! I am test3. Hello! I am test3. ",
+    birth: "2021-03-03",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Male",
+    isSitter: true,
+    title: "I love pets3",
+    hourlyWage: 13,
+  });
+
+  const test4Profile = await Profile.create({
+    userId: test4._id,
+    firstName: "test4Fname",
+    lastName: "test4Lname",
+    address: "toronto, ontario",
+    phone: "222-333-4444",
+    description:
+      "Hello! I am test4. Hello! I am test4. Hello! I am test4. Hello! I am test4. ",
+    birth: "2021-03-03",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Male",
+    isSitter: true,
+    title: "I love pets4",
+    hourlyWage: 14,
+  });
+
+  const test5Profile = await Profile.create({
+    userId: test5._id,
+    firstName: "test5Fname",
+    lastName: "test5Lname",
+    address: "ottawa, ontario",
+    phone: "222-333-4444",
+    description:
+      "Hello! I am test5. Hello! I am test5. Hello! I am test5. Hello! I am test5. ",
+    birth: "2021-03-03",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Male",
+    isSitter: true,
+    title: "I love pets5",
+    hourlyWage: 15,
+  });
+
+  const test6Profile = await Profile.create({
+    userId: test6._id,
+    firstName: "test6Fname",
+    lastName: "test6Lname",
+    address: "vancouver, british columbia",
+    phone: "222-333-4444",
+    description:
+      "Hello! I am test6. Hello! I am test6. Hello! I am test6. Hello! I am test6. ",
+    birth: "2021-03-03",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Male",
+    isSitter: true,
+    title: "I love pets6",
+    hourlyWage: 16,
+  });
+
+  const test7Profile = await Profile.create({
+    userId: test7._id,
+    firstName: "test7Fname",
+    lastName: "test7Lname",
+    address: "Burnaby, British columbia",
+    phone: "222-333-4444",
+    description:
+      "Hello! I am test7. Hello! I am test7. Hello! I am test7. Hello! I am test7. ",
+    birth: "2021-03-03",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Male",
+    isSitter: true,
+    title: "I love pets7",
+    hourlyWage: 17,
+  });
+
+  const test8Profile = await Profile.create({
+    userId: test8._id,
+    firstName: "test8Fname",
+    lastName: "test8Lname",
+    address: "toronto, ontario",
+    phone: "222-333-4444",
+    description:
+      "Hello! I am test8. Hello! I am test8. Hello! I am test8. Hello! I am test8. ",
+    birth: "2021-03-03",
+    photos: [
+      "https://source.unsplash.com/600x200/?nature,sea",
+      "https://robohash.org/test-sitter-2.png",
+      "https://source.unsplash.com/125x125/?animal,puppy",
+      "https://source.unsplash.com/125x125/?animal,cat",
+      "https://source.unsplash.com/125x125/?animal,dog",
+    ],
+    gender: "Female",
+    isSitter: true,
+    title: "I love pets8",
+    hourlyWage: 18,
   });
 
   // mock conversation between test1 and test2
