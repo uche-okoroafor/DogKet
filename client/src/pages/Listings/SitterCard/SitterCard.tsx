@@ -10,7 +10,7 @@ interface Props {
 
 const SitterCard = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
-  const mockRandomeRating = Math.floor(1 + Math.random() * 5);
+  const mockRandomRating = Math.floor(1 + Math.random() * 5);
 
   return (
     <Grid item xs={12} sm={5} md={4} className={classes.root}>
@@ -40,7 +40,7 @@ const SitterCard = ({ sitter }: Props): JSX.Element => {
             <Typography variant="body2" className={classes.sitterShortDesc}>
               {sitter.title}
             </Typography>
-            <Rating name="read-only" size="small" value={mockRandomeRating} readOnly className={classes.rating} />
+            <Rating name="read-only" size="small" value={mockRandomRating} readOnly className={classes.rating} />
             <Typography variant="body1" align="center" className={classes.sitterAboutMe}>
               {sitter.description.slice(0, 60)}
             </Typography>
