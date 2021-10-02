@@ -6,7 +6,7 @@ import SearchLocation from './SearchLocation/SearchLocation';
 import SearchDateRange from './SearchDateRange/SearchDateRange';
 import SitterCard from './SitterCard/SitterCard';
 import { Sitter } from '../Profile/ProfileDetail/sampleData';
-import { getAllProfiles } from '../../helpers/APICalls/getAllProfiles';
+import { getAllProfiles } from '../../helpers/APICalls/profiles';
 import { Profile } from '../../interface/Profile';
 import useStyles from './useStyles';
 
