@@ -23,7 +23,7 @@ export const createNotification = async (
   }
 };
 
-// createNotification('Pet Sitting', 'Marry has request you service for two hours', 'Dog Sitting');
+createNotification('Pet Sitting', 'kMarry has request you service for two hours', 'Dog Sitting');
 
 export const getNotifications = async (
   page: number,

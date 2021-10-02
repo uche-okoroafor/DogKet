@@ -8,8 +8,12 @@ import Box from '@mui/material/Box';
 import NotificationPopover from './NotificationPopover';
 import { getNotifications, updReadNotifications } from '../../helpers/APICalls/notifications';
 import { Notification, NotificationApiData, NotificationApiDataSuccess } from '../../interface/Notifications';
+import Badge from '@mui/material/Badge';
 
-export default function NotificationButton() {
+interface Props {
+  notifCount: number;
+}
+export default function NotificationButton({ notifCount }: Props): JSX.Element {
   const classes = useStyles();
   // const messages: Notification[] = [];
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -52,19 +56,21 @@ export default function NotificationButton() {
   // }, []);
 
   return (
-    <Box>
-      <Button
-        // component={NavLink}
-        // to={linkTo}
-        aria-describedby={id}
-        onClick={handleClick}
-        className={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
-        // activeStyle={{ color: '#ffffff' }}
-        color="primary"
-        variant="text"
-      >
-        Notification
-      </Button>
+    <Box className={classes.wrap}>
+      <Badge color="primary" badgeContent={notifCount} max={99}>
+        <Button
+          // component={NavLink}
+          // to={linkTo}
+          aria-describedby={id}
+          onClick={handleClick}
+          className={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
+          // activeStyle={{ color: '#ffffff' }}
+          color="secondary"
+          variant="text"
+        >
+          Notification
+        </Button>
+      </Badge>
       <Popover
         id="mouse-over-popover"
         open={open}

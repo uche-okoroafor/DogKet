@@ -13,7 +13,7 @@ import NotificationMessages from './NotificationMessages';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { getNotifications, updReadNotifications } from '../../helpers/APICalls/notifications';
 import { Notification, NotificationApiData, NotificationApiDataSuccess } from '../../interface/Notifications';
-import { BrowserRouter as Router, Route, Link, useParams, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, useParams, useLocation, NavLink } from 'react-router-dom';
 
 export default function NotificationPopover() {
   const classes = useStyles();
@@ -27,10 +27,12 @@ export default function NotificationPopover() {
       const messagesCopy = returnNotificationType(res);
       if (messagesCopy) setmessagesToShow(messagesCopy);
 
-      const notificationsIds = messagesCopy.map((notifs) => notifs._id);
-      console.log(res, notificationsIds);
-      const updateRes = await updReadNotifications(notificationsIds);
-      if (updateRes) console.log(updateRes);
+      if (messagesCopy.length > 0) {
+        const notificationsIds = messagesCopy.map((notifs) => notifs._id);
+        console.log(res, notificationsIds);
+        const updateRes = await updReadNotifications(notificationsIds);
+        if (updateRes) console.log(updateRes);
+      }
     };
     fetchNotifications();
 
@@ -57,7 +59,7 @@ export default function NotificationPopover() {
           <NotificationMessages messagesToShow={messagesToShow} />
         )}
         <Box className={classes.footerWrap}>
-          <Button href={'./notifications'}>
+          <Button component={NavLink} to={'/notifications'}>
             Show all notifications
             <OpenInNewIcon />
           </Button>

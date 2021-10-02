@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: theme.spacing(2),
       margin: 'auto',
-      // maxWidth: 800,
       minWidth: 400,
     },
     image: {
@@ -40,9 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     unread: {
       backgroundColor: 'lightgrey',
+      marginBottom: '10px',
     },
     read: {
       backgroundColor: 'white',
+      marginBottom: '10px',
     },
   }),
 );

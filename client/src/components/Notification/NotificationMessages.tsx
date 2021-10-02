@@ -6,6 +6,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Box from '@material-ui/core/Box';
 import tempImage from '../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png';
 import useStyles from './NotificationStyles/NotificationMessages';
+import Divider from '@material-ui/core/Divider';
 
 export default function NotificationMessages({ messagesToShow }: any) {
   const classes = useStyles();
@@ -14,6 +15,7 @@ export default function NotificationMessages({ messagesToShow }: any) {
     <Box className={classes.root}>
       {messagesToShow.map((message: any) => (
         <Box className={!message.read ? classes.unread : classes.read} key={message._id}>
+          <Divider />
           <Grid container spacing={1}>
             <Grid item>
               <ButtonBase className={classes.image}>

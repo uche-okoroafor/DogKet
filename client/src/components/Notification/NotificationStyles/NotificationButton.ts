@@ -3,9 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   authNavItemBtn: {
     fontSize: 16,
-    color: '#000000',
+    color: '#000000 !important',
     fontWeight: 900,
-    marginRight: 35,
     textDecoration: 'none',
   },
   authNavMobile: {
@@ -15,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
   popoverWrap: {
     minWidth: '700px',
+  },
+  wrap: {
+    marginRight: '35px !important',
   },
 }));
 

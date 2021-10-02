@@ -61,9 +61,6 @@ export default function NotificationPopover() {
   return (
     <Box className={`${classes.root} ${classes.pageWrap}`}>
       <Paper className={classes.paper}>
-        <Typography variant="subtitle1" className={classes.title}>
-          Notifications.
-        </Typography>
         {messagesToShow.length < 1 ? (
           <Box>
             <Typography variant="subtitle1" className={classes.title}>

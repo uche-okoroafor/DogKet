@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     footerWrap: {
       display: 'flex',
       justifyContent: 'center',
+      marginTop: '20px',
     },
     pageWrap: {
       margin: 'auto',

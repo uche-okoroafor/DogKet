@@ -43,7 +43,7 @@ exports.notificationList = asyncHandler(async (req, res, next) => {
     if (unread === "true") options.read = false;
 
     const notifications = await Notification.find(options)
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: "desc" })
       .limit(limit)
       .skip(skipIndex)
       .exec();
