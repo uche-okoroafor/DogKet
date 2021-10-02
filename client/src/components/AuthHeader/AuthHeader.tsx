@@ -25,7 +25,6 @@ const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
     const fetchCount = async () => {
       const success = await getCount(true);
       if (success) setCount(success['count']);
-      console.log(success);
     };
     fetchCount();
   }, []);

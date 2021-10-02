@@ -1,21 +1,16 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { useState, useEffect } from 'react';
-import tempImage from '../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png';
-import useStyles from './NotificationStyles/NotificationMessages';
+import React, { useEffect } from 'react';
+import useStyles from './NotificationStyles/NotificationPopover';
 import NotificationMessages from './NotificationMessages';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { getNotifications, updReadNotifications } from '../../helpers/APICalls/notifications';
-import { Notification, NotificationApiData, NotificationApiDataSuccess } from '../../interface/Notifications';
-import { BrowserRouter as Router, Route, Link, useParams, useLocation, NavLink } from 'react-router-dom';
+import { Notification } from '../../interface/Notifications';
+import { NavLink } from 'react-router-dom';
 
-export default function NotificationPopover() {
+export default function NotificationPopover(): JSX.Element {
   const classes = useStyles();
   const returnNotificationType = (res: any): Notification[] => res.notifications;
   const messages: Notification[] = [];
@@ -29,21 +24,10 @@ export default function NotificationPopover() {
 
       if (messagesCopy.length > 0) {
         const notificationsIds = messagesCopy.map((notifs) => notifs._id);
-        console.log(res, notificationsIds);
-        const updateRes = await updReadNotifications(notificationsIds);
-        if (updateRes) console.log(updateRes);
+        await updReadNotifications(notificationsIds);
       }
     };
     fetchNotifications();
-
-    // const updateRead = async () => {
-    //   const messagesCopy = messagesToShow.notifications;
-    //   const notificationsIds = messagesCopy.map((notifs) => notifs._id);
-    //   console.log(messagesCopy, notificationsIds);
-    //   const res = await updReadNotifications(notificationsIds);
-    //   if (res) console.log(res);
-    // };
-    // updateRead();
   }, []);
 
   return (

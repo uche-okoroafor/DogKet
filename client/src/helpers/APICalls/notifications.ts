@@ -15,15 +15,12 @@ export const createNotification = async (
 
   try {
     const fetchData = await fetch(`/notification`, fetchOptions);
-    const createResponse = await fetchData.json();
-    console.log(createResponse);
-    return createResponse;
+    const notification = await fetchData.json();
+    return notification;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
   }
 };
-
-createNotification('Pet Sitting', 'kMarry has request you service for two hours', 'Dog Sitting');
 
 export const getNotifications = async (
   page: number,
@@ -40,11 +37,10 @@ export const getNotifications = async (
   if (page >= 0) url = url.concat(`page=${page}&`);
   if (limit >= 0) url = url.concat(`limit=${limit}&`);
   if (onlyUnread) url = url.concat(`unread=true`);
-  console.log(url, onlyUnread);
+
   try {
     const fetchData = await fetch(url, fetchOptions);
     const { success } = await fetchData.json();
-    console.log(success);
     return success;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
@@ -64,7 +60,6 @@ export const getCount = async (onlyUnread: boolean | null) => {
   try {
     const fetchData = await fetch(url, fetchOptions);
     const { success } = await fetchData.json();
-    console.log(success);
     return success;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
@@ -82,7 +77,6 @@ export const updReadNotifications = async (notificationsToUpd: string[]): Promis
   try {
     const fetchData = await fetch(`/notification`, fetchOptions);
     const updateNotification = await fetchData.json();
-    console.log(updateNotification);
     return updateNotification;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };

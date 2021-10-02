@@ -27,18 +27,18 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route GET /notification/all
-// @desc list of notifications; only get read if query provided
+// @route GET /notification/
+// @desc list of notifications; only get read if query unread = true;
 // @access Private
 exports.notificationList = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { unread } = req.query;
+
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const skipIndex = (page - 1) * limit;
 
-    console.log(req.query);
     const options = { userId: ObjectId(userId) };
     if (unread === "true") options.read = false;
 
@@ -48,7 +48,6 @@ exports.notificationList = asyncHandler(async (req, res, next) => {
       .skip(skipIndex)
       .exec();
 
-    // console.log(options, unread)
     res.status(200).json({
       success: { notifications },
     });
@@ -57,26 +56,21 @@ exports.notificationList = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route UPDATE /notification/read
-// @desc Update notification as read
+// @route UPDATE /notification/
+// @desc Update notifications as read
 // @access Private
 exports.updateReadStatus = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
-    // const { notificationId } = req.params;
     const { notificationsToUpd } = req.body;
-    console.log(notificationsToUpd);
+
     if (notificationsToUpd.length <= 0) {
       return res.status(200).json({
         success: { notifications: [] },
       });
     }
 
-    // const notification = await Notification.findOne({ notificationId, userId });
-    // if (!notification) {
-    //   return res.status(404).json({ message: "Notification not found" });
-    // }
-    const updateRes = await Notification.updateMany(
+    await Notification.updateMany(
       {
         _id: { $in: notificationsToUpd },
         userId,
@@ -84,7 +78,6 @@ exports.updateReadStatus = asyncHandler(async (req, res, next) => {
       { read: true }
     );
 
-    console.log(updateRes);
     res.status(200).json({
       success: { notifications: notificationsToUpd },
     });
@@ -100,20 +93,11 @@ exports.notificationCount = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { unread } = req.query;
-    // const { notificationId } = req.params;
-    // const { notificationsToUpd  } = req.body;
-    // console.log(notificationsToUpd);
-
-    // const notification = await Notification.findOne({ notificationId, userId });
-    // if (!notification) {
-    //   return res.status(404).json({ message: "Notification not found" });
-    // }
 
     const options = { userId: ObjectId(userId) };
     if (unread === "true") options.read = false;
 
     const count = await Notification.countDocuments(options);
-    console.log(options, count);
     res.status(200).json({
       success: { count },
     });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -7,13 +6,19 @@ import Box from '@material-ui/core/Box';
 import tempImage from '../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png';
 import useStyles from './NotificationStyles/NotificationMessages';
 import Divider from '@material-ui/core/Divider';
+import { Notification } from '../../interface/Notifications';
 
-export default function NotificationMessages({ messagesToShow }: any) {
+interface Props {
+  messagesToShow: Notification[];
+}
+
+export default function NotificationMessages({ messagesToShow }: Props): JSX.Element {
   const classes = useStyles();
+
   console.log(messagesToShow);
   return (
     <Box className={classes.root}>
-      {messagesToShow.map((message: any) => (
+      {messagesToShow.map((message: Notification) => (
         <Box className={!message.read ? classes.unread : classes.read} key={message._id}>
           <Divider />
           <Grid container spacing={1}>
@@ -32,7 +37,7 @@ export default function NotificationMessages({ messagesToShow }: any) {
                     {message.type}
                   </Typography>
                   <Typography variant="body2" gutterBottom className={classes.date}>
-                    {message.date}
+                    {new Date(message.createdAt).toLocaleDateString('en-US')}
                   </Typography>
                 </Grid>
               </Grid>

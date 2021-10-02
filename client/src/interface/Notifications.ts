@@ -1,6 +1,6 @@
 export interface Notification {
-  createdAt?: string;
-  udpdatedAt?: string;
+  createdAt: Date;
+  udpdatedAt: Date;
   type?: string;
   title?: string;
   read?: boolean;
@@ -15,12 +15,3 @@ export interface NotificationApiData {
   error?: { message: string };
   success?: NotificationApiDataSuccess;
 }
-
-// export interface RequestStatusApiDataSuccess {
-//   request: any;
-// }
-
-// export interface RequestStatusApiData {
-//   error?: { message: string };
-//   success?: RequestApiDataSuccess;
-// }

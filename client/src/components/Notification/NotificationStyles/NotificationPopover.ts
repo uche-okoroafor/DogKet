@@ -10,17 +10,19 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 'auto',
       minWidth: 400,
     },
+    image: {
+      width: 60,
+      height: 60,
+    },
     title: {
       fontWeight: 900,
     },
     footerWrap: {
       display: 'flex',
-      justifyContent: 'center',
-      marginTop: '20px',
+      justifyContent: 'flex-end',
     },
-    pageWrap: {
-      margin: 'auto',
-      maxWidth: '30%',
+    popoverWrap: {
+      minWidth: '500px',
     },
   }),
 );

@@ -30,13 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
     date: {
       fontWeight: 900,
     },
-    footerWrap: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-    },
-    popoverWrap: {
-      minWidth: '500px',
-    },
     unread: {
       backgroundColor: 'lightgrey',
       marginBottom: '10px',

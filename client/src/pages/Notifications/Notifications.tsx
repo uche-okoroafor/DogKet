@@ -1,20 +1,14 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { useState, useEffect } from 'react';
 import useStyles from './NotificationStyles/Notifications';
 import NotificationMessages from '../../components/Notification/NotificationMessages';
-import { BrowserRouter as Router, Route, Link, useParams, useLocation } from 'react-router-dom';
 import { getNotifications, updReadNotifications, getCount } from '../../helpers/APICalls/notifications';
-import { Notification, NotificationApiData, NotificationApiDataSuccess } from '../../interface/Notifications';
+import { Notification } from '../../interface/Notifications';
 
-export default function NotificationPopover() {
+export default function NotificationPopover(): JSX.Element {
   const classes = useStyles();
   const returnNotificationType = (res: any): Notification[] => res.notifications;
   const messages: Notification[] = [];
@@ -32,15 +26,9 @@ export default function NotificationPopover() {
       const messagesCopy = returnNotificationType(notificationRes);
       if (messagesCopy) setmessagesToShow(messagesCopy);
 
-      // const { success } = await getCount(null);
-      // if (success) setPage(success['count']);
-      // console.log(success);
-
       const unreadMessages = messagesCopy.filter((notifs) => !notifs.read).map((notifs) => notifs._id);
-      console.log(notificationRes, unreadMessages);
       if (unreadMessages.length <= 0) return;
-      const updateRes = await updReadNotifications(unreadMessages);
-      if (updateRes) console.log(updateRes);
+      await updReadNotifications(unreadMessages);
     };
     fetchNotifications();
   }, [page]);
@@ -53,7 +41,6 @@ export default function NotificationPopover() {
         const countCalc = Math.ceil(success['count'] / pageLimit);
         setCount(countCalc);
       }
-      console.log(success);
     };
     fetchCount();
   }, []);

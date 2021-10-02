@@ -21,9 +21,7 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element 
       <AuthNavItem asideText={asideText} classes={`${classes.accAside} ${classes.authNavMobile}`} linkTo={linkTo} />
       {loggedInUser ? (
         <>
-          {/* <Badge color="primary" badgeContent={notifCount} max={99}> */}
           <NotificationButton notifCount={notifCount} />
-          {/* </Badge> */}
           {loggedInUser.isSitter ? (
             <AuthNavItem
               isButton
