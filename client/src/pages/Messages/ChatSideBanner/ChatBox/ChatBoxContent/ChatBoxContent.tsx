@@ -13,13 +13,19 @@ const ChatBoxContent = ({ username, latestMessageText }: Props): JSX.Element => 
     <Box display="flex" justifyContent="space-between" className={classes.chatBoxContent}>
       <Box className={classes.chatInfo}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography className={classes.username}>{username}</Typography>
+          <Typography variant="h6" className={classes.username}>
+            {username}
+          </Typography>
           <Typography className={classes.smallScreenTime}>Yesterday</Typography>
         </Box>
-        <Typography className={classes.previewText}>{latestMessageText}</Typography>
+        <Typography variant="body2" className={classes.previewText}>
+          {latestMessageText}
+        </Typography>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="center" className={classes.timeInfo}>
-        <Typography className={classes.receivedTime}>Yesterday</Typography>
+        <Typography variant="body2" className={classes.receivedTime} align="right">
+          Yesterday
+        </Typography>
       </Box>
     </Box>
   );

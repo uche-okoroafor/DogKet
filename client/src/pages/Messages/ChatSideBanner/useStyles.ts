@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inboxMessages: {
     fontWeight: 700,
-    fontSize: 20,
     margin: theme.spacing(0, 0, 2, 0.5),
     [theme.breakpoints.down('sm')]: {
       display: 'none',

@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(0.5),
   },
   previewText: {
-    fontSize: 12,
     color: '#9CADC8',
     height: 18,
     overflow: 'hidden',
@@ -30,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
   smallScreenTime: {
     width: '72px',
-    fontSize: 12,
     color: '#9CADC8',
     textAlign: 'right',
     [theme.breakpoints.up('md')]: {
@@ -44,9 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   receivedTime: {
     width: '72px',
-    fontSize: 12,
     color: '#9CADC8',
-    textAlign: 'right',
   },
 }));
 

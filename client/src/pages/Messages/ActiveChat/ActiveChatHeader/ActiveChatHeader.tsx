@@ -16,7 +16,9 @@ const ActiveChatHeader = ({ username, profileImg, isOnline }: Props): JSX.Elemen
     <Box className={classes.activeChatHeader}>
       <Box className={classes.content}>
         <OtherUserAvatar small={false} isOnline={isOnline} username={username} profileImg={profileImg} />
-        <Typography className={classes.username}>{username}</Typography>
+        <Typography variant="h5" className={classes.username}>
+          {username}
+        </Typography>
       </Box>
       <MoreHorizIcon classes={{ root: classes.ellipsis }} />
     </Box>

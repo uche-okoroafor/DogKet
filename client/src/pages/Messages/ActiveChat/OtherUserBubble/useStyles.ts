@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#E9EEF9',
   },
   text: {
-    fontSize: '14px',
     padding: theme.spacing(1),
-    fontWeight: 700,
   },
 }));
 

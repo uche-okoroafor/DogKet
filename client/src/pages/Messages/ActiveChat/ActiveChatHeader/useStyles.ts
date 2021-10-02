@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
   mobileActiveChatHeader: {
     backgroundColor: '#fff',
-
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
   },
   username: {
-    fontSize: 20,
     textTransform: 'capitalize',
     fontWeight: 700,
     margin: theme.spacing(0, 1.5),

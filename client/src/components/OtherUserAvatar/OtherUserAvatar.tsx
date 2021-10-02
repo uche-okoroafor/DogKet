@@ -1,4 +1,5 @@
 import { Box, Badge, Avatar } from '@material-ui/core';
+import clsx from 'clsx';
 import useStyles from './useStyles';
 
 interface Props {
@@ -12,18 +13,15 @@ interface Props {
 const OtherUserAvatar = ({ username, profileImg, small, isOnline, customClasses }: Props): JSX.Element => {
   const classes = useStyles();
 
-  const badgeStyles = (isOnline: boolean | undefined): string => {
-    if (isOnline) {
-      return `${small ? classes.onlineBadge : classes.onlineActiveChatBadge}`;
-    } else {
-      return '';
-    }
-  };
-
   return (
     <Box className={`${classes.avatar} ${customClasses}`}>
       <Badge
-        classes={{ badge: badgeStyles(isOnline) }}
+        classes={{
+          badge: clsx({
+            [classes.onlineBadge]: isOnline && small,
+            [classes.onlineActiveChatBadge]: isOnline && !small,
+          }),
+        }}
         variant="dot"
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
