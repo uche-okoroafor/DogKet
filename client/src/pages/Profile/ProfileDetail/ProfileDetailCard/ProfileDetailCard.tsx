@@ -1,10 +1,10 @@
 import { Grid, Box, Avatar, Typography, Paper, ImageList, ImageListItem } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Profile } from '../../../../interface/Profile';
 import useStyles from './useStyles';
-import { petImageInfo, Sitter } from '../sampleData';
 
 interface Props {
-  sitter: Sitter;
+  sitter: Profile;
 }
 
 const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
@@ -27,20 +27,22 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
               className={classes.profileBackgroundImg}
               width="100%"
               height="200px"
-              src={sitter.profileBackgroundImg}
+              // Assume photos[0] is always a background image source displayed in ProfileDetail
+              src={sitter.photos[0]}
               alt="profile-detail-bg-image"
             />
             <Avatar
               variant="circular"
               className={classes.avatar}
-              src={sitter.userProfileImage}
-              alt={`${sitter.sitterFirstName}-${sitter.sitterLastName}-profile-image`}
+              // Assume photos[1] is always an avatar image source of a sitter
+              src={sitter.photos[1]}
+              alt={`${sitter.firstName}-${sitter.lastName}-profile-image`}
             />
             <Typography component="h5" variant="h5" align="center" className={classes.sitterName}>
-              {`${sitter.sitterFirstName} ${sitter.sitterLastName}`}
+              {`${sitter.firstName} ${sitter.lastName}`}
             </Typography>
             <Typography component="p" variant="body1" align="center" className={classes.sitterShortDesc}>
-              {sitter.sitterShortDesc}
+              {sitter.title}
             </Typography>
             <Box
               width="250px"
@@ -51,7 +53,7 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
             >
               <LocationOnIcon className={classes.locationIcon} />
               <Typography component="p" variant="body1" align="center" className={classes.sitterLocationText}>
-                {`${sitter.sitterCity}, ${sitter.sitterProvince}`}
+                {sitter.address}
               </Typography>
             </Box>
           </Box>
@@ -60,15 +62,16 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
               About me
             </Typography>
             <Typography component="p" variant="body1" className={classes.aboutMeDesc}>
-              {sitter.sitterAboutMe}
+              {sitter.description}
             </Typography>
             <ImageList className={classes.imageList} rowHeight={125}>
-              {sitter.sitterPetImages.map((item: petImageInfo) => (
-                <ImageListItem key={item.img}>
+              {/* Assume from photos[2] to photos[lastIndex] are always pet images for ProfileDetail Page */}
+              {sitter.photos.slice(2).map((image: string) => (
+                <ImageListItem key={image}>
                   <img
                     className={classes.imageItem}
-                    src={`${item.img}?w=125&h=125&fit=crop&auto=format`}
-                    alt={item.title}
+                    src={`${image}?w=125&h=125&fit=crop&auto=format`}
+                    alt={`pet-image-${image}`}
                     loading="lazy"
                   />
                 </ImageListItem>
