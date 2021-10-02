@@ -38,6 +38,12 @@ const useStyles = makeStyles((theme: Theme) =>
     popoverWrap: {
       minWidth: '500px',
     },
+    unread: {
+      backgroundColor: 'lightgrey',
+    },
+    read: {
+      backgroundColor: 'white',
+    },
   }),
 );
 

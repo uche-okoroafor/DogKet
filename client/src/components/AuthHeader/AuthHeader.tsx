@@ -18,6 +18,15 @@ const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 
+  useEffect(() => {
+    const fetchCount = async () => {
+      const success = await getCount(null);
+      if (success) setCount(success['count']);
+      console.log(success);
+    };
+    fetchCount();
+  }, []);
+
   return (
     <Box
       width="100%"

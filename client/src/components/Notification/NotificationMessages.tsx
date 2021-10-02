@@ -13,28 +13,30 @@ export default function NotificationMessages({ messagesToShow }: any) {
   return (
     <Box className={classes.root}>
       {messagesToShow.map((message: any) => (
-        <Grid container spacing={1} key={message._id}>
-          <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={tempImage} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography variant="subtitle1" className={classes.title}>
-                  {message.title}
-                </Typography>
-                <Typography gutterBottom variant="body2" color="textSecondary" className={classes.type}>
-                  {message.type}
-                </Typography>
-                <Typography variant="body2" gutterBottom className={classes.date}>
-                  {message.date}
-                </Typography>
+        <Box className={!message.read ? classes.unread : classes.read} key={message._id}>
+          <Grid container spacing={1}>
+            <Grid item>
+              <ButtonBase className={classes.image}>
+                <img className={classes.img} alt="complex" src={tempImage} />
+              </ButtonBase>
+            </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+                  <Typography variant="subtitle1" className={classes.title}>
+                    {message.title}
+                  </Typography>
+                  <Typography gutterBottom variant="body2" color="textSecondary" className={classes.type}>
+                    {message.type}
+                  </Typography>
+                  <Typography variant="body2" gutterBottom className={classes.date}>
+                    {message.date}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Box>
       ))}
     </Box>
   );

@@ -6,10 +6,12 @@ const {
   createNotification,
   notificationList,
   updateReadStatus,
+  notificationCount,
 } = require("../controllers/notifications");
 
 router.route("/").post(protect, createNotification);
+router.route("/count").get(protect, notificationCount);
 router.route("/").get(protect, notificationList);
-router.route("/:notificationId").patch(protect, updateReadStatus);
+router.route("/").patch(protect, updateReadStatus);
 
 module.exports = router;
