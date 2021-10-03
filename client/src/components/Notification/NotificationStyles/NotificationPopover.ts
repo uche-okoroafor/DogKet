@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
     },
     popoverWrap: {
-      minWidth: '500px',
+      minWidth: '450px',
     },
   }),
 );
