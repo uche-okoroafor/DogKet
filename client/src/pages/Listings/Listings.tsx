@@ -35,9 +35,7 @@ const Listings = (): JSX.Element => {
         setProfiles(fetchedProfiles);
       };
       fetchProfiles();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
