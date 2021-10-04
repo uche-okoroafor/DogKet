@@ -27,8 +27,6 @@ const SitterCard = ({ sitter }: Props): JSX.Element => {
             <Avatar
               variant="circular"
               className={classes.avatar}
-              // Assume photos[0] is always a background image source displayed in ProfileDetail,
-              // and photos[1] is always an avatar image source of a sitter
               src={sitter.photos[1]}
               alt={`${sitter.firstName}-${sitter.lastName}-profile-image`}
               component={Link}
