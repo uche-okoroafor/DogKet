@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
@@ -15,8 +16,15 @@ import MyJobs from './pages/MyJobs/MyJobs';
 import Profile from './pages/Profile/Profile';
 import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
 import Messages from './pages/Messages/Messages';
+import PaymentProfile from './pages/Payment/Payment';
+import './App.css';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { PaymentProfilesProvider } from './context/usePaymentProfilesContext';
 
 import './App.css';
+
+const stripePromise = loadStripe();
 
 function App(): JSX.Element {
   return (
@@ -25,23 +33,29 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
-                <Route exact path="/listings" component={Listings} />
-                <Route path="/listings/:sitterId" component={ProfileDetail} />
-                <Route exact path="/profile" component={Profile} />
-                <Route path="/profile/:setting" component={Profile} />
-                <ConvoProvider>
-                  <Route exact path="/messages" component={Messages} />
-                </ConvoProvider>
-                <Route exact path="/my-sitters" component={MySitters} />
-                <Route exact path="/my-jobs" component={MyJobs} />
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
+              <PaymentProfilesProvider>
+                <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
+                  <Route exact path="/listings" component={Listings} />
+                  <Route path="/listings/:sitterId" component={ProfileDetail} />
+                  <Route exact path="/profile" component={Profile} />
+                  <Route path="/profile/:setting" component={Profile} />
+                  <Elements stripe={stripePromise}>
+                    <ProtectedRoute exact path="/payment" component={PaymentProfile} />
+                  </Elements>
+                  <ConvoProvider>
+                    <Route exact path="/messages" component={Messages} />
+                  </ConvoProvider>
+
+                  <Route exact path="/my-sitters" component={MySitters} />
+                  <Route exact path="/my-jobs" component={MyJobs} />
+                  <Route path="*">
+                    <Redirect to="/login" />
+                  </Route>
+                </Switch>
+              </PaymentProfilesProvider>
             </SocketProvider>
           </AuthProvider>
         </SnackBarProvider>
