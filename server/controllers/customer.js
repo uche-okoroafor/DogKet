@@ -5,7 +5,7 @@ const User = require("../models/User");
 exports.createCustomer = asyncHandler(async (req, res) => {
   const { billing_details, id } = req.body;
   const { userId } = req.params;
-  if (!userId && !id) {
+  if (!userId || !id) {
     return res
       .status(404)
       .json({ err: "userId or paymentMethodId is undefined" });
@@ -36,7 +36,7 @@ exports.createCustomer = asyncHandler(async (req, res) => {
 
 exports.addPaymentprofile = asyncHandler(async (req, res) => {
   const { paymentMethodId, userStripeId } = req.body;
-  if (!paymentMethodId && !userStripeId) {
+  if (!paymentMethodId || !userStripeId) {
     return res
       .status(404)
       .json({ err: "paymentMethodId or userStripeId is undefined" });
