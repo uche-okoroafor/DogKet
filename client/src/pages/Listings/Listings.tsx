@@ -1,14 +1,17 @@
-import { useState, SyntheticEvent } from 'react';
-import { Grid, Box, Typography, Button } from '@mui/material';
+import { useState, SyntheticEvent, useEffect } from 'react';
+import { Grid, Box, Typography, Button, CircularProgress } from '@mui/material';
 import { DateRange } from '@mui/lab/DateRangePicker';
 import Layout from '../Layout/Layout';
 import SearchLocation from './SearchLocation/SearchLocation';
 import SearchDateRange from './SearchDateRange/SearchDateRange';
 import SitterCard from './SitterCard/SitterCard';
-import { Sitter, sampleData } from '../Profile/ProfileDetail/sampleData';
+import { Sitter } from '../Profile/ProfileDetail/sampleData';
+import { getAllProfiles } from '../../helpers/APICalls/profiles';
+import { Profile } from '../../interface/Profile';
 import useStyles from './useStyles';
 
 const Listings = (): JSX.Element => {
+  const [profiles, setProfiles] = useState<Profile[] | undefined>();
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
   const [search, setSearch] = useState<string>('test');
   const [newSitter, setNewSitter] = useState<Sitter | null>(null);
@@ -25,8 +28,25 @@ const Listings = (): JSX.Element => {
     setDateRange(newDateRange);
   };
 
+  useEffect(() => {
+    try {
+      const fetchProfiles = async () => {
+        const fetchedProfiles = await getAllProfiles();
+        setProfiles(fetchedProfiles);
+      };
+      fetchProfiles();
+    } catch (error) {}
+  }, []);
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleShowMore = () => {};
+
+  if (!profiles)
+    return (
+      <Box height="100vh" display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress size={100} />
+      </Box>
+    );
 
   return (
     <Layout>
@@ -48,8 +68,8 @@ const Listings = (): JSX.Element => {
         </Box>
 
         <Grid container className={classes.sitterLists} justifyContent="space-evenly">
-          {sampleData.slice(0, 6).map((sitter) => (
-            <SitterCard key={sitter.sitterId} sitter={sitter} />
+          {profiles?.slice(0, 6).map((profile: Profile) => (
+            <SitterCard key={profile._id} sitter={profile} />
           ))}
         </Grid>
         <Box display="flex" justifyContent="center" alignItems="center" className={classes.showMoreBox}>
