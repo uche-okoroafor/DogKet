@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     top: '18px',
     left: '48px',
     font: 'inherit',
-    fontSize: '16px',
     color: '#aaa',
   },
   formattedDateRangeText: {
