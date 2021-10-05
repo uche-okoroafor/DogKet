@@ -25,7 +25,7 @@ interface Props {
   updateTime: (arg0: Date, arg1: string, arg2: number) => void;
 }
 
-const BookingForm = ({ values, touched, errors, dateRange, day, updateTime }: Props): JSX.Element => {
+const AvailabilityForm = ({ values, touched, errors, dateRange, day, updateTime }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -74,4 +74,4 @@ const BookingForm = ({ values, touched, errors, dateRange, day, updateTime }: Pr
   );
 };
 
-export default BookingForm;
+export default AvailabilityForm;

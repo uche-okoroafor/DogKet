@@ -14,7 +14,6 @@ import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
 import AvailabilityForm from './AvailabilityForm/AvailabilityForm';
 import patchProfile from '../../../helpers/APICalls/updateProfile';
-import createUpdateProfile from '../../../helpers/APICalls/createProfile';
 
 const formSchema: { dateRange: RangeSchema } = {
   dateRange: {
@@ -51,7 +50,7 @@ interface RangeSchema {
   saturday: DateRange<Date | null>;
 }
 
-const Security = (): JSX.Element => {
+const Availability = (): JSX.Element => {
   const classes = useStyles();
   const [dateRange, setDateRange] = useState<RangeSchema>(formSchema.dateRange);
   const [formError, setformError] = useState<boolean>(false);
@@ -152,4 +151,4 @@ const Security = (): JSX.Element => {
   );
 };
 
-export default Security;
+export default Availability;

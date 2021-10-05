@@ -17,4 +17,3 @@ router.get("/", profileController.getAllProfiles);
 // router.post("/upload", uploadController.setUpload);
 
 module.exports = router;
-j;

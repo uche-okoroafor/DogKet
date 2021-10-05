@@ -41,7 +41,6 @@ interface ProfileApiData {
 }
 
 const patchProfile = async (data: Props, profileId: string): Promise<ProfileApiData> => {
-  console.log(data);
   const fetchOptions: FetchOptions = {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },

@@ -20,24 +20,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
   },
-  formWrap: {
-    width: '60%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   m5: {
     marginRight: '20px',
-  },
-  bookingBox: {
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(3, 3, 3, 0),
-    },
-  },
-  bookingContainer: {
-    [theme.breakpoints.down('xs')]: {
-      width: '100vw',
-    },
   },
   bookingForm: {
     padding: theme.spacing(2),
@@ -46,24 +30,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  hourlyWage: {
-    fontWeight: 700,
-    padding: theme.spacing(2),
-  },
-  rating: {
-    padding: theme.spacing(0, 0, 1),
-  },
   label: {
     fontWeight: 700,
     textTransform: 'uppercase',
-  },
-  inputField: {
-    padding: theme.spacing(1, 0),
-    [theme.breakpoints.between(426, 1440)]: {
-      flexDirection: 'column',
-      height: '170px',
-      justifyContent: 'space-between',
-    },
   },
   submit: {
     textTransform: 'uppercase',
@@ -72,10 +41,6 @@ const useStyles = makeStyles((theme) => ({
     width: '180px',
     height: '50px',
     marginTop: '60px  !important',
-  },
-  dateRangeIcon: {
-    color: '#aaa',
-    marginRight: theme.spacing(1),
   },
   hourInput: {
     width: '160px',
@@ -87,13 +52,6 @@ const useStyles = makeStyles((theme) => ({
   errorHelperText: {
     color: 'red !important',
     margin: '0 0 8px !important',
-  },
-  timeLabel: {
-    fontWeight: 900,
-    textDecoration: 'uppercase',
-  },
-  weekdayLabel: {
-    color: 'lightgrey',
   },
   dayLabel: {
     color: 'black',
