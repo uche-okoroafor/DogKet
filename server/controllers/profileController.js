@@ -15,7 +15,7 @@ exports.createProfile = async (req, res, next) => {
     let profile = await Profile.findOne({ userId });
 
     if (profile) {
-      res.status(404);
+      res.status(409);
       throw new Error("Profile already exists");
     }
 
