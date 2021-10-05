@@ -5,10 +5,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    // width: '90%',
-    // justifyContent: 'space-evenly',
-    // height: '15%',
-    // margin: 'none',
     width: '100%',
   },
   listWrap: {
