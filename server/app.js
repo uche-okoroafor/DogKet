@@ -45,7 +45,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/profile", protect, profileRouter);
+app.use("/profile", profileRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/conversations", protect, conversationRouter);

@@ -1,6 +1,6 @@
 const colors = require("colors");
 const dotenv = require("dotenv");
-dotenv.config({ path: "sample.env" });
+dotenv.config({ path: ".env" });
 
 const connectDB = require("./db");
 

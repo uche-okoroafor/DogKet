@@ -9,12 +9,14 @@ import { Sitter } from '../Profile/ProfileDetail/sampleData';
 import { getAllProfiles } from '../../helpers/APICalls/profiles';
 import { Profile } from '../../interface/Profile';
 import useStyles from './useStyles';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 const Listings = (): JSX.Element => {
-  const [profiles, setProfiles] = useState<Profile[] | undefined>();
+  const [profiles, setProfiles] = useState<Profile[]>([]);
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
   const [search, setSearch] = useState<string>('test');
   const [newSitter, setNewSitter] = useState<Sitter | null>(null);
+  const { updateSnackBarMessage } = useSnackBar();
   const classes = useStyles();
 
   const searchLocationHandleChange = (e: SyntheticEvent<Element, Event>, newInputValue: string) => {
@@ -35,8 +37,12 @@ const Listings = (): JSX.Element => {
         setProfiles(fetchedProfiles);
       };
       fetchProfiles();
-    } catch (error) {}
-  }, []);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        updateSnackBarMessage(error.message);
+      }
+    }
+  }, [updateSnackBarMessage]);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleShowMore = () => {};

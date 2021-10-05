@@ -1,4 +1,4 @@
-require("dotenv").config({ path: __dirname + "/../sample.env" });
+require("dotenv").config({ path: __dirname + "/../.env" });
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const { app } = require("../app.js");
