@@ -6,11 +6,11 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
-import { Sitter } from '../../sampleData';
+import { Profile } from '../../../../../interface/Profile';
 import useStyles from './useStyles';
 
 interface Props {
-  sitter: Sitter;
+  sitter: Profile;
 }
 
 const formSchema: { dateRange: DateRange<Date | null> } = { dateRange: [null, null] };
@@ -23,6 +23,8 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
 
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
+
+  const mockRandomRating = Math.floor(1 + Math.random() * 5);
 
   const handleSubmit = (
     // 'dateRange' will be used when we send 'submit request' to backend
@@ -76,9 +78,9 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
             renderInput={(startProps, endProps) => (
               <Form onSubmit={handleSubmit} className={classes.bookingForm}>
                 <Typography component="h5" variant="h5" align="center" className={classes.hourlyWage}>
-                  {`$ ${sitter.sitterWage}/ hr`}
+                  {`$ ${sitter.hourlyWage}/ hr`}
                 </Typography>
-                <Rating name="read-only" value={sitter.sitterRating} readOnly className={classes.rating} />
+                <Rating name="read-only" value={mockRandomRating} readOnly className={classes.rating} />
                 <Box display="flex" flexDirection="column" className={classes.inputField}>
                   <Typography variant="body2" className={classes.label}>
                     Drop In

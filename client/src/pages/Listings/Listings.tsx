@@ -8,6 +8,7 @@ import SitterCard from './SitterCard/SitterCard';
 import { Sitter } from '../Profile/ProfileDetail/sampleData';
 import { getAllProfiles } from '../../helpers/APICalls/profiles';
 import { Profile } from '../../interface/Profile';
+import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
