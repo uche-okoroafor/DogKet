@@ -10,7 +10,6 @@ import { getAllProfiles } from '../../helpers/APICalls/profiles';
 import { Profile } from '../../interface/Profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
-import { useSnackBar } from '../../context/useSnackbarContext';
 
 const Listings = (): JSX.Element => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -48,7 +47,7 @@ const Listings = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleShowMore = () => {};
 
-  if (!profiles)
+  if (!profiles.length)
     return (
       <Box height="100vh" display="flex" justifyContent="center" alignItems="center">
         <CircularProgress size={100} />
