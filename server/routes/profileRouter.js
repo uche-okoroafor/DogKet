@@ -11,8 +11,10 @@ router.put(
   validateSitterProfile,
   profileController.updateProfile
 );
+router.patch("/:profileId", profileController.patchProfile);
 router.get("/:profileId", profileController.findProfile);
 router.get("/", profileController.getAllProfiles);
 // router.post("/upload", uploadController.setUpload);
 
 module.exports = router;
+j;
