@@ -13,8 +13,10 @@ router.put(
   validateSitterProfile,
   profileController.updateProfile
 );
+router.get("/search", protect, profileController.searchSittersByCity);
 router.get("/:profileId", protect, profileController.findProfile);
 router.get("/", protect, profileController.getAllProfiles);
+
 // router.post("/upload", uploadController.setUpload);
 
 module.exports = router;

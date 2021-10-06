@@ -1,7 +1,8 @@
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent, useEffect } from 'react';
 import { Box, InputBase, Autocomplete } from '@mui/material';
 import SearchIcon from '@material-ui/icons/Search';
-import { Sitter } from '../../Profile/ProfileDetail/sampleData';
+import { useDebounce } from 'use-debounce';
+import { searchSittersByAddress } from '../../../helpers/APICalls/profiles';
 import useStyles from './useStyles';
 
 interface Props {
@@ -12,12 +13,37 @@ interface Props {
 const SearchLocation = ({ search, handleChange }: Props): JSX.Element => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  // this will be used when implementing search functionality
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [options, setOptions] = useState<Sitter[]>([]);
-  // this will be used when implementing search functionality
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [options, setOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [debouncedSearch] = useDebounce(search, 500);
+
+  const saveOptions = (cities: string[]) => {
+    setOptions(cities);
+  };
+
+  useEffect(() => {
+    let active = true;
+
+    const searchAndSaveSitters = async () => {
+      setLoading(true);
+      const response = await searchSittersByAddress({
+        city: debouncedSearch,
+      });
+      const sitterCities: string[] = [];
+
+      if (active && response && response.length) {
+        response.map((sitter) => sitterCities.push(sitter.address));
+        saveOptions([...new Set(sitterCities)]);
+      }
+      setLoading(false);
+    };
+
+    searchAndSaveSitters();
+
+    return () => {
+      active = false;
+    };
+  }, [debouncedSearch]);
 
   return (
     <form
@@ -34,7 +60,7 @@ const SearchLocation = ({ search, handleChange }: Props): JSX.Element => {
         onClose={() => {
           setOpen(false);
         }}
-        getOptionLabel={(option) => option.sitterCity}
+        getOptionLabel={(option) => option}
         options={options}
         loading={loading}
         onInputChange={handleChange}

@@ -5,7 +5,6 @@ import Layout from '../Layout/Layout';
 import SearchLocation from './SearchLocation/SearchLocation';
 import SearchDateRange from './SearchDateRange/SearchDateRange';
 import SitterCard from './SitterCard/SitterCard';
-import { Sitter } from '../Profile/ProfileDetail/sampleData';
 import { getAllProfiles } from '../../helpers/APICalls/profiles';
 import { Profile } from '../../interface/Profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
@@ -14,16 +13,12 @@ import useStyles from './useStyles';
 const Listings = (): JSX.Element => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
-  const [search, setSearch] = useState<string>('test');
-  const [newSitter, setNewSitter] = useState<Sitter | null>(null);
+  const [search, setSearch] = useState<string>('');
   const { updateSnackBarMessage } = useSnackBar();
   const classes = useStyles();
 
   const searchLocationHandleChange = (e: SyntheticEvent<Element, Event>, newInputValue: string) => {
     setSearch(newInputValue);
-    if (newSitter) {
-      setNewSitter(null);
-    }
   };
 
   const searchDateRangeHandleChange = (newDateRange: DateRange<Date>) => {
@@ -49,14 +44,16 @@ const Listings = (): JSX.Element => {
 
   if (!profiles.length)
     return (
-      <Box height="100vh" display="flex" justifyContent="center" alignItems="center">
-        <CircularProgress size={100} />
-      </Box>
+      <Layout>
+        <Box height="100%" display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress size={100} />
+        </Box>
+      </Layout>
     );
 
   return (
     <Layout>
-      <Grid className={classes.listings}>
+      <Grid height="100%" className={classes.listings}>
         <Box
           height="50px"
           display="flex"
@@ -73,10 +70,18 @@ const Listings = (): JSX.Element => {
           <SearchDateRange dateRange={dateRange} handleChange={searchDateRangeHandleChange} />
         </Box>
 
-        <Grid container className={classes.sitterLists} justifyContent="space-evenly">
-          {profiles?.slice(0, 6).map((profile: Profile) => (
-            <SitterCard key={profile._id} sitter={profile} />
-          ))}
+        <Grid
+          width="100vw"
+          minHeight="calc(100vh - 196px)"
+          container
+          className={classes.sitterLists}
+          justifyContent="space-evenly"
+        >
+          {profiles
+            .filter((profile: Profile) => profile.address.toLowerCase().includes(search.toLowerCase()))
+            .map((profile: Profile) => (
+              <SitterCard key={profile._id} sitter={profile} />
+            ))}
         </Grid>
         <Box display="flex" justifyContent="center" alignItems="center" className={classes.showMoreBox}>
           <Button variant="outlined" onClick={handleShowMore} className={classes.showMoreBtn}>
