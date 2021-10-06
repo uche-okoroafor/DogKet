@@ -11,6 +11,7 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const notificationRouter = require("./routes/notifications");
 const profileRouter = require("./routes/profileRouter");
 const conversationRouter = require("./routes/conversation");
 const messageRouter = require("./routes/message");
@@ -47,8 +48,9 @@ app.use((req, res, next) => {
 app.use("/profile", profileRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
-app.use("/conversations", conversationRouter);
-app.use("/messages", messageRouter);
+app.use("/notification", notificationRouter);
+app.use("/conversations", protect, conversationRouter);
+app.use("/messages", protect, messageRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
