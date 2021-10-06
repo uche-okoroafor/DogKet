@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import ChatSideBanner from './ChatSideBanner';
-import { mockLoggedInUser } from '../../mocks/mockUser';
+import { mockLoggedInUser } from '../../../mocks/mockUser';
 
 describe('ChatSideBanner tests', () => {
   test('smoke test', () => {

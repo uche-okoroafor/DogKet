@@ -1,10 +1,10 @@
 import { Grid, Box, Paper } from '@mui/material';
 import BookingForm from './BookingForm/BookingForm';
-import { Sitter } from '../sampleData';
+import { Profile } from '../../../../interface/Profile';
 import useStyles from './useStyles';
 
 interface Props {
-  sitter: Sitter;
+  sitter: Profile;
 }
 
 const BookingCard = ({ sitter }: Props): JSX.Element => {

@@ -3,9 +3,9 @@ import useStyles from './useStyles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { User } from '../../interface/User';
+import { User } from '../../../../interface/User';
 import { useDebounce } from 'use-debounce';
-import { searchUsers } from '../../helpers/APICalls/searchUsers';
+import { searchUsers } from '../../../../helpers/APICalls/searchUsers';
 
 interface Props {
   search: string;
@@ -35,7 +35,6 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
       });
 
       if (active && response && response.users) {
-        console.log(response);
         saveOptions(response.users);
       }
       setLoading(false);
