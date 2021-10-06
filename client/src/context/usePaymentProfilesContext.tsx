@@ -2,7 +2,7 @@
 import { useState, useContext, createContext, FunctionComponent } from 'react';
 import { User } from '../interface/User';
 
-interface IPaymentProfiles {
+interface PaymentProfiles {
   updatePaymentProfiles: (UserPaymentProfiles: any) => void;
   updateLoggedInUser: (loggedInuser: any) => void;
   paymentProfiles: any;
