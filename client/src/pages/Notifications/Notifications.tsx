@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
@@ -12,9 +12,9 @@ export default function NotificationPopover(): JSX.Element {
   const classes = useStyles();
   const returnNotificationType = (res: any): Notification[] => res.notifications;
   const messages: Notification[] = [];
-  const [messagesToShow, setmessagesToShow] = React.useState(messages);
-  const [page, setPage] = React.useState(1);
-  const [count, setCount] = React.useState(1);
+  const [messagesToShow, setmessagesToShow] = useState(messages);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(1);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -48,7 +48,7 @@ export default function NotificationPopover(): JSX.Element {
   return (
     <Box className={`${classes.root} ${classes.pageWrap}`}>
       <Paper className={classes.paper}>
-        {messagesToShow.length < 1 ? (
+        {messagesToShow.length ? (
           <Box>
             <Typography variant="subtitle1" className={classes.title}>
               No notifications.

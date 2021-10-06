@@ -11,6 +11,12 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
     const userId = req.user.id;
 
     const { type, title, description } = req.body;
+
+    if (!type && !title && !description) {
+      res.status(400).json({
+        message: "Bad Request",
+      });
+    }
     const notificatonModel = {
       userId: ObjectId(userId),
       type,
@@ -64,7 +70,7 @@ exports.updateReadStatus = asyncHandler(async (req, res, next) => {
     const userId = req.user.id;
     const { notificationsToUpd } = req.body;
 
-    if (notificationsToUpd.length <= 0) {
+    if (!notificationsToUpd?.length) {
       return res.status(200).json({
         success: { notifications: [] },
       });

@@ -15,8 +15,7 @@ export const createNotification = async (
 
   try {
     const fetchData = await fetch(`/notification`, fetchOptions);
-    const notification = await fetchData.json();
-    return notification;
+    return fetchData.json();
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
   }
@@ -76,8 +75,7 @@ export const updReadNotifications = async (notificationsToUpd: string[]): Promis
 
   try {
     const fetchData = await fetch(`/notification`, fetchOptions);
-    const updateNotification = await fetchData.json();
-    return updateNotification;
+    return await fetchData.json();
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };
   }

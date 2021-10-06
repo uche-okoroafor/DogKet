@@ -15,7 +15,6 @@ interface Props {
 export default function NotificationMessages({ messagesToShow }: Props): JSX.Element {
   const classes = useStyles();
 
-  console.log(messagesToShow);
   return (
     <Box className={classes.root}>
       {messagesToShow.map((message: Notification) => (
