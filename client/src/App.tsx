@@ -24,25 +24,25 @@ function App(): JSX.Element {
       <BrowserRouter>
         <SnackBarProvider>
           <AuthProvider>
-            <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
-                <Route exact path="/listings" component={Listings} />
-                <Route path="/listings/:sitterId" component={ProfileDetail} />
-                <Route exact path="/profile" component={Profile} />
-                <Route path="/profile/:setting" component={Profile} />
-                <ConvoProvider>
-                  <Route exact path="/messages" component={Messages} />
-                </ConvoProvider>
-                <Route exact path="/my-sitters" component={MySitters} />
-                <Route exact path="/my-jobs" component={MyJobs} />
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
-            </SocketProvider>
+            {/* <SocketProvider> */}
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
+              <Route exact path="/listings" component={Listings} />
+              <Route path="/listings/:sitterId" component={ProfileDetail} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/profile/:setting" component={Profile} />
+              <ConvoProvider>
+                <Route exact path="/messages" component={Messages} />
+              </ConvoProvider>
+              <Route exact path="/my-sitters" component={MySitters} />
+              <Route exact path="/my-jobs" component={MyJobs} />
+              <Route path="*">
+                <Redirect to="/login" />
+              </Route>
+            </Switch>
+            {/* </SocketProvider> */}
           </AuthProvider>
         </SnackBarProvider>
       </BrowserRouter>

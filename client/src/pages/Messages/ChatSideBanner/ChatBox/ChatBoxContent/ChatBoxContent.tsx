@@ -1,30 +1,33 @@
 import { Box, Typography } from '@material-ui/core';
+import { Message } from '../../../../../interface/Conversation';
+import moment from 'moment';
 import useStyles from './useStyles';
 
 interface Props {
-  username: string;
-  latestMessageText: string;
+  fullName: string;
+  latestMessage?: Message;
 }
 
-const ChatBoxContent = ({ username, latestMessageText }: Props): JSX.Element => {
+const ChatBoxContent = ({ fullName, latestMessage }: Props): JSX.Element => {
   const classes = useStyles();
-
   return (
     <Box display="flex" justifyContent="space-between" className={classes.chatBoxContent}>
       <Box className={classes.chatInfo}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h6" className={classes.username}>
-            {username}
+            {fullName}
           </Typography>
-          <Typography className={classes.smallScreenTime}>Yesterday</Typography>
+          <Typography className={classes.smallScreenTime}>
+            {moment(latestMessage?.createdAt).format('HH:mm')}
+          </Typography>
         </Box>
         <Typography variant="body2" className={classes.previewText}>
-          {latestMessageText}
+          {latestMessage?.text}
         </Typography>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="center" className={classes.timeInfo}>
         <Typography variant="body2" className={classes.receivedTime} align="right">
-          Yesterday
+          {moment(latestMessage?.createdAt).format('HH:mm[\n]A')}
         </Typography>
       </Box>
     </Box>

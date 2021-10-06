@@ -31,7 +31,7 @@ exports.validateLogin = [
 exports.validateSendMessage = [
   check("conversationId", "conversationId is required").not().isEmpty(),
   check("text", "text is required").not().isEmpty(),
-  check("recipientId", "recipientId is required").not().isEmpty(),
+  check("recipientProfileId", "recipientProfileId is required").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -41,7 +41,7 @@ exports.validateSendMessage = [
 ];
 
 exports.validateCreateConversation = [
-  check("recipientId", "recipientId is required").not().isEmpty(),
+  check("recipientProfileId", "recipientProfileId is required").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())

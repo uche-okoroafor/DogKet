@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const conversationSchema = new Schema(
   {
-    user1: {
+    user1Profile: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "profile",
     },
-    user2: {
+    user2Profile: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "profile",
     },
     latestMessage: {
       type: Schema.Types.ObjectId,
