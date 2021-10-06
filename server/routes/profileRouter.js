@@ -14,7 +14,6 @@ router.put(
   profileController.updateProfile
 );
 router.patch("/:profileId", protect, profileController.patchProfile);
-router.get("/:profileId", profileController.findProfile);
 router.get("/:profileId", protect, profileController.findProfile);
 router.get("/", protect, profileController.getAllProfiles);
 // router.post("/upload", uploadController.setUpload);

@@ -104,7 +104,7 @@ exports.updateProfile = async (req, res, next) => {
 
 // @route PATCH /profile/:profileId
 // @access private
-// @desc patch a profile of a logged-in user. Onmly provided props will be updated.
+// @desc patch a profile of a logged-in user. Only provided props will be updated.
 exports.patchProfile = async (req, res, next) => {
   try {
     const { profileId } = req.params;
