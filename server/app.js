@@ -8,7 +8,7 @@ const connectDB = require("./db");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-
+const protect = require("./middleware/auth");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const notificationRouter = require("./routes/notifications");
