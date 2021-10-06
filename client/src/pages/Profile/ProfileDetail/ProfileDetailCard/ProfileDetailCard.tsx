@@ -27,14 +27,12 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
               className={classes.profileBackgroundImg}
               width="100%"
               height="200px"
-              // Assume photos[0] is always a background image source displayed in ProfileDetail
               src={sitter.photos[0]}
               alt="profile-detail-bg-image"
             />
             <Avatar
               variant="circular"
               className={classes.avatar}
-              // Assume photos[1] is always an avatar image source of a sitter
               src={sitter.photos[1]}
               alt={`${sitter.firstName}-${sitter.lastName}-profile-image`}
             />
@@ -65,7 +63,6 @@ const ProfileDetailCard = ({ sitter }: Props): JSX.Element => {
               {sitter.description}
             </Typography>
             <ImageList className={classes.imageList} rowHeight={125}>
-              {/* Assume from photos[2] to photos[lastIndex] are always pet images for ProfileDetail Page */}
               {sitter.photos.slice(2).map((image: string) => (
                 <ImageListItem key={image}>
                   <img

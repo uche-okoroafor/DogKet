@@ -1,4 +1,3 @@
-// TODO: Remove this 'sampleData.ts' file after finishing 'Dynamic Listings Page' ticket
 export interface petImageInfo {
   img: string;
   title: string;

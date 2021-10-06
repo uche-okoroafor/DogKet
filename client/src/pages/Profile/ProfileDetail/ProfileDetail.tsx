@@ -6,12 +6,15 @@ import ProfileDetailCard from './ProfileDetailCard/ProfileDetailCard';
 import BookingCard from './BookingCard/BookingCard';
 import { Profile } from '../../../interface/Profile';
 import { getProfileDetail } from '../../../helpers/APICalls/profiles';
+import { useSnackBar } from '../../../context/useSnackbarContext';
 
 const ProfileDetail = (): JSX.Element => {
   const params: { sitterId: string } = useParams();
   const { sitterId } = params;
 
   const [sitter, setSitter] = useState<Profile | null | undefined>(null);
+
+  const { updateSnackBarMessage } = useSnackBar();
 
   useEffect(() => {
     try {
@@ -20,10 +23,12 @@ const ProfileDetail = (): JSX.Element => {
         setSitter(fetchedProfileDetail);
       };
       fetchProfileDetail();
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        updateSnackBarMessage(error.message);
+      }
     }
-  }, [sitterId]);
+  }, [sitterId, updateSnackBarMessage]);
 
   if (!sitter)
     return (
