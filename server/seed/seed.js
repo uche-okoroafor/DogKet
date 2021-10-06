@@ -1,4 +1,3 @@
-const colors = require("colors");
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env" });
 
@@ -13,36 +12,20 @@ const Message = require("../models/Message");
 async function deleteData() {
   try {
     await User.deleteMany();
-    console.log("Users are deleted..");
-
     await Conversation.deleteMany();
-    console.log("Conversations are deleted..");
-
     await Message.deleteMany();
-    console.log("Messages are deleted..");
-
     await Profile.deleteMany();
-    console.log("Profiles are deleted..\n");
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) {}
 }
 
 async function seed() {
   await connectDB();
   await deleteData();
 
-  // Total 9 users.
-  // DemoUser: testUsers[0], OtherUsers: testUsers[1] ~ testUsers[8]
   const testUsers = await seedUsers();
-  console.log(testUsers.length + " testUsers are created..");
 
-  // Total 9 profiles.
-  // DemoUserProfile: testProfiles[0], OtherUserProfiles: testProfiles[1] ~ testProfiles[8]
   const testProfiles = await seedProfiles(testUsers);
-  console.log(testProfiles.length + " testProfiles are created..");
 
-  // Initial conversation between demoUser and test1
   const demoUserConvo = await Conversation.create({
     user1Profile: testProfiles[0]._id,
     user2Profile: testProfiles[1]._id,
@@ -72,7 +55,6 @@ async function seed() {
   demoUserConvo.latestMessage = demoUserTest1Message3._id;
   await demoUserConvo.save();
 
-  // Initial conversation between demoUser and test2
   const demoUserConvo2 = await Conversation.create({
     user1Profile: testProfiles[0]._id,
     user2Profile: testProfiles[2]._id,
@@ -102,7 +84,6 @@ async function seed() {
   demoUserConvo2.latestMessage = demoUserTest2Message3._id;
   await demoUserConvo2.save();
 
-  // Initial conversation between demoUser and test3 (Test3 starts the conversation)
   const demoUserConvo3 = await Conversation.create({
     user1Profile: testProfiles[3]._id,
     user2Profile: testProfiles[0]._id,
@@ -134,15 +115,11 @@ async function seed() {
 }
 
 async function runSeed() {
-  console.log("seeding..");
   try {
     await seed();
-    console.log("data seeded successfully..");
   } catch (err) {
-    console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log("MongoDB connection closed..".cyan.underline + "\n");
     process.exit();
   }
 }
