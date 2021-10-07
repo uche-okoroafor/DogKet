@@ -10,7 +10,12 @@ const NotificationSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["newRequest", "requestStatus", "payment"],
+      enum: [
+        "Pet Sitting",
+        "Sitting Accepted",
+        "Payment Deposited",
+        "Sitting Declined",
+      ],
       required: true,
     },
     title: {
