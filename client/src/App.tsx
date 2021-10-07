@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import { AuthProvider } from './context/useAuthContext';
-import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { ConvoProvider } from './context/useConvoContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -39,6 +38,7 @@ function App(): JSX.Element {
               </ConvoProvider>
               <Route exact path="/my-sitters" component={MySitters} />
               <Route exact path="/my-jobs" component={MyJobs} />
+              <Route exact path="/" component={Landing} />
               <Route path="*">
                 <Redirect to="/login" />
               </Route>
