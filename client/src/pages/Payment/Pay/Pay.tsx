@@ -32,6 +32,8 @@ export default function Pay({
   const { serviceRequestDetails, openDialog, handlePayDialog, handleServiceRequestDetails } = usePayment();
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const history = useHistory();
 
   const stripe = useStripe();
@@ -68,7 +70,10 @@ export default function Pay({
           payment_method: paymentMethodId,
         });
         confirmation.paymentIntent.status === 'succeeded' ? setPaymentConfirmed(true) : setPaymentConfirmed(false);
-      } catch (err) {}
+      } catch (err) {
+        const error: any = err;
+        setErrorMessage(error.message);
+      }
     }
   };
 

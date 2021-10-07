@@ -30,6 +30,7 @@ export default function PaymentProfile(): JSX.Element {
   const [paymentProfileExist, SetPaymentProfileExist] = useState<boolean>(false);
   const [userIds, setUserIds] = useState<any>(false);
   const [defaultPaymentMethodId, setDefaultPaymentMethodId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const hiddenCardNumber: string[] = [starOfLife, starOfLife, starOfLife, starOfLife];
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function PaymentProfile(): JSX.Element {
       return stripeId;
     } catch (err) {
       const error: any = err;
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   };
 
@@ -68,7 +69,7 @@ export default function PaymentProfile(): JSX.Element {
       SetPaymentProfileExist(true);
     } catch (err) {
       const error: any = err;
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   };
 
