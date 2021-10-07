@@ -14,8 +14,8 @@ import MySitters from './pages/MySitters/MySitters';
 import MyJobs from './pages/MyJobs/MyJobs';
 import Profile from './pages/Profile/Profile';
 import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
+import Notifications from './pages/Notifications/Notifications';
 import Messages from './pages/Messages/Messages';
-
 import './App.css';
 
 function App(): JSX.Element {
@@ -33,6 +33,7 @@ function App(): JSX.Element {
                 <Route path="/listings/:sitterId" component={ProfileDetail} />
                 <Route exact path="/profile" component={Profile} />
                 <Route path="/profile/:setting" component={Profile} />
+                <Route exact path="/notifications" component={Notifications} />
                 <ConvoProvider>
                   <Route exact path="/messages" component={Messages} />
                 </ConvoProvider>

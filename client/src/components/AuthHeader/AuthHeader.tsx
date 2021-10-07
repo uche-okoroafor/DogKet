@@ -6,6 +6,8 @@ import AuthMenu from '../AuthMenu/AuthMenu';
 import { User } from '../../interface/User';
 import AuthMenuDesktop from '../AuthMenuDesktop/AuthMenuDesktop';
 import { useAuth } from '../../context/useAuthContext';
+import { useState, useEffect } from 'react';
+import { getCount } from '../../helpers/APICalls/notifications';
 
 interface Props {
   loggedInUser?: User;
@@ -17,6 +19,15 @@ interface Props {
 const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      const success = await getCount(true);
+      if (success) setCount(success['count']);
+    };
+    fetchCount();
+  }, []);
 
   return (
     <Box
@@ -33,7 +44,7 @@ const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
       </Link>
 
       <Box height="80px" display="flex" flexWrap="wrap" alignItems="center" p={1}>
-        <AuthMenuDesktop asideText={asideText} linkTo={linkTo} />
+        <AuthMenuDesktop asideText={asideText} linkTo={linkTo} notifCount={count} />
         <AuthMenu />
       </Box>
     </Box>

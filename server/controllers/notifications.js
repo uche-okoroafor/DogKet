@@ -11,6 +11,12 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
     const userId = req.user.id;
 
     const { type, title, description } = req.body;
+
+    if (!type && !title && !description) {
+      res.status(400).json({
+        message: "Bad Request",
+      });
+    }
     const notificatonModel = {
       userId: ObjectId(userId),
       type,
@@ -27,18 +33,27 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route GET /notification/all
-// @desc list of notifications; only get read if query provided
+// @route GET /notification/
+// @desc list of notifications; only get read if query unread = true;
 // @access Private
 exports.notificationList = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { unread } = req.query;
 
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const skipIndex = (page - 1) * limit;
+
     const options = { userId: ObjectId(userId) };
     if (unread === "true") options.read = false;
 
-    const notifications = await Notification.find(options);
+    const notifications = await Notification.find(options)
+      .sort({ createdAt: "desc" })
+      .limit(limit)
+      .skip(skipIndex)
+      .exec();
+
     res.status(200).json({
       success: { notifications },
     });
@@ -47,28 +62,50 @@ exports.notificationList = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route UPDATE /notification/read
-// @desc Update notification as read
+// @route UPDATE /notification/
+// @desc Update notifications as read
 // @access Private
 exports.updateReadStatus = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const { notificationId } = req.params;
+    const { notificationsToUpd } = req.body;
 
-    if (!ObjectId.isValid(notificationId)) {
-      return res.status(400).message("Bad Request");
+    if (!notificationsToUpd?.length) {
+      return res.status(200).json({
+        success: { notifications: [] },
+      });
     }
 
-    const notification = await Notification.findOne({ notificationId, userId });
-    if (!notification) {
-      return res.status(404).json({ message: "Notification not found" });
-    }
-
-    notification.read = true;
-    await notification.save();
+    await Notification.updateMany(
+      {
+        _id: { $in: notificationsToUpd },
+        userId,
+      },
+      { read: true }
+    );
 
     res.status(200).json({
-      success: { notification },
+      success: { notifications: notificationsToUpd },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @route GET /notification/count
+// @desc get count of notifications
+// @access Private
+exports.notificationCount = asyncHandler(async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { unread } = req.query;
+
+    const options = { userId: ObjectId(userId) };
+    if (unread === "true") options.read = false;
+
+    const count = await Notification.countDocuments(options);
+    res.status(200).json({
+      success: { count },
     });
   } catch (error) {
     next(error);
