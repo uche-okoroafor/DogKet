@@ -20,12 +20,14 @@ import { useAuth } from '../../context/useAuthContext';
 import { retrievePaymentProfiles, getUserStripeId, setDefaultPaymentProfile } from '../../helpers/APICalls/payment';
 import { usePaymentProfiles } from '../../context/usePaymentProfilesContext';
 import Pay from './Pay/Pay';
+import { usePayment } from '../../context/usePaymentContext';
 
 export default function PaymentProfile(): JSX.Element {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
   const { loggedInUser } = useAuth();
   const { updatePaymentProfiles, paymentProfiles, updateLoggedInUser } = usePaymentProfiles();
+  const { handlePayDialog, serviceRequestDetails } = usePayment();
   const [paymentProfileExist, SetPaymentProfileExist] = useState<boolean>(false);
   const [userIds, setUserIds] = useState<any>(false);
   const [defaultPaymentMethodId, setDefaultPaymentMethodId] = useState('');
@@ -73,11 +75,7 @@ export default function PaymentProfile(): JSX.Element {
 
   const handleDefaultPaymentMethod = async (PaymentMethodId: string): Promise<void> => {
     const response = await setDefaultPaymentProfile(PaymentMethodId, userIds.stripeId);
-    if (response.invoice_settings.default_payment_method) {
-      setDefaultPaymentMethodId(response.invoice_settings.default_payment_method);
-    } else {
-      console.log('network error');
-    }
+    setDefaultPaymentMethodId(response.invoice_settings.default_payment_method);
   };
 
   const handleCardExpMonth = (month: string): string => {
@@ -170,15 +168,17 @@ export default function PaymentProfile(): JSX.Element {
             <Button variant="outlined" size="large" className={classes.addProfileBtn} onClick={handleOpenDialog}>
               Add New Payment Profile
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.addProfileBtn}
-              onClick={handleOpenDialog}
-            >
-              Continue with Payment
-            </Button>
+            {paymentProfileExist && serviceRequestDetails && (
+              <Button
+                variant="contained"
+                // color='green'
+                size="large"
+                className={classes.addProfileBtn}
+                onClick={() => handlePayDialog(true)}
+              >
+                Continue with Payment
+              </Button>
+            )}
           </Grid>
 
           <Dialog open={openDialog} onClose={handleCloseDialog}>
@@ -206,6 +206,7 @@ export default function PaymentProfile(): JSX.Element {
         paymentProfileExist={paymentProfileExist}
         handleOpenDialog={handleOpenDialog}
         defaultPaymentMethodId={defaultPaymentMethodId}
+        userIds={userIds}
       />
     </Grid>
   );

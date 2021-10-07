@@ -19,24 +19,23 @@ import { Box, useMediaQuery } from '@mui/material';
 import { createPaymentIntent } from '../../../helpers/APICalls/payment';
 import { useStripe } from '@stripe/react-stripe-js';
 
-export default function Pay({ paymentProfileExist, handleOpenDialog, defaultPaymentMethodId }: any): JSX.Element {
-  const [openDialog, setOpenDialog] = useState(false);
-  const { serviceRequestDetails } = usePayment();
+export default function Pay({
+  paymentProfileExist,
+  handleOpenDialog,
+  defaultPaymentMethodId,
+  userIds,
+}: any): JSX.Element {
+  const { serviceRequestDetails, openDialog, handlePayDialog } = usePayment();
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
   const stripe = useStripe();
 
   useEffect(() => {
-    if (serviceRequestDetails) handleOpenPayDialog();
+    if (serviceRequestDetails) handlePayDialog(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serviceRequestDetails]);
 
-  const handleOpenPayDialog = () => {
-    setOpenDialog(true);
-  };
-  const handleClosePayDialog = () => {
-    setOpenDialog(false);
-  };
   const handleAddPaymentMethod = () => {
-    handleClosePayDialog();
+    handlePayDialog(false);
     handleOpenDialog();
   };
 
@@ -44,10 +43,10 @@ export default function Pay({ paymentProfileExist, handleOpenDialog, defaultPaym
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleCreatePaymentIntent = async (): Promise<void> => {
-    if (serviceRequestDetails) {
+    if (serviceRequestDetails && userIds) {
       const amount: any = serviceRequestDetails.serviceCharge;
       const amountInCents: any = 100 * amount;
-      const response = await createPaymentIntent(amountInCents);
+      const response = await createPaymentIntent(amountInCents, defaultPaymentMethodId, userIds.stripeId);
       setClientSecret(response);
       console.log(clientSecret);
     }
@@ -57,10 +56,15 @@ export default function Pay({ paymentProfileExist, handleOpenDialog, defaultPaym
     const paymentMethodId: any = defaultPaymentMethodId;
 
     if (stripe && clientSecret) {
-      const confirmation: any = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: paymentMethodId,
-      });
-      console.log(confirmation, 100000);
+      try {
+        const confirmation: any = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: paymentMethodId,
+          // confirm:true
+        });
+        console.log(confirmation, 100000);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -68,33 +72,43 @@ export default function Pay({ paymentProfileExist, handleOpenDialog, defaultPaym
     <Dialog
       fullScreen={fullScreen}
       open={openDialog}
-      onClose={handleClosePayDialog}
+      onClose={() => handlePayDialog(false)}
       aria-labelledby="responsive-dialog-title"
     >
       <DialogTitle id="responsive-dialog-title">{'Your Requested Service Details'}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Box>
-            <Typography>Sitter: {serviceRequestDetails ? serviceRequestDetails.sitter : ''}</Typography>
-          </Box>
-          <Box>
+            <Typography variant="h6">Sitter: </Typography>
             <Typography>
-              Service Charge per hour: {serviceRequestDetails ? `$ ${serviceRequestDetails.perHourCharge}/ hour` : ''}
+              {' '}
+              {serviceRequestDetails &&
+                `${serviceRequestDetails.sitterFirstName} ${' '}${serviceRequestDetails.sitterLastName}`}
             </Typography>
           </Box>
           <Box>
-            <Typography>
-              Total Service hours: {serviceRequestDetails ? `${serviceRequestDetails.requestedHours} hours` : ''}
-            </Typography>
+            {' '}
+            <Typography variant="h6"> Service Charge per hour: </Typography>
+            <Typography>{serviceRequestDetails ? `$ ${serviceRequestDetails.perHourCharge}/ hour` : ''}</Typography>
           </Box>
           <Box>
-            <Typography>
-              Total Service Charge: {serviceRequestDetails ? `$ ${serviceRequestDetails.serviceCharge}` : ''}
-            </Typography>
+            <Typography variant="h6"> Total Service hours:</Typography>
+            <Typography>{serviceRequestDetails ? `${serviceRequestDetails.requestedHours} hours` : ''}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="h6"> Total Service Charge:</Typography>
+            <Typography>{serviceRequestDetails ? `$ ${serviceRequestDetails.serviceCharge}` : ''}</Typography>
           </Box>
 
           <Box>
-            <Typography variant={paymentProfileExist ? 'button' : 'h6'} onClick={handleClosePayDialog}>
+            <Typography
+              variant={'button'}
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                setClientSecret(undefined);
+                handlePayDialog(false);
+              }}
+            >
               {!paymentProfileExist ? `Add Payment Method to Continue With this Transaction` : 'Change Payment Method'}
             </Typography>
           </Box>
@@ -114,7 +128,13 @@ export default function Pay({ paymentProfileExist, handleOpenDialog, defaultPaym
             Make Payment
           </Button>
         )}
-        <Button onClick={handleClosePayDialog} autoFocus>
+        <Button
+          onClick={() => {
+            setClientSecret(undefined);
+            handlePayDialog(false);
+          }}
+          autoFocus
+        >
           Cancel
         </Button>
       </DialogActions>

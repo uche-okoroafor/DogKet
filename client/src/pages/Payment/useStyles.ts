@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '40px',
     color: '#f04040',
     border: '1px solid #f04040',
+    marginRight: 10,
   },
   checkBox: {
     color: '#f04040',

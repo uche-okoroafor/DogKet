@@ -42,7 +42,8 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
     const serviceCharge: number = requestedHours * +sitter.sitterWage;
 
     handleServiceRequestDetails({
-      sitter: `${sitter.sitterFirstName}${''}${sitter.sitterLastName}`,
+      sitterFirstName: sitter.sitterFirstName,
+      sitterLastName: sitter.sitterLastName,
       perHourCharge: sitter.sitterWage,
       requestedHours,
       serviceCharge,

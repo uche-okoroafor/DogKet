@@ -66,14 +66,18 @@ export const setDefaultPaymentProfile = async (paymentMethodId: string, userStri
     }));
 };
 
-export const createPaymentIntent = async (amount: string): Promise<any> => {
-  console.log('here20000');
-  const fetchOptions: FetchOptions = {
-    method: 'Get',
-    credentials: 'include',
-  };
+export const createPaymentIntent = async (
+  amount: string,
+  paymentMethodId: string,
+  customerId: string,
+): Promise<any> => {
+  console.log(amount, paymentMethodId, customerId);
+  // const fetchOptions: FetchOptions = {
+  //   method: 'Get',
+  //   credentials: 'include',
+  // };
   return await axios
-    .post(`/payment/create-payment-intent/${amount}`, { amount })
+    .post(`/payment/create-payment-intent/${amount}`, { amount, paymentMethodId, customerId })
     .then((res) => res.data)
     .catch((err) => console.log(err));
 };

@@ -26,7 +26,7 @@ function PaymentMethodForm({
   const elements = useElements();
   const stripe = useStripe();
   const classes = useStyles();
-  const { serviceRequestDetails } = usePayment();
+  const { serviceRequestDetails, handlePayDialog } = usePayment();
   const cardElementOpts: StripeCardElementOptions | undefined = {
     iconStyle: 'solid',
     style: iframeStyles,
@@ -94,6 +94,7 @@ function PaymentMethodForm({
           }
         }
         if (serviceRequestDetails) {
+          handlePayDialog(true);
         }
       } else {
         setSubmitting(false);
