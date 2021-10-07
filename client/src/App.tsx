@@ -15,6 +15,7 @@ import MyJobs from './pages/MyJobs/MyJobs';
 import Profile from './pages/Profile/Profile';
 import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
 import Messages from './pages/Messages/Messages';
+import Bookings from './pages/Bookings/Bookings';
 
 import './App.css';
 
@@ -32,6 +33,8 @@ function App(): JSX.Element {
                 <Route exact path="/listings" component={Listings} />
                 <Route path="/listings/:sitterId" component={ProfileDetail} />
                 <Route exact path="/profile" component={Profile} />
+                <Route path="/profile/:setting" component={Profile} />
+                <Route exact path="/bookings" component={Bookings} />
                 <Route path="/profile/:setting" component={Profile} />
                 <ConvoProvider>
                   <Route exact path="/messages" component={Messages} />
