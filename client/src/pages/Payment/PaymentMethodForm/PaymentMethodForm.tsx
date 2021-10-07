@@ -9,8 +9,9 @@ import Button from '@material-ui/core/Button';
 import { createCustomer, addPaymentprofile } from '../../../helpers/APICalls/payment';
 import * as Yup from 'yup';
 import { iframeStyles } from './CardElementStyles/CardElementStyles';
+import { usePayment } from '../../../context/usePaymentContext';
 
-interface IState {
+interface State {
   billingDetails: { name: string; email: string; address: string; city: string; state: string; zip: string };
 }
 
@@ -20,18 +21,19 @@ function PaymentMethodForm({
   handleCloseDialog,
   handleGetUserIds,
   handleGetPaymentProfiles,
+  handleDefaultPaymentMethod,
 }: any): JSX.Element {
   const elements = useElements();
   const stripe = useStripe();
   const classes = useStyles();
-
+  const { serviceRequestDetails } = usePayment();
   const cardElementOpts: StripeCardElementOptions | undefined = {
     iconStyle: 'solid',
     style: iframeStyles,
     hidePostalCode: true,
   };
 
-  const userDetails: IState['billingDetails'] = {
+  const userDetails: State['billingDetails'] = {
     name: '',
     email: '',
     address: '',
@@ -41,8 +43,8 @@ function PaymentMethodForm({
   };
 
   const handleSubmit = async (
-    customerDetails: IState['billingDetails'],
-    { setStatus, setSubmitting }: FormikHelpers<IState['billingDetails']>,
+    customerDetails: State['billingDetails'],
+    { setStatus, setSubmitting }: FormikHelpers<State['billingDetails']>,
   ): Promise<void> => {
     if (!stripe || !elements) {
       return;
@@ -87,6 +89,11 @@ function PaymentMethodForm({
           await handleGetPaymentProfiles(stripeId);
           await handleGetUserIds();
           handleCloseDialog();
+          if (paymentMethod) {
+            handleDefaultPaymentMethod(paymentMethod.id);
+          }
+        }
+        if (serviceRequestDetails) {
         }
       } else {
         setSubmitting(false);

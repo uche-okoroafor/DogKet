@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import PaymentMethodForm from './PaymentMethodForm/PaymentMethodForm';
 import masterCardLogo from './CardImages/Mastercard-Logo.svg';
@@ -18,16 +19,18 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { retrievePaymentProfiles, getUserStripeId, setDefaultPaymentProfile } from '../../helpers/APICalls/payment';
 import { usePaymentProfiles } from '../../context/usePaymentProfilesContext';
+import Pay from './Pay/Pay';
 
 export default function PaymentProfile(): JSX.Element {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const { loggedInUser } = useAuth();
   const { updatePaymentProfiles, paymentProfiles, updateLoggedInUser } = usePaymentProfiles();
   const [paymentProfileExist, SetPaymentProfileExist] = useState<boolean>(false);
   const [userIds, setUserIds] = useState<any>(false);
   const [defaultPaymentMethodId, setDefaultPaymentMethodId] = useState('');
   const hiddenCardNumber: string[] = [starOfLife, starOfLife, starOfLife, starOfLife];
+
   useEffect(() => {
     getUserPaymentProfiles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +51,8 @@ export default function PaymentProfile(): JSX.Element {
       setUserIds({ stripeId, userId: user.id });
       return stripeId;
     } catch (err) {
-      console.log(err);
+      const error: any = err;
+      alert(error.message);
     }
   };
 
@@ -62,13 +66,18 @@ export default function PaymentProfile(): JSX.Element {
 
       SetPaymentProfileExist(true);
     } catch (err) {
-      console.log(err);
+      const error: any = err;
+      alert(error.message);
     }
   };
 
   const handleDefaultPaymentMethod = async (PaymentMethodId: string): Promise<void> => {
     const response = await setDefaultPaymentProfile(PaymentMethodId, userIds.stripeId);
-    setDefaultPaymentMethodId(response.invoice_settings.default_payment_method);
+    if (response.invoice_settings.default_payment_method) {
+      setDefaultPaymentMethodId(response.invoice_settings.default_payment_method);
+    } else {
+      console.log('network error');
+    }
   };
 
   const handleCardExpMonth = (month: string): string => {
@@ -79,13 +88,12 @@ export default function PaymentProfile(): JSX.Element {
   };
 
   const handleOpenDialog = () => {
-    setOpen(true);
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-  const handleCloseDialog = () => {
-    setOpen(false);
-  };
 
   return (
     <Grid container className={classes.container}>
@@ -162,9 +170,18 @@ export default function PaymentProfile(): JSX.Element {
             <Button variant="outlined" size="large" className={classes.addProfileBtn} onClick={handleOpenDialog}>
               Add New Payment Profile
             </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.addProfileBtn}
+              onClick={handleOpenDialog}
+            >
+              Continue with Payment
+            </Button>
           </Grid>
 
-          <Dialog open={open} onClose={handleCloseDialog}>
+          <Dialog open={openDialog} onClose={handleCloseDialog}>
             <DialogTitle>
               {' '}
               <Typography className={classes.dialogTitle} variant="h6">
@@ -179,11 +196,17 @@ export default function PaymentProfile(): JSX.Element {
                 userIds={userIds}
                 handleGetUserIds={handleGetUserIds}
                 SetPaymentProfileExist={SetPaymentProfileExist}
+                handleDefaultPaymentMethod={handleDefaultPaymentMethod}
               />
             </DialogContent>
           </Dialog>
         </Card>
       </Grid>
+      <Pay
+        paymentProfileExist={paymentProfileExist}
+        handleOpenDialog={handleOpenDialog}
+        defaultPaymentMethodId={defaultPaymentMethodId}
+      />
     </Grid>
   );
 }

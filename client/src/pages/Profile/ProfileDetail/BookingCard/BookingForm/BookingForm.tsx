@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState } from 'react';
 import { Box, Typography, Button, Rating, TextField, CircularProgress, FormHelperText } from '@mui/material';
 import { TimePicker, LocalizationProvider, MobileDateRangePicker } from '@mui/lab';
@@ -8,6 +9,8 @@ import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { Sitter } from '../../sampleData';
 import useStyles from './useStyles';
+import { useHistory } from 'react-router-dom';
+import { usePayment } from '../../../../../context/usePaymentContext';
 
 interface Props {
   sitter: Sitter;
@@ -21,7 +24,8 @@ const validationSchema = Yup.object().shape({
 
 const BookingForm = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
-
+  const history = useHistory();
+  const { handleServiceRequestDetails } = usePayment();
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
 
   const handleSubmit = (
@@ -32,6 +36,20 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   ) => {
     // 'setSubmitting' will be used when we send 'submit request' to backend
     // I guess it's related to 'isSubmitting' and 'onSubmit' in Formik
+
+    const requiredDateRange: any = dateRange;
+    const requestedHours: number = Math.abs(requiredDateRange[0] - requiredDateRange[1]) / 36e5;
+    const serviceCharge: number = requestedHours * +sitter.sitterWage;
+
+    handleServiceRequestDetails({
+      sitter: `${sitter.sitterFirstName}${''}${sitter.sitterLastName}`,
+      perHourCharge: sitter.sitterWage,
+      requestedHours,
+      serviceCharge,
+    });
+
+    history.push('/payment');
+
     setSubmitting(false);
     setDateRange([null, null]);
     // resetForm is used in the current version. Assume you submit the form with valid date range inputs successfully.

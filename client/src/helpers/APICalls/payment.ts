@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { FetchOptions } from '../../interface/FetchOptions';
+import axios from 'axios';
 
 export const createCustomer = async (paymentMethod: any, userId: string): Promise<any> => {
   const fetchOptions: FetchOptions = {
@@ -62,4 +64,16 @@ export const setDefaultPaymentProfile = async (paymentMethodId: string, userStri
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
+};
+
+export const createPaymentIntent = async (amount: string): Promise<any> => {
+  console.log('here20000');
+  const fetchOptions: FetchOptions = {
+    method: 'Get',
+    credentials: 'include',
+  };
+  return await axios
+    .post(`/payment/create-payment-intent/${amount}`, { amount })
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
 };

@@ -7,7 +7,7 @@ exports.createCustomer = asyncHandler(async (req, res) => {
   const { userId } = req.params;
   if (!userId || !id) {
     return res
-      .status(404)
+      .status(400)
       .json({ err: "userId or paymentMethodId is undefined" });
   }
   try {
@@ -17,7 +17,7 @@ exports.createCustomer = asyncHandler(async (req, res) => {
       .attach(id, {
         customer: customer.id,
       })
-      .catch((err) => res.status(404).json({ err: err.message }));
+      .catch((err) => res.status(422).json({ err: err.message }));
 
     await User.updateOne(
       { _id: userId },
@@ -30,7 +30,7 @@ exports.createCustomer = asyncHandler(async (req, res) => {
 
     res.status(201).json({ stripeId: customer.id });
   } catch (err) {
-    res.status(400).json({ err: err.message });
+    res.status(409).json({ err: err.message });
   }
 });
 
@@ -38,7 +38,7 @@ exports.addPaymentprofile = asyncHandler(async (req, res) => {
   const { paymentMethodId, userStripeId } = req.body;
   if (!paymentMethodId || !userStripeId) {
     return res
-      .status(404)
+      .status(400)
       .json({ err: "paymentMethodId or userStripeId is undefined" });
   }
   try {
@@ -48,7 +48,7 @@ exports.addPaymentprofile = asyncHandler(async (req, res) => {
 
     res.status(201).json(paymentMethods);
   } catch (err) {
-    res.status(400).json({ err: err.message });
+    res.status(422).json({ err: err.message });
   }
 });
 
@@ -56,7 +56,7 @@ exports.retrieveCustomer = asyncHandler(async (req, res) => {
   const { customerId } = req.params;
 
   if (!customerId) {
-    return res.status(404).json({ err: "customerId is undefined" });
+    return res.status(400).json({ err: "customerId is undefined" });
   }
   try {
     const paymentMethods = await stripe.paymentMethods.list({
@@ -66,7 +66,7 @@ exports.retrieveCustomer = asyncHandler(async (req, res) => {
     const customer = await stripe.customers.retrieve(customerId);
     res.status(200).json({ customer, paymentMethods });
   } catch (err) {
-    res.status(400).json({ err: err.message });
+    res.status(422).json({ err: err.message });
   }
 });
 
@@ -74,13 +74,13 @@ exports.getUserStripeId = asyncHandler(async (req, res, next) => {
   const { userId } = req.params;
 
   if (!userId) {
-    return res.status(401).json({ err: "userId is undefined" });
+    return res.status(400).json({ err: "userId is undefined" });
   }
 
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ err: "user not found" });
+      return res.status(400).json({ err: "user not found" });
     }
     res.status(200).json({
       stripeId: user.stripeId,
@@ -93,7 +93,7 @@ exports.getUserStripeId = asyncHandler(async (req, res, next) => {
 exports.setDefaultPaymentMethod = asyncHandler(async (req, res, next) => {
   const { userStripeId, paymentMethodId } = req.params;
   if (!userStripeId || !paymentMethodId) {
-    return res.status(401).json({ err: "userId or paymentId is undefined" });
+    return res.status(400).json({ err: "userId or paymentId is undefined" });
   }
 
   try {
@@ -104,6 +104,6 @@ exports.setDefaultPaymentMethod = asyncHandler(async (req, res, next) => {
     });
     res.status(200).json(customer);
   } catch (err) {
-    res.status(404).json({ err: err.message });
+    res.status(422).json({ err: err.message });
   }
 });

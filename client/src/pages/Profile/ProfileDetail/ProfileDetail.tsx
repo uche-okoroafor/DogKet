@@ -9,7 +9,6 @@ import { sampleData, Sitter } from './sampleData';
 const ProfileDetail = (): JSX.Element => {
   const params: { sitterId: string } = useParams();
   const { sitterId } = params;
-
   const [sitter, setSitter] = useState<Sitter | null | undefined>(null);
 
   const getSitterInfo = (sitterId: string) => {

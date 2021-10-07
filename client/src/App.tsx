@@ -21,10 +21,12 @@ import './App.css';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { PaymentProfilesProvider } from './context/usePaymentProfilesContext';
-
+import { PaymentProvider } from './context/usePaymentContext';
 import './App.css';
 
-const stripePromise = loadStripe();
+const stripePromise = loadStripe(
+  'pk_test_51JdfCrHTISnlklzNeWCPnnzwLCfvEgPODCQJ8cYe3Z1h83MPIJFsMlTaXkR8NGyYt97rx5I8tMB4NJPtHsLx8fLY00uPHJGn0h',
+);
 
 function App(): JSX.Element {
   return (
@@ -34,27 +36,28 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <PaymentProfilesProvider>
-                <Switch>
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/signup" component={Signup} />
-                  <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
-                  <Route exact path="/listings" component={Listings} />
-                  <Route path="/listings/:sitterId" component={ProfileDetail} />
-                  <Route exact path="/profile" component={Profile} />
-                  <Route path="/profile/:setting" component={Profile} />
-                  <Elements stripe={stripePromise}>
-                    <ProtectedRoute exact path="/payment" component={PaymentProfile} />
-                  </Elements>
+                <PaymentProvider>
                   <ConvoProvider>
-                    <Route exact path="/messages" component={Messages} />
+                    <Elements stripe={stripePromise}>
+                      <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/signup" component={Signup} />
+                        <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
+                        <Route exact path="/listings" component={Listings} />
+                        <Route path="/listings/:sitterId" component={ProfileDetail} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route path="/profile/:setting" component={Profile} />
+                        <ProtectedRoute exact path="/payment" component={PaymentProfile} />
+                        <Route exact path="/messages" component={Messages} />
+                        <Route exact path="/my-sitters" component={MySitters} />
+                        <Route exact path="/my-jobs" component={MyJobs} />
+                        <Route path="*">
+                          <Redirect to="/login" />
+                        </Route>
+                      </Switch>
+                    </Elements>
                   </ConvoProvider>
-
-                  <Route exact path="/my-sitters" component={MySitters} />
-                  <Route exact path="/my-jobs" component={MyJobs} />
-                  <Route path="*">
-                    <Redirect to="/login" />
-                  </Route>
-                </Switch>
+                </PaymentProvider>
               </PaymentProfilesProvider>
             </SocketProvider>
           </AuthProvider>

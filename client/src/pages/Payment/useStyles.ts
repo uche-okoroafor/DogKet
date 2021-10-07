@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   cardDate: {
     fontSize: '0.8rem',
     fontWeight: 'bolder',
-    color: 'rgb(198, 196, 196)',
+    color: '#969696',
   },
 
   cardHeader: {
