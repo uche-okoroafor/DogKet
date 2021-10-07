@@ -42,15 +42,6 @@ const Listings = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleShowMore = () => {};
 
-  if (!profiles.length)
-    return (
-      <Layout>
-        <Box height="100%" display="flex" justifyContent="center" alignItems="center">
-          <CircularProgress size={100} />
-        </Box>
-      </Layout>
-    );
-
   return (
     <Layout>
       <Grid height="100%" className={classes.listings}>
@@ -79,6 +70,12 @@ const Listings = (): JSX.Element => {
             handleChange={searchDateRangeHandleChange}
           />
         </Box>
+
+        {!profiles.length && (
+          <Box height="60%" display="flex" justifyContent="center" alignItems="center">
+            <CircularProgress size={100} />
+          </Box>
+        )}
 
         <Grid
           width="100vw"
