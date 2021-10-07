@@ -20,7 +20,6 @@ const landingFormStyle = makeStyles((theme) => ({
   label: {
     fontWeight: 900,
     textTransform: 'uppercase',
-    margin: '30px 0px 10px 0px',
   },
   inputField: {
     [theme.breakpoints.between(426, 1440)]: {

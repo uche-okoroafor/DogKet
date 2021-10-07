@@ -38,7 +38,7 @@ function App(): JSX.Element {
                 </ConvoProvider>
                 <Route exact path="/my-sitters" component={MySitters} />
                 <Route exact path="/my-jobs" component={MyJobs} />
-                <Route exact path="/home" component={Landing} />
+                <Route exact path="/" component={Landing} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, TextField, CircularProgress, FormHelperText } from '@mui/material';
+import { Box, Button, TextField, CircularProgress, FormHelperText, Typography } from '@mui/material';
 import { LocalizationProvider, MobileDateRangePicker } from '@mui/lab';
 import { DateRange } from '@mui/lab/DateRangePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -61,9 +61,13 @@ const BookingForm = (): JSX.Element => {
             }}
             renderInput={(startProps, endProps) => (
               <Form onSubmit={handleSubmit} className={classes.bookingForm}>
-                <Box className={classes.label}>Where</Box>
+                <Typography variant="overline" display="block" gutterBottom className={classes.label}>
+                  Where
+                </Typography>
                 <TextField id="outlined-basic" variant="outlined" placeholder="Anywhere" />
-                <Box className={classes.label}>Drop In / Drop Off</Box>
+                <Typography variant="overline" display="block" gutterBottom className={classes.label}>
+                  Drop In / Drop Off
+                </Typography>
                 <Box className={classes.dateInputWrapper}>
                   <Box display="flex" flexDirection="column" className={classes.inputField}>
                     <Box display="flex" className={classes.inputField}>
