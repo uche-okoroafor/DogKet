@@ -12,6 +12,7 @@ const protect = require("./middleware/auth");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profileRouter");
+const notificationRouter = require("./routes/notifications");
 const conversationRouter = require("./routes/conversation");
 const messageRouter = require("./routes/message");
 
