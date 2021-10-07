@@ -2,7 +2,6 @@ const Profile = require("../models/ProfileModel");
 const mongoose = require("mongoose");
 const { capitalize, formatAddress } = require("../utils/helperFunctions");
 const asyncHandler = require("express-async-handler");
-const moment = require("moment");
 
 // @route POST /profile
 // @access private
