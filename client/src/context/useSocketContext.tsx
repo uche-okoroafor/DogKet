@@ -15,9 +15,9 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
 
   const initSocket = useCallback(() => {
-    console.log('trying to connect');
+    console.log('trying to connect', window.location.origin);
     setSocket(
-      io('/', {
+      io(window.location.origin, {
         withCredentials: true,
       }),
     );

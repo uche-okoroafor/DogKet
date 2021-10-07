@@ -4,6 +4,7 @@ import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
+import { useSocket } from './useSocketContext';
 
 interface IAuthContext {
   loggedInUser: User | null | undefined;
@@ -21,6 +22,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
   const history = useHistory();
+  const { initSocket } = useSocket();
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
@@ -48,6 +50,8 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       await loginWithCookies().then((data: AuthApiData) => {
         if (data.success) {
           updateLoginContext(data.success);
+          // console.log(initSocket);
+          initSocket();
           history.push('/dashboard');
         } else {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
@@ -57,7 +61,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       });
     };
     checkLoginWithCookies();
-  }, [updateLoginContext, history]);
+  }, [updateLoginContext, history, initSocket]);
 
   return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
 };
