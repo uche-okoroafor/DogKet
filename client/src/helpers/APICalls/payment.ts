@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { FetchOptions } from '../../interface/FetchOptions';
 import axios from 'axios';
 

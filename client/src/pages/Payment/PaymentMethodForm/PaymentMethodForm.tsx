@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { withRouter } from 'react-router-dom';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { TextField, CircularProgress } from '@material-ui/core';

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export interface serviceRequestDetails {
   sitterFirstName: string;
   sitterLastName: string;

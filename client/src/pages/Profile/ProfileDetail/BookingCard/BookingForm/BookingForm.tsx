@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState } from 'react';
 import { Box, Typography, Button, Rating, TextField, CircularProgress, FormHelperText } from '@mui/material';
 import { TimePicker, LocalizationProvider, MobileDateRangePicker } from '@mui/lab';

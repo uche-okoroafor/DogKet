@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState, useContext, createContext, FunctionComponent } from 'react';
 import { User } from '../interface/User';
 import { serviceRequestDetails } from '../interface/serviceRequestDetails';

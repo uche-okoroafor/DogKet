@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import PaymentMethodForm from './PaymentMethodForm/PaymentMethodForm';
 import masterCardLogo from './CardImages/Mastercard-Logo.svg';

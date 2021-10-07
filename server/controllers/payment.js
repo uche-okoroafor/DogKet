@@ -13,7 +13,6 @@ exports.createPaymentIntent = asyncHandler(async (req, res) => {
       amount,
       currency: "USD",
       payment_method: paymentMethodId,
-      // confirm: "true",
     });
     res.status(200).send(paymentIntent.client_secret);
   } catch (err) {
