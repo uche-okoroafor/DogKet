@@ -48,7 +48,6 @@ export default function Pay({
       const amountInCents: any = 100 * amount;
       const response = await createPaymentIntent(amountInCents, defaultPaymentMethodId, userIds.stripeId);
       setClientSecret(response);
-      console.log(clientSecret);
     }
   };
 
@@ -118,10 +117,6 @@ export default function Pay({
         {!paymentProfileExist ? (
           <Button autoFocus onClick={handleAddPaymentMethod}>
             Add Payment Method
-          </Button>
-        ) : clientSecret ? (
-          <Button autoFocus onClick={handleConfirmCardPayment}>
-            Confirm Payment
           </Button>
         ) : (
           <Button autoFocus onClick={handleCreatePaymentIntent}>

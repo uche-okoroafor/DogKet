@@ -88,10 +88,10 @@ function PaymentMethodForm({
           const { stripeId } = await createCustomer(paymentMethod, userIds.userId);
           await handleGetPaymentProfiles(stripeId);
           await handleGetUserIds();
-          handleCloseDialog();
           if (paymentMethod) {
-            handleDefaultPaymentMethod(paymentMethod.id);
+            await handleDefaultPaymentMethod(paymentMethod.id);
           }
+          handleCloseDialog();
         }
         if (serviceRequestDetails) {
           handlePayDialog(true);
