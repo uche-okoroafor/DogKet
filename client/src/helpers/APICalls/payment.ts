@@ -71,13 +71,12 @@ export const createPaymentIntent = async (
   paymentMethodId: string,
   customerId: string,
 ): Promise<any> => {
-  console.log(amount, paymentMethodId, customerId);
-  // const fetchOptions: FetchOptions = {
-  //   method: 'Get',
-  //   credentials: 'include',
-  // };
+  const fetchOptions: FetchOptions = {
+    method: 'Get',
+    credentials: 'include',
+  };
   return await axios
-    .post(`/payment/create-payment-intent/${amount}`, { amount, paymentMethodId, customerId })
+    .post(`/payment/create-payment-intent`, { amount, paymentMethodId, customerId })
     .then((res) => res.data)
     .catch((err) => console.log(err));
 };
