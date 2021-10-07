@@ -12,7 +12,9 @@ const logger = require("morgan");
 const protect = require("./middleware/auth");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const notificationRouter = require("./routes/notifications");
 const profileRouter = require("./routes/profileRouter");
+const notificationRouter = require("./routes/notifications");
 const conversationRouter = require("./routes/conversation");
 const messageRouter = require("./routes/message");
 
@@ -48,6 +50,7 @@ app.use((req, res, next) => {
 app.use("/profile", profileRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use("/notification", notificationRouter);
 app.use("/conversations", protect, conversationRouter);
 app.use("/messages", protect, messageRouter);
 
