@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   listings: {
     backgroundColor: '#ffffff',
+    overflow: 'auto',
   },
   searchTitleBox: {
     margin: theme.spacing(2, 0),
@@ -24,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '1280px',
   },
   showMoreBox: {
-    paddingBottom: theme.spacing(4),
     margin: theme.spacing(1, 'auto', 4),
   },
   showMoreBtn: {

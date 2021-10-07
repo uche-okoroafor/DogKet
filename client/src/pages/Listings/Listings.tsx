@@ -66,18 +66,8 @@ const Listings = (): JSX.Element => {
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center" alignItems="center" className={classes.searchBox}>
-          <SearchLocation
-            dateRange={dateRange}
-            setProfiles={setProfiles}
-            search={search}
-            handleChange={searchLocationHandleChange}
-          />
-          <SearchDateRange
-            search={search}
-            setProfiles={setProfiles}
-            dateRange={dateRange}
-            handleChange={searchDateRangeHandleChange}
-          />
+          <SearchLocation search={search} handleChange={searchLocationHandleChange} />
+          <SearchDateRange dateRange={dateRange} handleChange={searchDateRangeHandleChange} />
         </Box>
 
         <Grid
@@ -87,9 +77,11 @@ const Listings = (): JSX.Element => {
           className={classes.sitterLists}
           justifyContent="space-evenly"
         >
-          {profiles.map((profile: Profile) => (
-            <SitterCard key={profile._id} sitter={profile} />
-          ))}
+          {profiles
+            .filter((profile: Profile) => profile.address.toLowerCase().includes(search.toLowerCase()))
+            .map((profile: Profile) => (
+              <SitterCard key={profile._id} sitter={profile} />
+            ))}
         </Grid>
         <Box display="flex" justifyContent="center" alignItems="center" className={classes.showMoreBox}>
           <Button variant="outlined" onClick={handleShowMore} className={classes.showMoreBtn}>

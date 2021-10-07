@@ -1,27 +1,21 @@
-import { useState, SyntheticEvent, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, SyntheticEvent, useEffect } from 'react';
 import { Box, InputBase, Autocomplete } from '@mui/material';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDebounce } from 'use-debounce';
-import { searchSitters } from '../../../helpers/APICalls/profiles';
+import { searchSittersByAddress } from '../../../helpers/APICalls/profiles';
 import useStyles from './useStyles';
-import { useSnackBar } from '../../../context/useSnackbarContext';
-import { Profile } from '../../../interface/Profile';
-import { DateRange } from '@mui/lab/DateRangePicker';
 
 interface Props {
   search: string;
-  dateRange: DateRange<Date | null>;
   handleChange: (event: SyntheticEvent<Element, Event>, newInputValue: string) => void;
-  setProfiles: Dispatch<SetStateAction<Profile[]>>;
 }
 
-const SearchLocation = ({ dateRange, setProfiles, search, handleChange }: Props): JSX.Element => {
+const SearchLocation = ({ search, handleChange }: Props): JSX.Element => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
-  const { updateSnackBarMessage } = useSnackBar();
 
   const saveOptions = (cities: string[]) => {
     setOptions(cities);
@@ -29,36 +23,27 @@ const SearchLocation = ({ dateRange, setProfiles, search, handleChange }: Props)
 
   useEffect(() => {
     let active = true;
-    try {
-      const searchAndSaveSitters = async () => {
-        setLoading(true);
-        const response = await searchSitters({
-          city: debouncedSearch,
-          searchStartDate: dateRange[0]?.toISOString().split('T')[0],
-          searchEndDate: dateRange[1]?.toISOString().split('T')[0],
-        });
-        setProfiles(response);
 
-        const sitterCities: string[] = [];
+    const searchAndSaveSitters = async () => {
+      setLoading(true);
+      const response = await searchSittersByAddress({
+        city: debouncedSearch,
+      });
+      const sitterCities: string[] = [];
 
-        if (active && response && response.length) {
-          response.map((sitter) => sitterCities.push(sitter.address));
-          saveOptions([...new Set(sitterCities)]);
-        }
-        setLoading(false);
-      };
-
-      searchAndSaveSitters();
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        updateSnackBarMessage(error.message);
+      if (active && response && response.length) {
+        response.map((sitter) => sitterCities.push(sitter.address));
+        saveOptions([...new Set(sitterCities)]);
       }
-    }
+      setLoading(false);
+    };
+
+    searchAndSaveSitters();
 
     return () => {
       active = false;
     };
-  }, [dateRange, debouncedSearch, setProfiles, updateSnackBarMessage]);
+  }, [debouncedSearch]);
 
   return (
     <form

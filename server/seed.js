@@ -1,3 +1,4 @@
+const colors = require("colors");
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env" });
 
@@ -11,10 +12,19 @@ const Profile = require("./models/ProfileModel");
 async function deleteData() {
   try {
     await User.deleteMany();
+    console.log("Users are deleted..");
+
     await Conversation.deleteMany();
+    console.log("Conversations are deleted..");
+
     await Message.deleteMany();
+    console.log("Messages are deleted..");
+
     await Profile.deleteMany();
-  } catch (err) {}
+    console.log("Profiles are deleted..");
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function seed() {
@@ -115,9 +125,13 @@ async function seed() {
     title: "I love pets1",
     hourlyWage: 11,
     availability: {
-      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
-      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
-      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 6, 18)],
+      sunday: [new Date(2021, 8, 26, 12), new Date(2021, 8, 26, 18)],
+      monday: [new Date(2021, 8, 27, 12), new Date(2021, 8, 27, 18)],
+      tuesday: [new Date(2021, 8, 28, 12), new Date(2021, 8, 28, 18)],
+      wednesday: [new Date(2021, 8, 29, 12), new Date(2021, 8, 29, 18)],
+      thursday: [new Date(2021, 8, 30, 12), new Date(2021, 8, 30, 18)],
+      friday: [new Date(2021, 9, 01, 12), new Date(2021, 9, 01, 18)],
+      saturday: [new Date(2021, 9, 02, 12), new Date(2021, 9, 02, 18)],
     },
   });
 
@@ -142,10 +156,13 @@ async function seed() {
     title: "I love pets2",
     hourlyWage: 12,
     availability: {
-      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
-      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
-      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
-      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+      sunday: [new Date(2021, 8, 26, 15), new Date(2021, 8, 26, 23)],
+      monday: [new Date(2021, 8, 27, 15), new Date(2021, 8, 27, 23)],
+      tuesday: [new Date(2021, 8, 28, 15), new Date(2021, 8, 28, 23)],
+      wednesday: [new Date(2021, 8, 29, 15), new Date(2021, 8, 29, 23)],
+      thursday: [new Date(2021, 8, 30, 15), new Date(2021, 8, 30, 23)],
+      friday: [new Date(2021, 9, 01, 15), new Date(2021, 9, 01, 23)],
+      saturday: [new Date(2021, 9, 02, 15), new Date(2021, 9, 02, 23)],
     },
   });
 
@@ -170,10 +187,13 @@ async function seed() {
     title: "I love pets3",
     hourlyWage: 13,
     availability: {
-      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
-      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
-      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
-      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+      sunday: [new Date(2021, 8, 26, 12), new Date(2021, 8, 26, 18)],
+      monday: [new Date(2021, 8, 27, 12), new Date(2021, 8, 27, 18)],
+      tuesday: [new Date(2021, 8, 28, 12), new Date(2021, 8, 28, 18)],
+      wednesday: [new Date(2021, 8, 29, 12), new Date(2021, 8, 29, 18)],
+      thursday: [new Date(2021, 8, 30, 12), new Date(2021, 8, 30, 18)],
+      friday: [new Date(2021, 9, 01, 12), new Date(2021, 9, 01, 18)],
+      saturday: [new Date(2021, 9, 02, 12), new Date(2021, 9, 02, 18)],
     },
   });
 
@@ -198,10 +218,13 @@ async function seed() {
     title: "I love pets4",
     hourlyWage: 14,
     availability: {
-      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
-      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
-      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
-      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+      sunday: [new Date(2021, 8, 26, 12), new Date(2021, 8, 26, 18)],
+      monday: [new Date(2021, 8, 27, 12), new Date(2021, 8, 27, 18)],
+      tuesday: [new Date(2021, 8, 28, 12), new Date(2021, 8, 28, 18)],
+      wednesday: [new Date(2021, 8, 29, 12), new Date(2021, 8, 29, 18)],
+      thursday: [new Date(2021, 8, 30, 12), new Date(2021, 8, 30, 18)],
+      friday: [new Date(2021, 9, 01, 12), new Date(2021, 9, 01, 18)],
+      saturday: [new Date(2021, 9, 02, 12), new Date(2021, 9, 02, 18)],
     },
   });
 
@@ -226,9 +249,13 @@ async function seed() {
     title: "I love pets5",
     hourlyWage: 15,
     availability: {
-      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
-      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
-      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 6, 18)],
+      sunday: [new Date(2021, 8, 26, 01), new Date(2021, 8, 26, 05)],
+      monday: [new Date(2021, 8, 27, 01), new Date(2021, 8, 27, 05)],
+      tuesday: [new Date(2021, 8, 28, 01), new Date(2021, 8, 28, 05)],
+      wednesday: [new Date(2021, 8, 29, 01), new Date(2021, 8, 29, 05)],
+      thursday: [new Date(2021, 8, 30, 01), new Date(2021, 8, 30, 05)],
+      friday: [new Date(2021, 9, 01, 01), new Date(2021, 9, 01, 05)],
+      saturday: [new Date(2021, 9, 02, 01), new Date(2021, 9, 02, 05)],
     },
   });
 
@@ -253,13 +280,13 @@ async function seed() {
     title: "I love pets6",
     hourlyWage: 16,
     availability: {
-      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
-      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
-      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
-      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
-      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
-      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
-      saturday: [new Date(2021, 9, 9, 12), new Date(2021, 9, 9, 18)],
+      sunday: [new Date(2021, 8, 26, 08), new Date(2021, 8, 26, 14)],
+      monday: [new Date(2021, 8, 27, 08), new Date(2021, 8, 27, 14)],
+      tuesday: [new Date(2021, 8, 28, 08), new Date(2021, 8, 28, 14)],
+      wednesday: [new Date(2021, 8, 29, 08), new Date(2021, 8, 29, 14)],
+      thursday: [new Date(2021, 8, 30, 08), new Date(2021, 8, 30, 14)],
+      friday: [new Date(2021, 9, 01, 08), new Date(2021, 9, 01, 14)],
+      saturday: [new Date(2021, 9, 02, 08), new Date(2021, 9, 02, 14)],
     },
   });
 
@@ -284,10 +311,13 @@ async function seed() {
     title: "I love pets7",
     hourlyWage: 17,
     availability: {
-      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
-      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
-      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
-      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+      sunday: [new Date(2021, 8, 26, 15), new Date(2021, 8, 26, 20)],
+      monday: [new Date(2021, 8, 27, 15), new Date(2021, 8, 27, 20)],
+      tuesday: [new Date(2021, 8, 28, 15), new Date(2021, 8, 28, 20)],
+      wednesday: [new Date(2021, 8, 29, 15), new Date(2021, 8, 29, 20)],
+      thursday: [new Date(2021, 8, 30, 15), new Date(2021, 8, 30, 20)],
+      friday: [new Date(2021, 9, 01, 15), new Date(2021, 9, 01, 20)],
+      saturday: [new Date(2021, 9, 02, 15), new Date(2021, 9, 02, 20)],
     },
   });
 
@@ -312,16 +342,17 @@ async function seed() {
     title: "I love pets8",
     hourlyWage: 18,
     availability: {
-      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
-      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
-      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
-      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
-      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
-      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
-      saturday: [new Date(2021, 9, 9, 12), new Date(2021, 9, 9, 18)],
+      sunday: [new Date(2021, 8, 26, 15), new Date(2021, 8, 26, 23)],
+      monday: [new Date(2021, 8, 27, 15), new Date(2021, 8, 27, 23)],
+      tuesday: [new Date(2021, 8, 28, 15), new Date(2021, 8, 28, 23)],
+      wednesday: [new Date(2021, 8, 29, 15), new Date(2021, 8, 29, 23)],
+      thursday: [new Date(2021, 8, 30, 15), new Date(2021, 8, 30, 23)],
+      friday: [new Date(2021, 9, 01, 15), new Date(2021, 9, 01, 23)],
+      saturday: [new Date(2021, 9, 02, 15), new Date(2021, 9, 02, 23)],
     },
   });
 
+  // mock conversation between test1 and test2
   const test1Convo = await Conversation.create({
     user1: test1._id,
     user2: test2._id,
@@ -365,6 +396,7 @@ async function seed() {
   test1Convo.latestMessage = test1test2Message3._id;
   await test1Convo.save();
 
+  // mock conversation between test1 and test3
   const test1Convo2 = await Conversation.create({
     user1: test1._id,
     user2: test3._id,
@@ -415,6 +447,7 @@ async function seed() {
   test1Convo2.latestMessage = test1test3Message4._id;
   await test1Convo2.save();
 
+  // mock conversation between test2 and test3
   const test2Convo = await Conversation.create({
     user1: test2._id,
     user2: test3._id,
@@ -453,11 +486,15 @@ async function seed() {
 }
 
 async function runSeed() {
+  console.log("seeding..");
   try {
     await seed();
+    console.log("data seeded successfully..");
   } catch (err) {
+    console.error(err);
     process.exitCode = 1;
   } finally {
+    console.log("MongoDB connection closed..".cyan.underline + "\n");
     process.exit();
   }
 }
