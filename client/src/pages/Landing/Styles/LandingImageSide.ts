@@ -1,4 +1,3 @@
-import { red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import Dog from '../../../Images/landing-dog-sqr.jpg';
 
@@ -31,21 +30,20 @@ const useStyles = makeStyles((theme) => ({
     margin: '0px',
   },
   sitter: {
-    color: 'black',
     textDecoration: 'underline',
-    padding: '10px',
   },
   login: {
-    color: 'white',
     borderColor: 'white',
   },
   signup: {
-    color: 'white',
-    backgroundColor: 'red',
+    backgroundColor: '#f04040 !important',
+    fontSize: '11px !important',
   },
   button: {
-    padding: '10px',
-    width: '110px',
+    textTransform: 'uppercase',
+    padding: '10px 5px',
+    color: 'white',
+    width: '115px',
   },
 }));
 
