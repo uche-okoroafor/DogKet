@@ -7,6 +7,10 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { Profile } from '../../../../../interface/Profile';
+import { createRequest } from '../../../../../helpers/APICalls/request';
+import { createNotification } from '../../../../../helpers/APICalls/notifications';
+import { useSnackBar } from '../../../../../context/useSnackbarContext';
+import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 
 interface Props {
@@ -21,16 +25,39 @@ const validationSchema = Yup.object().shape({
 
 const BookingForm = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
-
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
+  const { updateSnackBarMessage } = useSnackBar();
+  const history = useHistory();
 
-  const handleSubmit = (
+  const handleSubmit = async (
     { dateRange }: { dateRange: DateRange<Date> },
     { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
   ) => {
+    if (dateRange[0] && dateRange[1]) {
+      try {
+        await createRequest(sitter.userId, dateRange?.[0], dateRange?.[1]);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          updateSnackBarMessage(error.message);
+        }
+      }
+
+      try {
+        await createNotification(
+          'Pet Sitting',
+          `${sitter.firstName} ${sitter.lastName}'s Request`,
+          `${sitter.firstName} ${sitter.lastName} sent a Request!`,
+        );
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          updateSnackBarMessage(error.message);
+        }
+      }
+    }
     setSubmitting(false);
     setDateRange([null, null]);
     resetForm({ values: { dateRange: [null, null] } });
+    history.push('/listings');
   };
 
   const handleChange = (newDateRange: DateRange<Date>) => {
