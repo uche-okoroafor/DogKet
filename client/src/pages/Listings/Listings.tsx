@@ -81,7 +81,7 @@ const Listings = (): JSX.Element => {
           </Box>
         )}
 
-        {!loading && (
+        {!loading && profiles.length && (
           <>
             <Grid
               width="100vw"
