@@ -41,8 +41,6 @@ exports.createProfile = async (req, res, next) => {
 // @route PUT /profile/:profileId
 // @access private
 // @desc Update a profile of a logged-in user ONLY. It should not be able to update other user's profile.
-// Note: this profile can be set up as a 'Sitter' profile here.
-// Extra fields for Sitter: isSitter(Boolean), title(String), hourlyWage(Number)
 exports.updateProfile = async (req, res, next) => {
   try {
     const { profileId } = req.params;
@@ -171,12 +169,6 @@ exports.patchProfile = async (req, res, next) => {
 // @route GET /profile/:profileId
 // @access private
 // @desc Get a profile with given profileId. profileId can be either a logged in user's profileId or other user's profileId.
-// (e.g.,)
-// 1. No matter you are a pet owner or a sitter, you want to see other pet sitter' profile in ProfileDetail page.
-//    (from Listings page, click a 'pet sitter detail card', you will see a ProfileDetail of the pet sitter)
-// 2. Assume you already have your profile and just want to update your profile in EditProfile page.
-//    In this case, when you access your EditProfile Page, your existing profile data should be displayed
-//    in EditProfile Page before you edit your profile.
 exports.findProfile = async (req, res, next) => {
   try {
     const { profileId } = req.params;
@@ -202,7 +194,6 @@ exports.findProfile = async (req, res, next) => {
 // @route GET /profile
 // @access private
 // @desc Get all sitter profiles only.
-// No matter you are a pet owner or a sitter, you want to see all other pet sitter' profile in Listings page.
 exports.getAllProfiles = async (req, res, next) => {
   try {
     const profiles = await Profile.find({ isSitter: true });

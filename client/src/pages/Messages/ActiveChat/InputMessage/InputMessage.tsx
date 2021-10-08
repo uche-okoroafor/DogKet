@@ -1,29 +1,40 @@
 import { Button, TextField, CircularProgress } from '@material-ui/core';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useConvo } from '../../../../context/useConvoContext';
 import useStyles from './useStyles';
 
 interface Props {
   conversationId: string;
-  recipientId: string;
+  recipientProfileId: string;
 }
 
-const InputMessage = ({ conversationId, recipientId }: Props): JSX.Element => {
+const InputMessage = ({ conversationId, recipientProfileId }: Props): JSX.Element => {
   const classes = useStyles();
+  const { sendMessageContenxt } = useConvo();
 
-  const handleSubmit = (
-    _values: { conversationId: string; text: string; recipientId: string },
+  const handleSubmit = async (
+    values: { conversationId: string; text: string; recipientProfileId: string; recipientRead: boolean },
     {
       setSubmitting,
       resetForm,
     }: FormikHelpers<{
       conversationId: string;
       text: string;
-      recipientId: string;
+      recipientProfileId: string;
+      recipientRead: boolean;
     }>,
   ) => {
+    await sendMessageContenxt(values);
     setSubmitting(false);
-    resetForm();
+    resetForm({
+      values: {
+        conversationId,
+        text: '',
+        recipientProfileId,
+        recipientRead: false,
+      },
+    });
   };
 
   return (
@@ -31,10 +42,12 @@ const InputMessage = ({ conversationId, recipientId }: Props): JSX.Element => {
       initialValues={{
         conversationId,
         text: '',
-        recipientId,
+        recipientProfileId,
+        recipientRead: false,
       }}
       validationSchema={Yup.object().shape({ text: Yup.string().required('Text is required') })}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
         <Form onSubmit={handleSubmit} noValidate className={classes.form}>

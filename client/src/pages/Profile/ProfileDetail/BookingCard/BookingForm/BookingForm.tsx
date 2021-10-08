@@ -27,20 +27,12 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   const mockRandomRating = Math.floor(1 + Math.random() * 5);
 
   const handleSubmit = (
-    // 'dateRange' will be used when we send 'submit request' to backend
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { dateRange }: { dateRange: DateRange<Date> },
     { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
   ) => {
-    // 'setSubmitting' will be used when we send 'submit request' to backend
-    // I guess it's related to 'isSubmitting' and 'onSubmit' in Formik
     setSubmitting(false);
     setDateRange([null, null]);
-    // resetForm is used in the current version. Assume you submit the form with valid date range inputs successfully.
-    // After that, when you try to submit "again" with empty input fields,
-    // the form won't show error messages without 'resetForm()' (it should display error messages on UI)
-    // and it will submit the previous date range inputs that you already submitted successfully
-    // (it shouldn't submit because you try to submit with invalid inputs)
     resetForm({ values: { dateRange: [null, null] } });
   };
 

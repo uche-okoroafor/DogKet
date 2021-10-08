@@ -9,14 +9,42 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
 
-    const conversations = await Conversation.find({
-      $or: [{ user1: userId }, { user2: userId }],
+    const userProfile = await Profile.findOne({ userId });
+
+    if (!userProfile) {
+      res.status(404);
+      throw new Error("Couldn't find a profile for this user");
+    }
+
+    let conversations = await Conversation.find({
+      $or: [
+        { user1Profile: userProfile._id },
+        { user2Profile: userProfile._id },
+      ],
     })
       .populate("latestMessage")
-      .populate("user1", "-password -register_date -__v")
-      .populate("user2", "-password -register_date -__v");
+      .populate("user1Profile", "userId photos firstName lastName")
+      .populate("user2Profile", "userId photos firstName lastName");
 
-    res.status(200).json(conversations);
+    conversations.sort((first, second) => {
+      return second.latestMessage.createdAt - first.latestMessage.createdAt;
+    });
+
+    convosFormat = conversations.map((convo) => {
+      const convoCopy = { ...convo._doc };
+      if (
+        convoCopy.user1Profile._id.toString() === userProfile._id.toString()
+      ) {
+        convoCopy.otherUserProfile = convoCopy.user2Profile;
+      } else {
+        convoCopy.otherUserProfile = convoCopy.user1Profile;
+      }
+      delete convoCopy.user1Profile;
+      delete convoCopy.user2Profile;
+      return convoCopy;
+    });
+
+    res.status(200).json(convosFormat);
   } catch (error) {
     next(error);
   }
@@ -36,10 +64,22 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
 
     const userId = req.user.id;
 
+    const userProfile = await Profile.findOne({ userId });
+
+    if (!userProfile) {
+      res.status(404);
+      throw new Error("Couldn't find a profile for this user");
+    }
+
     const conversation = await Conversation.findOne({
       _id: conversationId,
-      $or: [{ user1: userId }, { user2: userId }],
-    });
+      $or: [
+        { user1Profile: userProfile._id },
+        { user2Profile: userProfile._id },
+      ],
+    })
+      .populate("user1Profile", "userId photos firstName lastName")
+      .populate("user2Profile", "userId photos firstName lastName");
 
     if (!conversation) {
       res.status(404);
@@ -50,9 +90,23 @@ exports.getConversation = asyncHandler(async (req, res, next) => {
 
     const messages = await Message.find({
       conversation: conversation._id,
-    }).populate("sender", "-password -register_date");
+    }).populate("senderProfile", "userId photos firstName lastName");
 
-    res.status(200).json(messages);
+    const convoCopy = { ...conversation._doc };
+
+    if (convoCopy.user1Profile._id.toString() === userProfile._id.toString()) {
+      convoCopy.otherUserProfile = convoCopy.user2Profile;
+    } else {
+      convoCopy.otherUserProfile = convoCopy.user1Profile;
+    }
+    delete convoCopy.user1Profile;
+    delete convoCopy.user2Profile;
+
+    res.status(200).json({
+      conversationId,
+      otherUserProfile: convoCopy.otherUserProfile,
+      messages,
+    });
   } catch (error) {
     next(error);
   }
@@ -70,32 +124,54 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
       throw new Error("Invalid recipientId");
     }
 
-    const userId = req.user.id;
+    const recipientProfile = await Profile.findOne({ userId: recipientId });
 
+    if (!recipientProfile) {
+      res.status(404);
+      throw new Error("Couldn't find a profile for recipient");
+    }
+
+    const userId = req.user.id;
+    const userProfile = await Profile.findOne({ userId });
+
+    if (!userProfile) {
+      res.status(404);
+      throw new Error("Couldn't find a profile for this user");
+    }
     let conversation;
 
     conversation = await Conversation.findOne({
       $or: [
-        { $and: [{ user1: userId }, { user2: recipientId }] },
-        { $and: [{ user1: recipientId }, { user2: userId }] },
+        {
+          $and: [
+            { user1Profile: userProfile._id },
+            { user2Profile: recipientProfile._id },
+          ],
+        },
+        {
+          $and: [
+            { user1Profile: recipientProfile._id },
+            { user2Profile: userProfile._id },
+          ],
+        },
       ],
     });
 
     if (conversation) {
-      res.status(404);
+      res.status(409);
       throw new Error(
         "Conversation between this user and recipient already exists."
       );
     }
 
     conversation = await Conversation.create({
-      user1: userId,
-      user2: recipientId,
+      user1Profile: userProfile._id,
+      user2Profile: recipientProfile._id,
     });
 
     conversation = await conversation
-      .populate("user1", "-password -register_date")
-      .populate("user2", "-password -register_date")
+      .populate("user1Profile", "userId photos firstName lastName")
+      .populate("user2Profile", "userId photos firstName lastName")
       .execPopulate();
 
     res.status(200).json(conversation);
