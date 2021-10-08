@@ -4,10 +4,16 @@ const useStyles = makeStyles((theme) => ({
   chatSideBanner: {
     height: '100%',
     borderRight: '1px solid #eee',
+    [theme.breakpoints.down('xs')]: {
+      border: 'none',
+    },
   },
   chatSideBannerBox: {
     padding: theme.spacing(2),
     borderBottom: '1px solid #eee',
+    [theme.breakpoints.down('xs')]: {
+      border: 'none',
+    },
   },
   inboxMessages: {
     fontWeight: 700,

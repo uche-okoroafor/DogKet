@@ -8,25 +8,49 @@ const Conversation = require("../models/Conversation");
 // @access private
 exports.sendMessage = asyncHandler(async (req, res, next) => {
   try {
-    const { conversationId, text, recipientId } = req.body;
+    const { conversationId, text, recipientProfileId } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(conversationId)) {
       res.status(400);
       throw new Error("Invalid conversationId");
     }
 
-    if (!mongoose.Types.ObjectId.isValid(recipientId)) {
+    if (!mongoose.Types.ObjectId.isValid(recipientProfileId)) {
       res.status(400);
-      throw new Error("Invalid recipientId");
+      throw new Error("Invalid recipientProfileId");
+    }
+
+    const recipientProfile = await Profile.findOne({ _id: recipientProfileId });
+
+    if (!recipientProfile) {
+      res.status(404);
+      throw new Error("Couldn't find a profile for recipient");
     }
 
     const userId = req.user.id;
 
+    const userProfile = await Profile.findOne({ userId });
+
+    if (!userProfile) {
+      res.status(404);
+      throw new Error("Couldn't find a profile for this user");
+    }
+
     const conversation = await Conversation.findOne({
       _id: conversationId,
       $or: [
-        { $and: [{ user1: userId }, { user2: recipientId }] },
-        { $and: [{ user1: recipientId }, { user2: userId }] },
+        {
+          $and: [
+            { user1Profile: userProfile._id },
+            { user2Profile: recipientProfile._id },
+          ],
+        },
+        {
+          $and: [
+            { user1Profile: recipientProfile._id },
+            { user2Profile: userProfile._id },
+          ],
+        },
       ],
     });
 
@@ -39,7 +63,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
 
     let message = await Message.create({
       conversation: conversation._id,
-      sender: userId,
+      senderProfile: userProfile._id,
       text,
       recipientRead: false,
     });
@@ -47,7 +71,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     conversation.latestMessage = message._id;
     await conversation.save();
     message = await message
-      .populate("sender", "-password -register_date")
+      .populate("senderProfile", "userId photos firstName lastName")
       .execPopulate();
 
     res.status(200).json(message);

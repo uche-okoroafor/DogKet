@@ -11,9 +11,9 @@ const messageSchema = new Schema(
       type: String,
       required: true,
     },
-    sender: {
+    senderProfile: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "profile",
     },
     recipientRead: {
       type: Boolean,
