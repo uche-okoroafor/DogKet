@@ -14,6 +14,7 @@ const Listings = (): JSX.Element => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
   const [search, setSearch] = useState<string>('');
+  const [loading, setLoading] = useState(false);
   const { updateSnackBarMessage } = useSnackBar();
   const classes = useStyles();
 
@@ -28,14 +29,17 @@ const Listings = (): JSX.Element => {
   useEffect(() => {
     try {
       const fetchProfiles = async () => {
+        setLoading(true);
         const fetchedProfiles = await getAllProfiles();
         setProfiles(fetchedProfiles);
+        setLoading(false);
       };
       fetchProfiles();
     } catch (error: unknown) {
       if (error instanceof Error) {
         updateSnackBarMessage(error.message);
       }
+      setLoading(false);
     }
   }, [updateSnackBarMessage]);
 
@@ -71,28 +75,32 @@ const Listings = (): JSX.Element => {
           />
         </Box>
 
-        {!profiles.length && (
+        {loading && (
           <Box height="60%" display="flex" justifyContent="center" alignItems="center">
             <CircularProgress size={100} />
           </Box>
         )}
 
-        <Grid
-          width="100vw"
-          minHeight="calc(100vh - 196px)"
-          container
-          className={classes.sitterLists}
-          justifyContent="space-evenly"
-        >
-          {profiles.map((profile: Profile) => (
-            <SitterCard key={profile._id} sitter={profile} />
-          ))}
-        </Grid>
-        <Box display="flex" justifyContent="center" alignItems="center" className={classes.showMoreBox}>
-          <Button variant="outlined" onClick={handleShowMore} className={classes.showMoreBtn}>
-            Show More
-          </Button>
-        </Box>
+        {!loading && (
+          <>
+            <Grid
+              width="100vw"
+              minHeight="calc(100vh - 196px)"
+              container
+              className={classes.sitterLists}
+              justifyContent="space-evenly"
+            >
+              {profiles.map((profile: Profile) => (
+                <SitterCard key={profile._id} sitter={profile} />
+              ))}
+            </Grid>
+            <Box display="flex" justifyContent="center" alignItems="center" className={classes.showMoreBox}>
+              <Button variant="outlined" onClick={handleShowMore} className={classes.showMoreBtn}>
+                Show More
+              </Button>
+            </Box>
+          </>
+        )}
       </Grid>
     </Layout>
   );
