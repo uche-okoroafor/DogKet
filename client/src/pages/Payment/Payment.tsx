@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import PaymentMethodForm from './PaymentMethodForm/PaymentMethodForm';
 import masterCardLogo from './CardImages/Mastercard-Logo.svg';
@@ -105,8 +106,7 @@ export default function PaymentProfile(): JSX.Element {
           </Grid>
           <Grid item container md={10} className={classes.gridContainer}>
             <Typography variant="h6" className={classes.containerInfo}>
-              {paymentProfiles && 'Saved Payment Profiles:'}
-              {!paymentProfiles && "You don't have any Payment Profile"}
+              {paymentProfiles ? 'Saved Payment Profiles:' : "You don't have any Payment Profile"}
             </Typography>
             <Grid item container spacing={2} className={classes.grid}>
               {paymentProfiles &&
