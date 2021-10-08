@@ -4,23 +4,40 @@ import { Grid, Box, CircularProgress } from '@mui/material';
 import Layout from '../../Layout/Layout';
 import ProfileDetailCard from './ProfileDetailCard/ProfileDetailCard';
 import BookingCard from './BookingCard/BookingCard';
-import { sampleData, Sitter } from './sampleData';
+import { Profile } from '../../../interface/Profile';
+import { getProfileDetail } from '../../../helpers/APICalls/profiles';
+import { useSnackBar } from '../../../context/useSnackbarContext';
 
 const ProfileDetail = (): JSX.Element => {
   const params: { sitterId: string } = useParams();
   const { sitterId } = params;
-  const [sitter, setSitter] = useState<Sitter | null | undefined>(null);
 
-  const getSitterInfo = (sitterId: string) => {
-    return sampleData.find((sitter: Sitter) => sitter.sitterId === sitterId);
-  };
+
+  const [sitter, setSitter] = useState<Profile | null | undefined>(null);
+
+
+  const { updateSnackBarMessage } = useSnackBar();
 
   useEffect(() => {
-    const sitter = getSitterInfo(sitterId);
-    setSitter(sitter);
-  }, [sitterId]);
+    try {
+      const fetchProfileDetail = async () => {
+        const fetchedProfileDetail = await getProfileDetail(sitterId);
+        setSitter(fetchedProfileDetail);
+      };
+      fetchProfileDetail();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        updateSnackBarMessage(error.message);
+      }
+    }
+  }, [sitterId, updateSnackBarMessage]);
 
-  if (!sitter) return <CircularProgress />;
+  if (!sitter)
+    return (
+      <Box height="100vh" display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress size={100} />
+      </Box>
+    );
 
   return (
     <Layout>

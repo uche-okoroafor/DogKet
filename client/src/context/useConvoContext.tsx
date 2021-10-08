@@ -8,16 +8,21 @@ import {
   KeyboardEvent,
   MouseEvent,
 } from 'react';
-import { Conversation } from '../interface/Conversation';
-import { mockTest1Convos } from '../mocks/mockConversation';
+import { getAllConversations, getConversation, sendMessage } from '../helpers/APICalls/conversation';
+import { ActiveConversation, Conversation, Message } from '../interface/Conversation';
+import produce from 'immer';
 
 interface IConvoContext {
   conversations: Conversation[] | null | undefined;
-  activeConvo: Conversation | null | undefined;
+  activeConvo: ActiveConversation | null | undefined;
   mobileOpen: boolean;
   updateConvoContext: (convos: Conversation[]) => void;
-  activateChat: (convo: Conversation | null | undefined) => void;
-  toggleDrawer: (open: boolean, convo: Conversation | null | undefined) => (event: KeyboardEvent | MouseEvent) => void;
+  activateChat: (convo: ActiveConversation | null | undefined) => void;
+  toggleDrawer: (
+    open: boolean,
+    conversationId: string | undefined,
+  ) => (event: KeyboardEvent | MouseEvent) => Promise<void>;
+  sendMessageContenxt: (sendingMessageInfo: Message) => void;
 }
 
 export const ConvoContext = createContext<IConvoContext>({
@@ -26,24 +31,30 @@ export const ConvoContext = createContext<IConvoContext>({
   mobileOpen: false,
   updateConvoContext: () => null,
   activateChat: () => null,
-  toggleDrawer: () => () => null,
+  toggleDrawer: () => async () => undefined,
+  sendMessageContenxt: () => null,
 });
 
 export const ConvoProvider: FunctionComponent = ({ children }): JSX.Element => {
   const [conversations, setConversations] = useState<Conversation[] | null | undefined>();
-  const [activeConvo, setActiveConvo] = useState<Conversation | null | undefined>();
+  const [activeConvo, setActiveConvo] = useState<ActiveConversation | null | undefined>();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const updateConvoContext = useCallback((convos: Conversation[]) => {
     setConversations(convos);
   }, []);
 
-  const activateChat = useCallback((convo: Conversation | null | undefined) => {
+  const fetchConversations = useCallback(async () => {
+    const data = await getAllConversations();
+    updateConvoContext(data);
+  }, [updateConvoContext]);
+
+  const activateChat = useCallback((convo: ActiveConversation | null | undefined) => {
     setActiveConvo(convo);
   }, []);
 
   const toggleDrawer = useCallback(
-    (open: boolean, convo: Conversation | null | undefined) => (event: KeyboardEvent | MouseEvent) => {
+    (open: boolean, conversationId: string | undefined) => async (event: KeyboardEvent | MouseEvent) => {
       if (
         event &&
         event.type === 'keydown' &&
@@ -52,21 +63,47 @@ export const ConvoProvider: FunctionComponent = ({ children }): JSX.Element => {
         return;
       }
       setMobileOpen(open);
-      activateChat(convo);
+
+      if (open) {
+        const messages = await getConversation(conversationId);
+        activateChat(messages);
+      } else {
+        activateChat(null);
+      }
     },
     [activateChat],
   );
 
+  const sendMessageContenxt = useCallback(
+    async (sendingMessageInfo: Message) => {
+      const sendingMessage = await sendMessage(sendingMessageInfo);
+      setActiveConvo(
+        produce((draft) => {
+          draft.messages.push(sendingMessage);
+        }),
+      );
+      fetchConversations();
+    },
+    [fetchConversations],
+  );
+
   useEffect(() => {
-    const fetchConversations = () => {
-      updateConvoContext(mockTest1Convos);
-    };
-    fetchConversations();
-  }, [updateConvoContext]);
+    try {
+      fetchConversations();
+    } catch (error) {}
+  }, [fetchConversations]);
 
   return (
     <ConvoContext.Provider
-      value={{ conversations, activeConvo, mobileOpen, updateConvoContext, activateChat, toggleDrawer }}
+      value={{
+        conversations,
+        activeConvo,
+        mobileOpen,
+        updateConvoContext,
+        activateChat,
+        toggleDrawer,
+        sendMessageContenxt,
+      }}
     >
       {children}
     </ConvoContext.Provider>

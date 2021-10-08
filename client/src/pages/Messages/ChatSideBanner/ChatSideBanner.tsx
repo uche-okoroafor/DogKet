@@ -4,6 +4,7 @@ import Search from './Search/Search';
 import ChatBox from './ChatBox/ChatBox';
 import { User } from '../../../interface/User';
 import { Conversation } from '../../../interface/Conversation';
+import CustomProgressCircular from '../../../components/CustomProgressCircular/CustomProgressCircular';
 import useStyles from './useStyles';
 
 interface Props {
@@ -22,6 +23,8 @@ const ChatSideBanner = ({ conversations }: Props): JSX.Element => {
       setNewChatUser(null);
     }
   };
+
+  if (!conversations) return <CustomProgressCircular />;
 
   return (
     <Grid item sm={4} className={classes.chatSideBanner}>

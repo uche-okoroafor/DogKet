@@ -1,1 +1,1 @@
-export const demoUser = { email: 'test@gmail.com', password: '123123' };
+export const demoUser = { email: 'demoUser@gmail.com', password: '123123' };

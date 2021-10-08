@@ -2,30 +2,31 @@
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import Login from './pages/Login/Login';
+import Signup from './pages/SignUp/SignUp';
 import { AuthProvider } from './context/useAuthContext';
-import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { ConvoProvider } from './context/useConvoContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import Login from './pages/Login/Login';
-import Signup from './pages/SignUp/SignUp';
 import TempDashboardMain from './pages/TempDashboardMain/TempDashboardMain';
 import Listings from './pages/Listings/Listings';
 import MySitters from './pages/MySitters/MySitters';
 import MyJobs from './pages/MyJobs/MyJobs';
 import Profile from './pages/Profile/Profile';
 import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
+import Landing from './pages/Landing/Landing';
+import Notifications from './pages/Notifications/Notifications';
 import Messages from './pages/Messages/Messages';
 import PaymentProfile from './pages/Payment/Payment';
-import './App.css';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { PaymentProfilesProvider } from './context/usePaymentProfilesContext';
 import { PaymentProvider } from './context/usePaymentContext';
 import './App.css';
 
+
 const stripePromise = loadStripe(
-  'pk_test_51JdfCrHTISnlklzNeWCPnnzwLCfvEgPODCQJ8cYe3Z1h83MPIJFsMlTaXkR8NGyYt97rx5I8tMB4NJPtHsLx8fLY00uPHJGn0h',
+  
 );
 
 function App(): JSX.Element {
@@ -48,9 +49,11 @@ function App(): JSX.Element {
                         <Route exact path="/profile" component={Profile} />
                         <Route path="/profile/:setting" component={Profile} />
                         <ProtectedRoute exact path="/payment" component={PaymentProfile} />
+                        <Route exact path="/notifications" component={Notifications} />
                         <Route exact path="/messages" component={Messages} />
                         <Route exact path="/my-sitters" component={MySitters} />
                         <Route exact path="/my-jobs" component={MyJobs} />
+                        <Route exact path="/" component={Landing} />
                         <Route path="*">
                           <Redirect to="/login" />
                         </Route>
