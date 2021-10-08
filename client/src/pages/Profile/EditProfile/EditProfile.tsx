@@ -122,7 +122,7 @@ const EditProfile = (): JSX.Element => {
           Want to become a sitter? Create your Profile first
         </Typography>
         <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="first-name" className={classes.label}>
               first name
             </label>
@@ -140,7 +140,7 @@ const EditProfile = (): JSX.Element => {
               onBlur={formik.handleBlur}
             />
           </Box>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="last-name" className={classes.label}>
               last name
             </label>
@@ -158,7 +158,7 @@ const EditProfile = (): JSX.Element => {
               onBlur={formik.handleBlur}
             />
           </Box>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="select-outlined" className={classes.label}>
               gender
             </label>
@@ -177,7 +177,7 @@ const EditProfile = (): JSX.Element => {
               </Select>
             </FormControl>
           </Box>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="birth" className={classes.label}>
               birth date
             </label>
@@ -210,7 +210,7 @@ const EditProfile = (): JSX.Element => {
               onChange={formik.handleChange}
             />
           </Box>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="phone-number" className={classes.label}>
               phone number
             </label>
@@ -221,7 +221,7 @@ const EditProfile = (): JSX.Element => {
               </Button>
             </Box>
           </Box>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="where-live" className={classes.label}>
               where you live
             </label>
@@ -239,7 +239,7 @@ const EditProfile = (): JSX.Element => {
               onBlur={formik.handleBlur}
             />
           </Box>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="describe" className={classes.label}>
               describe your self
             </label>
@@ -259,7 +259,7 @@ const EditProfile = (): JSX.Element => {
             />
           </Box>
           {isEditMode && (
-            <Box className={classes.box}>
+            <Box display="flex" alignItems="center" className={classes.box}>
               <label htmlFor="isSitter" className={classes.label}>
                 Become a Sitter
               </label>
@@ -275,7 +275,7 @@ const EditProfile = (): JSX.Element => {
           )}
           {isEditMode && formik.values.isSitter && (
             <>
-              <Box className={classes.box}>
+              <Box display="flex" alignItems="center" className={classes.box}>
                 <label htmlFor="title" className={classes.label}>
                   Title
                 </label>
@@ -293,7 +293,7 @@ const EditProfile = (): JSX.Element => {
                   onBlur={formik.handleBlur}
                 />
               </Box>
-              <Box className={classes.box}>
+              <Box display="flex" alignItems="center" className={classes.box}>
                 <label htmlFor="where-live" className={classes.label}>
                   Hourly Wage
                 </label>

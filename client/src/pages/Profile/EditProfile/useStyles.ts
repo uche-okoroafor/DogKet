@@ -1,12 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   editProfileContainer: {
     margin: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      margin: theme.spacing(0),
+    },
   },
   form: {
     width: '100%',
     padding: '0 40px',
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(0),
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   },
   typography: {
     margin: 20,
@@ -16,6 +27,9 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     textAlign: 'center',
     padding: '5px',
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2),
+    },
   },
   label: {
     padding: 10,
@@ -31,6 +45,9 @@ const useStyles = makeStyles(() => ({
   },
   box: {
     padding: 2.5,
+    [theme.breakpoints.down('xs')]: {
+      width: '95%',
+    },
   },
   boxStyle: {
     display: 'inline-flex',
