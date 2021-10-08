@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#E9EEF9',
       cursor: 'pointer',
     },
+    [theme.breakpoints.down('xs')]: {
+      outline: 'none',
+    },
   },
 }));
 
