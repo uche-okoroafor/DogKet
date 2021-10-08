@@ -3,14 +3,14 @@ import clsx from 'clsx';
 import useStyles from './useStyles';
 
 interface Props {
-  username: string;
+  fullName?: string;
   profileImg?: string;
   small?: boolean;
   isOnline?: boolean;
   customClasses?: string;
 }
 
-const OtherUserAvatar = ({ username, profileImg, small, isOnline, customClasses }: Props): JSX.Element => {
+const OtherUserAvatar = ({ fullName, profileImg, small, isOnline, customClasses }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -25,7 +25,7 @@ const OtherUserAvatar = ({ username, profileImg, small, isOnline, customClasses 
         variant="dot"
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <Avatar alt={username} src={profileImg} className={`${small ? classes.profilePic : classes.activeChatPic}`} />
+        <Avatar alt={fullName} src={profileImg} className={`${small ? classes.profilePic : classes.activeChatPic}`} />
       </Badge>
     </Box>
   );

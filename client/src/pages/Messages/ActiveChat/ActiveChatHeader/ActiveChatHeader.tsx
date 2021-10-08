@@ -4,20 +4,20 @@ import OtherUserAvatar from '../../../../components/OtherUserAvatar/OtherUserAva
 import useStyles from './useStyles';
 
 interface Props {
-  username: string;
+  fullName: string;
   profileImg?: string;
   isOnline: boolean;
 }
 
-const ActiveChatHeader = ({ username, profileImg, isOnline }: Props): JSX.Element => {
+const ActiveChatHeader = ({ fullName, profileImg, isOnline }: Props): JSX.Element => {
   const classes = useStyles();
 
   const activeChatHeaderContents = (
     <Box className={classes.activeChatHeader}>
       <Box className={classes.content}>
-        <OtherUserAvatar small={false} isOnline={isOnline} username={username} profileImg={profileImg} />
+        <OtherUserAvatar small={false} isOnline={isOnline} fullName={fullName} profileImg={profileImg} />
         <Typography variant="h5" className={classes.username}>
-          {username}
+          {fullName}
         </Typography>
       </Box>
       <MoreHorizIcon classes={{ root: classes.ellipsis }} />
