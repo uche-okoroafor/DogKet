@@ -2,7 +2,12 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-export default function TimeDisplay({ endTime, startTime }): JSX.Element {
+interface Props {
+  endTime?: Date;
+  startTime?: Date;
+}
+
+export default function TimeDisplay({ endTime, startTime }: Props): JSX.Element {
   const pageStyles = makeStyles((theme: Theme) =>
     createStyles({
       BookingSubHr: {
@@ -14,8 +19,8 @@ export default function TimeDisplay({ endTime, startTime }): JSX.Element {
   );
   const pageClasses = pageStyles();
 
-  const endDate = new Date(endTime);
-  const startDate = new Date(startTime);
+  const endDate = endTime ? new Date(endTime) : new Date();
+  const startDate = startTime ? new Date(startTime) : new Date();
   const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minutes: 'numeric' } as const;
 
   const timeEnd = endDate.toLocaleDateString('en-US', options);

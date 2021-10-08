@@ -29,7 +29,7 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
+                <ProtectedRoute exact path="/dashboard" component={Bookings} />
                 <Route exact path="/listings" component={Listings} />
                 <Route path="/listings/:sitterId" component={ProfileDetail} />
                 <Route exact path="/profile" component={Profile} />

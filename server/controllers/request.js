@@ -55,7 +55,6 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
         success: { resModel },
       });
 
-    // current bookings and past bookings list
     const separatorIndex = requestsByUser.findIndex(
       (req) => req.startDate < currentTime
     );
@@ -69,7 +68,6 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
       );
     }
 
-    // next booking object
     const currentLength = resModel.currentBookings.length;
     if (currentLength > 0) {
       const acceptedBookings = resModel.currentBookings.filter(

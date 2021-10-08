@@ -18,10 +18,6 @@ export interface RequestApiData {
   success?: RequestApiDataSuccess;
 }
 
-export interface RequestStatusApiDataSuccess {
-  request: any;
-}
-
 export interface RequestStatusApiData {
   error?: { message: string };
   success?: RequestApiDataSuccess;

@@ -1,26 +1,22 @@
 import 'date-fns';
 import useStyles from './useStyles';
-import MultipleDatesPicker from '@randex/material-ui-multiple-dates-picker';
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
+import { Calendar } from 'react-multi-date-picker';
+import { useState } from 'react';
+import type { Value } from 'react-multi-date-picker';
+import 'react-multi-date-picker/styles/colors/red.css';
 
 interface Props {
   currentBookings: any[];
 }
-export default function Calendar({ currentBookings }: Props): JSX.Element {
+export default function CalendarWrap({ currentBookings }: Props): JSX.Element {
   const classes = useStyles();
   const selectedDates = currentBookings.map((booking) => new Date(booking.startDate));
+  const [value, setValue] = useState<Value>(selectedDates);
 
   return (
-    <Box className={'calendarWrapper'}>
-      <Paper className={classes.paper}>
-        <MultipleDatesPicker
-          readOnly={true}
-          open={true}
-          selectedDates={selectedDates}
-          onSubmit={(dates: any) => console.log('selected dates', dates)}
-        />
-      </Paper>
+    <Box className={classes.calendarWrap}>
+      <Calendar className="red" multiple value={value} onChange={setValue} />
     </Box>
   );
 }

@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       backgroundColor: 'rgb(250,250,251)',
       padding: '35px',
+      height: '100vh',
+    },
+    calendarWrap: {
+      height: '100%',
     },
   }),
 );

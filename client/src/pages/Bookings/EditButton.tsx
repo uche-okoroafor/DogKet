@@ -25,12 +25,12 @@ export default function EditButton({ requestId, updateStatusState, sectionName }
   };
 
   const onClickHandler = async (status: string) => {
-    const { success } = await updateStatus(status, requestId);
+    const { success }: any = await updateStatus(status, requestId);
     if (success) {
       const id = success['request']._id;
-      if (sectionName === 'nextBooking') updateStatusState(id, status, 'nextBooking');
-      else if (sectionName == 'current bookings') updateStatusState(id, status, 'currentBookings');
-      else if (sectionName == 'past bookings') updateStatusState(id, status, 'pastBookings');
+      if (sectionName === 'next booking') updateStatusState(id, status, 'nextBooking');
+      else if (sectionName === 'current bookings') updateStatusState(id, status, 'currentBookings');
+      else if (sectionName === 'past bookings') updateStatusState(id, status, 'pastBookings');
       handleClose();
     }
   };

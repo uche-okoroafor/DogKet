@@ -25,7 +25,7 @@ export default function NextBookings({ nextBooking, updateStatusState }: Props):
                 <Typography variant="body2" gutterBottom className={pageClasses.sectionHr}>
                   your next booking
                 </Typography>
-                {nextBooking?.startDate ? (
+                {nextBooking.startDate ? (
                   <TimeDisplay endTime={nextBooking.startDate} startTime={nextBooking.startDate} />
                 ) : (
                   <Typography gutterBottom variant="subtitle1">
@@ -44,7 +44,7 @@ export default function NextBookings({ nextBooking, updateStatusState }: Props):
             </Grid>
             <Grid item>
               <EditButton
-                sectionName={'nextBooking'}
+                sectionName={'next booking'}
                 updateStatusState={updateStatusState}
                 requestId={nextBooking?._id}
               />

@@ -5,10 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
 import React from 'react';
-import Calendar from './Calendar';
+import CalendarWrap from './Calendar';
 import NextBookings from './NextBookings';
 import ManageBookings from './ManageBookings';
-import { RequestApiDataSuccess } from '../../interface/Requests';
+import { RequestApiDataSuccess, Booking } from '../../interface/Requests';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
@@ -17,18 +17,18 @@ export default function Bookings(): JSX.Element {
     currentBookings: [],
     pastBookings: [],
   };
-  const [requests, setRequest] = useState<RequestApiDataSuccess>(resModel);
-  const returnRequestType = (success): RequestApiDataSuccess => success.resModel;
+  const [requests, setRequest] = useState(resModel);
+  const returnRequestType = (success: any): RequestApiDataSuccess => success.resModel;
 
   const updateStatusState = (id: string, status: string, sectionName: string) => {
-    const requestCopy = { ...requests };
-    if (id == requestCopy.nextBooking?._id) {
+    const requestCopy: any = { ...requests };
+    if (id === requestCopy.nextBooking?._id) {
       requestCopy.nextBooking.status = status;
       setRequest(requestCopy);
       return;
     }
 
-    const index = requestCopy[sectionName].findIndex((booking) => booking._id === id);
+    const index = requestCopy[sectionName].findIndex((booking: Booking) => booking._id === id);
     if (index >= 0) {
       requestCopy[sectionName][index].status = status;
       setRequest(requestCopy);
@@ -59,7 +59,7 @@ export default function Bookings(): JSX.Element {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Calendar currentBookings={requests.currentBookings} />
+              <CalendarWrap currentBookings={requests.currentBookings} />
             </Grid>
           </Grid>
         </Box>
