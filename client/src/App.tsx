@@ -16,6 +16,7 @@ import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
 import Landing from './pages/Landing/Landing';
 import Notifications from './pages/Notifications/Notifications';
 import Messages from './pages/Messages/Messages';
+import Bookings from './pages/Bookings/Bookings';
 import './App.css';
 
 function App(): JSX.Element {
