@@ -32,9 +32,11 @@ const ProfileDetail = (): JSX.Element => {
 
   if (!sitter)
     return (
-      <Box height="100vh" display="flex" justifyContent="center" alignItems="center">
-        <CircularProgress size={100} />
-      </Box>
+      <Layout>
+        <Box height="100%" display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress size={100} />
+        </Box>
+      </Layout>
     );
 
   return (

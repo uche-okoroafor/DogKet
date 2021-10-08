@@ -32,7 +32,7 @@ export default function Layout({ children }: Props): JSX.Element {
           flexDirection="column"
           minHeight="100vh"
         >
-          <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/listings" />
+          <AuthHeader loggedInUser={loggedInUser} asideText="Become a sitter" linkTo="/profile/edit" />
           <Box
             className={classes.layoutOuterContainer}
             width="100%"

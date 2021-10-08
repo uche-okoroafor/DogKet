@@ -43,6 +43,11 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets1",
     hourlyWage: 11,
+    availability: {
+      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
+      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
+      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 6, 18)],
+    },
   });
   testProfiles.push(test1Profile);
 
@@ -66,6 +71,12 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets2",
     hourlyWage: 12,
+    availability: {
+      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
+      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
+      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
+      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+    },
   });
   testProfiles.push(test2Profile);
 
@@ -89,6 +100,12 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets3",
     hourlyWage: 13,
+    availability: {
+      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
+      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
+      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
+      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+    },
   });
   testProfiles.push(test3Profile);
 
@@ -112,6 +129,12 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets4",
     hourlyWage: 14,
+    availability: {
+      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
+      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
+      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
+      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+    },
   });
   testProfiles.push(test4Profile);
 
@@ -135,6 +158,11 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets5",
     hourlyWage: 15,
+    availability: {
+      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
+      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
+      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 6, 18)],
+    },
   });
   testProfiles.push(test5Profile);
 
@@ -158,6 +186,15 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets6",
     hourlyWage: 16,
+    availability: {
+      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
+      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
+      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
+      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
+      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
+      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+      saturday: [new Date(2021, 9, 9, 12), new Date(2021, 9, 9, 18)],
+    },
   });
   testProfiles.push(test6Profile);
 
@@ -181,6 +218,12 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets7",
     hourlyWage: 17,
+    availability: {
+      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
+      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
+      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
+      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+    },
   });
   testProfiles.push(test7Profile);
 
@@ -204,6 +247,15 @@ const seedProfiles = async (testUsers) => {
     isSitter: true,
     title: "I love pets8",
     hourlyWage: 18,
+    availability: {
+      sunday: [new Date(2021, 9, 3, 12), new Date(2021, 9, 3, 18)],
+      monday: [new Date(2021, 9, 4, 12), new Date(2021, 9, 4, 18)],
+      tuesday: [new Date(2021, 9, 5, 12), new Date(2021, 9, 5, 18)],
+      wednesday: [new Date(2021, 9, 6, 12), new Date(2021, 9, 6, 18)],
+      thursday: [new Date(2021, 9, 7, 12), new Date(2021, 9, 7, 18)],
+      friday: [new Date(2021, 9, 8, 12), new Date(2021, 9, 8, 18)],
+      saturday: [new Date(2021, 9, 9, 12), new Date(2021, 9, 9, 18)],
+    },
   });
   testProfiles.push(test8Profile);
 
