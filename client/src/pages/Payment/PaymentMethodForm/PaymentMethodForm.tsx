@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { withRouter } from 'react-router-dom';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { TextField, CircularProgress } from '@material-ui/core';
+import { TextField, CircularProgress, Box } from '@material-ui/core';
 import { StripeCardElement, StripeCardElementOptions, StripeCardNumberElement } from '@stripe/stripe-js';
 import { Formik, FormikHelpers } from 'formik';
 import useStyles from '../useStyles';
@@ -10,8 +10,13 @@ import { createCustomer, addPaymentprofile } from '../../../helpers/APICalls/pay
 import * as Yup from 'yup';
 import { iframeStyles } from './CardElementStyles/CardElementStyles';
 
-interface IState {
-  billingDetails: { name: string; email: string; address: string; city: string; state: string; zip: string };
+interface BillingDetails {
+  name: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
 }
 
 function PaymentMethodForm({
@@ -31,7 +36,7 @@ function PaymentMethodForm({
     hidePostalCode: true,
   };
 
-  const userDetails: IState['billingDetails'] = {
+  const userDetails: BillingDetails = {
     name: '',
     email: '',
     address: '',
@@ -41,8 +46,8 @@ function PaymentMethodForm({
   };
 
   const handleSubmit = async (
-    customerDetails: IState['billingDetails'],
-    { setStatus, setSubmitting }: FormikHelpers<IState['billingDetails']>,
+    customerDetails: BillingDetails,
+    { setStatus, setSubmitting }: FormikHelpers<BillingDetails>,
   ): Promise<void> => {
     if (!stripe || !elements) {
       return;
@@ -200,11 +205,11 @@ function PaymentMethodForm({
             size="small"
           />
 
-          <div className={classes.cardElementContainer}>
+          <Box className={classes.cardElementContainer}>
             <CardElement options={cardElementOpts} />
-          </div>
+          </Box>
 
-          <div className={classes.buttonContainer}>
+          <Box className={classes.buttonContainer}>
             {' '}
             <Button type="submit" variant="contained" color="primary" className={classes.submitButton}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Save'}
@@ -212,7 +217,7 @@ function PaymentMethodForm({
             <Button onClick={handleCloseDialog} variant="contained" color="secondary" className={classes.cancelButton}>
               Cancel
             </Button>
-          </div>
+          </Box>
         </form>
       )}
     </Formik>

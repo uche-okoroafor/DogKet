@@ -13,6 +13,7 @@ import {
   Dialog,
   CardContent,
   Checkbox,
+  Box,
 } from '@material-ui/core';
 import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
@@ -28,6 +29,7 @@ export default function PaymentProfile(): JSX.Element {
   const [userIds, setUserIds] = useState<any>(false);
   const [defaultPaymentMethodId, setDefaultPaymentMethodId] = useState('');
   const hiddenCardNumber: string[] = [starOfLife, starOfLife, starOfLife, starOfLife];
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     getUserPaymentProfiles();
@@ -50,7 +52,7 @@ export default function PaymentProfile(): JSX.Element {
       return stripeId;
     } catch (err) {
       const error: any = err;
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   };
 
@@ -65,7 +67,7 @@ export default function PaymentProfile(): JSX.Element {
       SetPaymentProfileExist(true);
     } catch (err) {
       const error: any = err;
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   };
 
@@ -110,7 +112,7 @@ export default function PaymentProfile(): JSX.Element {
                 paymentProfiles.map((paymentMethod: any) => (
                   <Grid item xs={12} sm={12} md={6} key={paymentMethod.id}>
                     <Card className={classes.payCard}>
-                      <div className={classes.cardHeader}>
+                      <Box className={classes.cardHeader}>
                         <img
                           style={{
                             width: '18%',
@@ -127,36 +129,36 @@ export default function PaymentProfile(): JSX.Element {
                           onChange={() => handleDefaultPaymentMethod(paymentMethod.id)}
                           className={classes.checkBox}
                         />
-                      </div>
+                      </Box>
                       <CardContent>
-                        <div className={classes.cardNumberContainer}>
-                          <div className={classes.cardNumber}>
+                        <Box className={classes.cardNumberContainer}>
+                          <Box className={classes.cardNumber}>
                             {hiddenCardNumber.map((starOfLife, key) => (
                               <img key={key} src={starOfLife} style={{ width: 10 }} alt="star" />
                             ))}
-                          </div>
-                          <div className={classes.cardNumber}>
+                          </Box>
+                          <Box className={classes.cardNumber}>
                             {hiddenCardNumber.map((starOfLife, key) => (
                               <img key={key} src={starOfLife} style={{ width: 10 }} alt="star" />
                             ))}
-                          </div>
-                          <div className={classes.cardNumber}>
+                          </Box>
+                          <Box className={classes.cardNumber}>
                             {hiddenCardNumber.map((starOfLife, key) => (
                               <img key={key} src={starOfLife} style={{ width: 10 }} alt="star" />
                             ))}
-                          </div>{' '}
+                          </Box>{' '}
                           <Typography className={classes.cardNumber}>{paymentMethod.card.last4}</Typography>
-                        </div>
-                        <div className={classes.cardDateContainer}>
+                        </Box>
+                        <Box className={classes.cardDateContainer}>
                           <Typography className={classes.cardDate}>
                             Exp. Date {handleCardExpMonth(paymentMethod.card.exp_month)}/
                             {handleCardExpYear(paymentMethod.card.exp_year)}
                           </Typography>{' '}
-                        </div>
+                        </Box>
                       </CardContent>
-                      <div className={classes.cardFooter}>
+                      <Box className={classes.cardFooter}>
                         <Typography className={classes.h6}>{paymentMethod.billing_details.name}</Typography>
-                      </div>
+                      </Box>
                     </Card>
                   </Grid>
                 ))}
