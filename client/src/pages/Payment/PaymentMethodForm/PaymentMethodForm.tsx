@@ -10,8 +10,13 @@ import * as Yup from 'yup';
 import { iframeStyles } from './CardElementStyles/CardElementStyles';
 import { usePayment } from '../../../context/usePaymentContext';
 
-interface State {
-  billingDetails: { name: string; email: string; address: string; city: string; state: string; zip: string };
+interface BillingDetails {
+  name: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
 }
 
 function PaymentMethodForm({
@@ -32,7 +37,7 @@ function PaymentMethodForm({
     hidePostalCode: true,
   };
 
-  const userDetails: State['billingDetails'] = {
+  const userDetails: BillingDetails = {
     name: '',
     email: '',
     address: '',
@@ -42,8 +47,8 @@ function PaymentMethodForm({
   };
 
   const handleSubmit = async (
-    customerDetails: State['billingDetails'],
-    { setStatus, setSubmitting }: FormikHelpers<State['billingDetails']>,
+    customerDetails: BillingDetails,
+    { setStatus, setSubmitting }: FormikHelpers<BillingDetails>,
   ): Promise<void> => {
     if (!stripe || !elements) {
       return;
