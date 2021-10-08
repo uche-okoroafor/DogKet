@@ -13,6 +13,7 @@ router.put(
   validateSitterProfile,
   profileController.updateProfile
 );
+router.get("/my-profile", protect, profileController.userProfile);
 router.get("/:profileId", protect, profileController.findProfile);
 router.get("/", protect, profileController.getAllProfiles);
 // router.post("/upload", uploadController.setUpload);

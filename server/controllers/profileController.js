@@ -125,6 +125,26 @@ exports.findProfile = async (req, res, next) => {
   }
 };
 
+// @route GET /profile/my-profile
+// @access private
+// @desc Get a profile of a currently logged in user.
+exports.userProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const profile = await Profile.findOne({ userId });
+
+    if (!profile) {
+      res.status(404);
+      throw new Error("Profile not found");
+    }
+
+    res.status(200).json(profile);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // @route GET /profile
 // @access private
 // @desc Get all sitter profiles only.
