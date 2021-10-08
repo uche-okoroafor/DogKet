@@ -1,4 +1,4 @@
-require("dotenv").config({ path: __dirname + "/../sample.env" });
+require("dotenv").config({ path: __dirname + "/../.env" });
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const sinon = require("sinon");
@@ -50,24 +50,20 @@ describe("Tests for all /auth controllers", () => {
     });
 
     it("should not be able to login with nonExisting email", async () => {
-      const res = await agent
-        .post("/auth/login")
-        .send({
-          email: testNewUserInfo.email,
-          password: testNewUserInfo.password,
-        });
+      const res = await agent.post("/auth/login").send({
+        email: testNewUserInfo.email,
+        password: testNewUserInfo.password,
+      });
       res.should.have.status(401);
       res.should.have.property("text").contains("Invalid email or password");
       agent.should.not.have.cookie("token");
     });
 
     it("should not be able to login with invalid password", async () => {
-      const res = await agent
-        .post("/auth/login")
-        .send({
-          email: testUserInfo.email,
-          password: testUserInfo.wrongPassword,
-        });
+      const res = await agent.post("/auth/login").send({
+        email: testUserInfo.email,
+        password: testUserInfo.wrongPassword,
+      });
       res.should.have.status(401);
       res.should.have.property("text").contains("Invalid email or password");
       agent.should.not.have.cookie("token");
@@ -85,12 +81,10 @@ describe("Tests for all /auth controllers", () => {
     });
 
     it("should not be able to login if email is invalid", async () => {
-      const res = await agent
-        .post("/auth/login")
-        .send({
-          email: testUserInfo.invalidEmail,
-          password: testUserInfo.password,
-        });
+      const res = await agent.post("/auth/login").send({
+        email: testUserInfo.invalidEmail,
+        password: testUserInfo.password,
+      });
       res.should.have.status(400);
       res.should.have
         .property("text")
@@ -149,24 +143,20 @@ describe("Tests for all /auth controllers", () => {
     });
 
     it("should not be able to register if username field is missing", async () => {
-      const res = await agent
-        .post("/auth/register")
-        .send({
-          email: testNewUserInfo.email,
-          password: testNewUserInfo.password,
-        });
+      const res = await agent.post("/auth/register").send({
+        email: testNewUserInfo.email,
+        password: testNewUserInfo.password,
+      });
       res.should.have.status(400);
       res.should.have.property("text").contains("Please enter a username");
       agent.should.not.have.cookie("token");
     });
 
     it("should not be able to register if email field is missing", async () => {
-      const res = await agent
-        .post("/auth/register")
-        .send({
-          username: testNewUserInfo.username,
-          password: testNewUserInfo.password,
-        });
+      const res = await agent.post("/auth/register").send({
+        username: testNewUserInfo.username,
+        password: testNewUserInfo.password,
+      });
       res.should.have.status(400);
       res.should.have
         .property("text")
@@ -175,12 +165,10 @@ describe("Tests for all /auth controllers", () => {
     });
 
     it("should not be able to register if password field is missing", async () => {
-      const res = await agent
-        .post("/auth/register")
-        .send({
-          username: testNewUserInfo.username,
-          email: testNewUserInfo.email,
-        });
+      const res = await agent.post("/auth/register").send({
+        username: testNewUserInfo.username,
+        email: testNewUserInfo.email,
+      });
       res.should.have.status(400);
       res.should.have
         .property("text")
