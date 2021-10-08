@@ -14,8 +14,10 @@ router.put(
   profileController.updateProfile
 );
 router.get("/my-profile", protect, profileController.userProfile);
+router.get("/search", protect, profileController.searchSitters);
 router.get("/:profileId", protect, profileController.findProfile);
 router.get("/", protect, profileController.getAllProfiles);
+
 // router.post("/upload", uploadController.setUpload);
 
 module.exports = router;

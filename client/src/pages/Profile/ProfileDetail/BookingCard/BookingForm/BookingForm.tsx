@@ -24,10 +24,7 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
 
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
 
-  const mockRandomRating = Math.floor(1 + Math.random() * 5);
-
   const handleSubmit = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { dateRange }: { dateRange: DateRange<Date> },
     { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
   ) => {
@@ -72,7 +69,7 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
                 <Typography component="h5" variant="h5" align="center" className={classes.hourlyWage}>
                   {`$ ${sitter.hourlyWage}/ hr`}
                 </Typography>
-                <Rating name="read-only" value={mockRandomRating} readOnly className={classes.rating} />
+                <Rating name="read-only" value={4} readOnly className={classes.rating} />
                 <Box display="flex" flexDirection="column" className={classes.inputField}>
                   <Typography variant="body2" className={classes.label}>
                     Drop In
