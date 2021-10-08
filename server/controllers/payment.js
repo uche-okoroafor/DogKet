@@ -3,7 +3,6 @@ const asyncHandler = require("express-async-handler");
 
 exports.createPaymentIntent = asyncHandler(async (req, res) => {
   const { amount, paymentMethodId, customerId } = req.body;
-  console.log(amount, paymentMethodId, customerId);
   if (!amount) {
     return res.status(400).json({ err: "amount is undefined" });
   }
@@ -16,6 +15,6 @@ exports.createPaymentIntent = asyncHandler(async (req, res) => {
     });
     res.status(200).send(paymentIntent.client_secret);
   } catch (err) {
-    res.status(500).json({ statusCode: 500, message: err.message });
+    res.status(422).json({ statusCode: 422, message: err.message });
   }
 });

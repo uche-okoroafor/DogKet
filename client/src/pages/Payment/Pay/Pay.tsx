@@ -1,10 +1,7 @@
-/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Card,
-  Grid,
   Typography,
   Button,
   DialogTitle,
@@ -12,16 +9,13 @@ import {
   DialogActions,
   DialogContentText,
   Dialog,
-  CardContent,
-  Checkbox,
   useTheme,
+  Box,
+  useMediaQuery,
 } from '@material-ui/core';
 import { usePayment } from '../../../context/usePaymentContext';
-import { Box, useMediaQuery } from '@mui/material';
 import { createPaymentIntent } from '../../../helpers/APICalls/payment';
 import { useStripe } from '@stripe/react-stripe-js';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
 
 export default function Pay({
   paymentProfileExist,
@@ -33,7 +27,7 @@ export default function Pay({
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
 
   const stripe = useStripe();
@@ -52,16 +46,18 @@ export default function Pay({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleCreatePaymentIntent = async (): Promise<void> => {
-    console.log(userIds);
+    setIsSubmitting(true);
     if (serviceRequestDetails && userIds) {
       const amount: any = serviceRequestDetails.serviceCharge;
       const amountInCents: any = 100 * amount;
       const response = await createPaymentIntent(amountInCents, defaultPaymentMethodId, userIds.stripeId);
       setClientSecret(response);
+      setIsSubmitting(false);
     }
   };
 
   const handleConfirmCardPayment = async (): Promise<void> => {
+    setIsSubmitting(true);
     const paymentMethodId: any = defaultPaymentMethodId;
 
     if (stripe && clientSecret) {
@@ -70,6 +66,7 @@ export default function Pay({
           payment_method: paymentMethodId,
         });
         confirmation.paymentIntent.status === 'succeeded' ? setPaymentConfirmed(true) : setPaymentConfirmed(false);
+        setIsSubmitting(false);
       } catch (err) {
         const error: any = err;
         setErrorMessage(error.message);
@@ -176,11 +173,23 @@ export default function Pay({
                   Add Payment Method
                 </Button>
               ) : clientSecret ? (
-                <Button autoFocus color="primary" variant="outlined" onClick={handleConfirmCardPayment}>
+                <Button
+                  autoFocus
+                  disabled={isSubmitting}
+                  style={{ background: 'green', color: 'white' }}
+                  variant="contained"
+                  onClick={handleConfirmCardPayment}
+                >
                   Confirm Payment
                 </Button>
               ) : (
-                <Button color="primary" variant="outlined" autoFocus onClick={handleCreatePaymentIntent}>
+                <Button
+                  color="primary"
+                  disabled={isSubmitting}
+                  variant="outlined"
+                  autoFocus
+                  onClick={handleCreatePaymentIntent}
+                >
                   Make Payment
                 </Button>
               )}

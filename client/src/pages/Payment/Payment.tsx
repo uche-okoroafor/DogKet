@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, useEffect } from 'react';
 import PaymentMethodForm from './PaymentMethodForm/PaymentMethodForm';
 import masterCardLogo from './CardImages/Mastercard-Logo.svg';
@@ -21,7 +22,7 @@ import { usePaymentProfiles } from '../../context/usePaymentProfilesContext';
 import Pay from './Pay/Pay';
 import { usePayment } from '../../context/usePaymentContext';
 
-export default function PaymentProfile(): JSX.Element {
+export default function PaymentProfile (): JSX.Element {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
   const { loggedInUser } = useAuth();
@@ -98,13 +99,13 @@ export default function PaymentProfile(): JSX.Element {
       <Grid item xs={12} sm={9} md={8} lg={7} className={classes.cardContainer}>
         <Card className={classes.card}>
           <Grid item>
-            <Typography variant="h5" className={classes.h6} align="center">
+            <Typography variant='h5' className={classes.h6} align='center'>
               {' '}
               Payment Methods
             </Typography>
           </Grid>
           <Grid item container md={10} className={classes.gridContainer}>
-            <Typography variant="h6" className={classes.containerInfo}>
+            <Typography variant='h6' className={classes.containerInfo}>
               {paymentProfiles && 'Saved Payment Profiles:'}
               {!paymentProfiles && "You don't have any Payment Profile"}
             </Typography>
@@ -121,7 +122,7 @@ export default function PaymentProfile(): JSX.Element {
                             marginTop: paymentMethod.card.brand === 'visa' ? 15 : 10,
                           }}
                           src={paymentMethod.card.brand === 'visa' ? visaCardLogo : masterCardLogo}
-                          alt="Logo"
+                          alt='Logo'
                         />
 
                         <Checkbox
@@ -135,17 +136,17 @@ export default function PaymentProfile(): JSX.Element {
                         <div className={classes.cardNumberContainer}>
                           <div className={classes.cardNumber}>
                             {hiddenCardNumber.map((starOfLife, key) => (
-                              <img key={key} src={starOfLife} style={{ width: 10 }} alt="star" />
+                              <img key={key} src={starOfLife} style={{ width: 10 }} alt='star' />
                             ))}
                           </div>
                           <div className={classes.cardNumber}>
                             {hiddenCardNumber.map((starOfLife, key) => (
-                              <img key={key} src={starOfLife} style={{ width: 10 }} alt="star" />
+                              <img key={key} src={starOfLife} style={{ width: 10 }} alt='star' />
                             ))}
                           </div>
                           <div className={classes.cardNumber}>
                             {hiddenCardNumber.map((starOfLife, key) => (
-                              <img key={key} src={starOfLife} style={{ width: 10 }} alt="star" />
+                              <img key={key} src={starOfLife} style={{ width: 10 }} alt='star' />
                             ))}
                           </div>{' '}
                           <Typography className={classes.cardNumber}>{paymentMethod.card.last4}</Typography>
@@ -165,14 +166,13 @@ export default function PaymentProfile(): JSX.Element {
                 ))}
             </Grid>
 
-            <Button variant="outlined" size="large" className={classes.addProfileBtn} onClick={handleOpenDialog}>
+            <Button variant='outlined' size='large' className={classes.addProfileBtn} onClick={handleOpenDialog}>
               Add New Payment Profile
             </Button>
             {paymentProfileExist && serviceRequestDetails && (
               <Button
-                variant="contained"
-                // color='green'
-                size="large"
+                variant='contained'
+                size='large'
                 className={classes.addProfileBtn}
                 onClick={() => handlePayDialog(true)}
               >
@@ -184,7 +184,7 @@ export default function PaymentProfile(): JSX.Element {
           <Dialog open={openDialog} onClose={handleCloseDialog}>
             <DialogTitle>
               {' '}
-              <Typography className={classes.dialogTitle} variant="h6">
+              <Typography className={classes.dialogTitle} variant='h6'>
                 Add Card Details
               </Typography>
             </DialogTitle>
@@ -196,7 +196,7 @@ export default function PaymentProfile(): JSX.Element {
                 userIds={userIds}
                 handleGetUserIds={handleGetUserIds}
                 SetPaymentProfileExist={SetPaymentProfileExist}
-                handleDefaultPaymentMethod={handleDefaultPaymentMethod}
+                setDefaultPaymentMethodId={setDefaultPaymentMethodId}
               />
             </DialogContent>
           </Dialog>

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { withRouter } from 'react-router-dom';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { TextField, CircularProgress } from '@material-ui/core';
@@ -5,7 +6,7 @@ import { StripeCardElement, StripeCardElementOptions, StripeCardNumberElement } 
 import { Formik, FormikHelpers } from 'formik';
 import useStyles from '../useStyles';
 import Button from '@material-ui/core/Button';
-import { createCustomer, addPaymentprofile } from '../../../helpers/APICalls/payment';
+import { createCustomer, addPaymentprofile, setDefaultPaymentProfile } from '../../../helpers/APICalls/payment';
 import * as Yup from 'yup';
 import { iframeStyles } from './CardElementStyles/CardElementStyles';
 import { usePayment } from '../../../context/usePaymentContext';
@@ -14,13 +15,13 @@ interface State {
   billingDetails: { name: string; email: string; address: string; city: string; state: string; zip: string };
 }
 
-function PaymentMethodForm({
+function PaymentMethodForm ({
   paymentProfileExist,
   userIds,
   handleCloseDialog,
   handleGetUserIds,
   handleGetPaymentProfiles,
-  handleDefaultPaymentMethod,
+  setDefaultPaymentMethodId,
 }: any): JSX.Element {
   const elements = useElements();
   const stripe = useStripe();
@@ -86,14 +87,16 @@ function PaymentMethodForm({
         } else {
           const { stripeId } = await createCustomer(paymentMethod, userIds.userId);
           await handleGetPaymentProfiles(stripeId);
-          await handleGetUserIds();
+          const customerStripeId: any = await handleGetUserIds();
+
           if (paymentMethod) {
-            await handleDefaultPaymentMethod(paymentMethod.id);
+            const response = await setDefaultPaymentProfile(paymentMethod.id, customerStripeId);
+            setDefaultPaymentMethodId(response.invoice_settings.default_payment_method);
           }
           handleCloseDialog();
-        }
-        if (serviceRequestDetails) {
-          handlePayDialog(true);
+          if (serviceRequestDetails) {
+            handlePayDialog(true);
+          }
         }
       } else {
         setSubmitting(false);
@@ -106,7 +109,9 @@ function PaymentMethodForm({
       initialValues={userDetails}
       validationSchema={Yup.object().shape({
         name: Yup.string().required('Name is required'),
-        email: Yup.string().required('Email is required').email('Email is not valid'),
+        email: Yup.string()
+          .required('Email is required')
+          .email('Email is not valid'),
         address: Yup.string().required('Address is required'),
         city: Yup.string().required('City is required'),
         state: Yup.string().required('State is required'),
@@ -118,93 +123,93 @@ function PaymentMethodForm({
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
             className={classes.field}
-            placeholder="Name"
-            id="name"
-            name="name"
-            type="input"
+            placeholder='Name'
+            id='name'
+            name='name'
+            type='input'
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.name ? errors.name : ''}
             error={touched.name && Boolean(errors.name)}
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            size="small"
+            size='small'
           />
 
           <TextField
             className={classes.field}
-            placeholder="Email Address"
-            id="email"
-            name="email"
-            type="input"
+            placeholder='Email Address'
+            id='email'
+            name='email'
+            type='input'
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.email ? errors.email : ''}
             error={touched.email && Boolean(errors.email)}
             required
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            size="small"
+            size='small'
           />
           <TextField
             className={classes.field}
-            placeholder="Address"
-            name="address"
-            id="address"
-            type="input"
+            placeholder='Address'
+            name='address'
+            id='address'
+            type='input'
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.address ? errors.address : ''}
             error={touched.address && Boolean(errors.address)}
             required
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            size="small"
+            size='small'
           />
           <TextField
             className={classes.field}
-            placeholder="City"
-            name="city"
-            id="city"
-            type="input"
+            placeholder='City'
+            name='city'
+            id='city'
+            type='input'
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.city ? errors.city : ''}
             error={touched.city && Boolean(errors.city)}
             required
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            size="small"
+            size='small'
           />
           <TextField
             className={classes.field}
-            placeholder="State"
-            name="state"
-            id="state"
-            type="input"
+            placeholder='State'
+            name='state'
+            id='state'
+            type='input'
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.state ? errors.state : ''}
             error={touched.state && Boolean(errors.state)}
             required
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            size="small"
+            size='small'
           />
           <TextField
             className={classes.field}
-            placeholder="Zip"
-            name="zip"
-            id="zip"
-            type="input"
+            placeholder='Zip'
+            name='zip'
+            id='zip'
+            type='input'
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={touched.zip ? errors.zip : ''}
             error={touched.zip && Boolean(errors.zip)}
             required
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            size="small"
+            size='small'
           />
 
           <div className={classes.cardElementContainer}>
@@ -213,10 +218,10 @@ function PaymentMethodForm({
 
           <div className={classes.buttonContainer}>
             {' '}
-            <Button type="submit" variant="contained" color="primary" className={classes.submitButton}>
+            <Button type='submit' variant='contained' color='primary' className={classes.submitButton}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Save'}
             </Button>
-            <Button onClick={handleCloseDialog} variant="contained" color="secondary" className={classes.cancelButton}>
+            <Button onClick={handleCloseDialog} variant='contained' color='secondary' className={classes.cancelButton}>
               Cancel
             </Button>
           </div>

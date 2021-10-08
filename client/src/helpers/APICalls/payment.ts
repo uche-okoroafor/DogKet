@@ -54,12 +54,9 @@ export const getUserStripeId = async (userId: string): Promise<any> => {
 };
 
 export const setDefaultPaymentProfile = async (paymentMethodId: string, userStripeId: string): Promise<any> => {
-  const fetchOptions: FetchOptions = {
-    method: 'POST',
-    credentials: 'include',
-  };
-  return await fetch(`/payment-profile/set-default-payment-method/${userStripeId}/${paymentMethodId}`, fetchOptions)
-    .then((res) => res.json())
+  return await axios
+    .post(`/payment-profile/set-default-payment-method`, { userStripeId, paymentMethodId })
+    .then((res) => res.data)
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
@@ -70,12 +67,10 @@ export const createPaymentIntent = async (
   paymentMethodId: string,
   customerId: string,
 ): Promise<any> => {
-  const fetchOptions: FetchOptions = {
-    method: 'Get',
-    credentials: 'include',
-  };
   return await axios
     .post(`/payment/create-payment-intent`, { amount, paymentMethodId, customerId })
     .then((res) => res.data)
-    .catch((err) => console.log(err));
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
 };

@@ -91,7 +91,7 @@ exports.getUserStripeId = asyncHandler(async (req, res, next) => {
 });
 
 exports.setDefaultPaymentMethod = asyncHandler(async (req, res, next) => {
-  const { userStripeId, paymentMethodId } = req.params;
+  const { userStripeId, paymentMethodId } = req.body;
   if (!userStripeId || !paymentMethodId) {
     return res.status(400).json({ err: "userId or paymentId is undefined" });
   }
