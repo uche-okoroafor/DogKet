@@ -1,5 +1,5 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { ICreateProfile, Profile } from '../../interface/Profile';
+import { CreateProfile, Profile } from '../../interface/Profile';
 
 export async function getAllProfiles(): Promise<Profile[]> {
   const fetchOptions: FetchOptions = {
@@ -25,7 +25,7 @@ export async function getProfileDetail(profileId: string): Promise<Profile> {
     }));
 }
 
-export async function createProfile(profileInfo: ICreateProfile): Promise<Profile> {
+export async function createProfile(profileInfo: CreateProfile): Promise<Profile> {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

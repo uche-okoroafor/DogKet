@@ -84,9 +84,23 @@ const EditProfile = (): JSX.Element => {
     hourlyWage: number;
   }) => {
     if (isEditMode) {
-      await updateProfile(profileId, values as Profile);
+      try {
+        await updateProfile(profileId, values as Profile);
+        updateSnackBarMessage('Updated Profile Successfully');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          updateSnackBarMessage(error.message);
+        }
+      }
     } else {
-      await createProfile(values);
+      try {
+        await createProfile(values);
+        updateSnackBarMessage('Created Profile Successfully');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          updateSnackBarMessage(error.message);
+        }
+      }
     }
     history.push('/profile');
   };

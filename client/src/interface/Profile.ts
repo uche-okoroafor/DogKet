@@ -20,7 +20,7 @@ export interface Profile {
   updatedAt: Date;
 }
 
-export interface ICreateProfile {
+export interface CreateProfile {
   userId?: string;
   firstName: string;
   lastName: string;
