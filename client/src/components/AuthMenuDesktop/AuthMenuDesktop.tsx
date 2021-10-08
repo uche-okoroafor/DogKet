@@ -3,15 +3,16 @@ import { User } from '../../interface/User';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles';
 import AuthNavItem from '../AuthNavItem/AuthNavItem';
-
+import NotificationButton from '../Notification/NotificationButton';
 interface Props {
   loggedInUser?: User;
   linkTo: string;
   asideText: string;
   btnText?: string;
+  notifCount: number;
 }
 
-const AuthMenuDesktop = ({ asideText, linkTo }: Props): JSX.Element => {
+const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 
@@ -20,6 +21,7 @@ const AuthMenuDesktop = ({ asideText, linkTo }: Props): JSX.Element => {
       <AuthNavItem asideText={asideText} classes={`${classes.accAside} ${classes.authNavMobile}`} linkTo={linkTo} />
       {loggedInUser ? (
         <>
+          <NotificationButton notifCount={notifCount} />
           {loggedInUser.isSitter ? (
             <AuthNavItem
               isButton

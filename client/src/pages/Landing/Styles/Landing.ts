@@ -23,7 +23,10 @@ const useStyles = makeStyles(() => ({
     fontFamily: "'Open Sans'",
   },
   logoWrapper: {
-    margin: '20px',
+    marginLeft: '30px',
+  },
+  landingWrapper: {
+    height: '100%',
   },
 }));
 
