@@ -52,10 +52,21 @@ const useStyles = makeStyles((theme) => ({
   dayLabel: {
     color: 'black',
     textTransform: 'capitalize',
+    fontWeight: 900,
   },
   headerTitle: {
     margin: '50px 0px',
     fontWeight: 900,
+  },
+  hourWageWrap: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wageInput: {
+    width: '160px',
+  },
+  wageLabel: {
+    marginRight: '11px',
   },
 }));
 

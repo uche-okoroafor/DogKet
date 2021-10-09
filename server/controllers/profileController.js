@@ -158,7 +158,6 @@ exports.patchProfile = async (req, res, next) => {
         "Couldn't find a profile with the profileId for this user"
       );
     }
-
     res.status(200).json(updatedProfile);
   } catch (err) {
     next(err);

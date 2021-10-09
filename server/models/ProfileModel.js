@@ -55,7 +55,7 @@ const profileSchema = new mongoose.Schema(
       default: false,
     },
     hourlyWage: {
-      type: Number,
+      type: String,
     },
   },
   {

@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import useStyles from './useStyles';
 import { useState } from 'react';
-import { Button, CircularProgress, FormHelperText } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { LocalizationProvider } from '@mui/lab';
 import { DateRange } from '@mui/lab/DateRangePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -14,7 +14,13 @@ import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
 import AvailabilityForm from './AvailabilityForm/AvailabilityForm';
 import patchProfile from '../../../helpers/APICalls/updateProfile';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { createNotification } from '../../../helpers/APICalls/notifications';
 
+createNotification('Pet Sitting', 'Mary Smith', 'Mary has requested your service for 2 days');
 const formSchema: { dateRange: RangeSchema } = {
   dateRange: {
     sunday: [null, null],
@@ -24,6 +30,7 @@ const formSchema: { dateRange: RangeSchema } = {
     thursday: [null, null],
     friday: [null, null],
     saturday: [null, null],
+    hourlyWage: '',
   },
 };
 
@@ -36,6 +43,7 @@ const validationSchema = Yup.object().shape({
   thursday: reqArrayOfDates,
   friday: reqArrayOfDates,
   saturday: reqArrayOfDates,
+  hourlyWage: Yup.string(),
 });
 
 const weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -48,13 +56,21 @@ interface RangeSchema {
   thursday: DateRange<Date | null>;
   friday: DateRange<Date | null>;
   saturday: DateRange<Date | null>;
+  hourlyWage?: string;
 }
 
 const Availability = (): JSX.Element => {
-  const classes = useStyles();
   const [dateRange, setDateRange] = useState<RangeSchema>(formSchema.dateRange);
   const [formError, setformError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [hourlyWage, setHourlyWage] = useState<string | undefined>('');
+
+  const classes = useStyles();
+  const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const dateRangeCopy = { ...dateRange };
+    dateRangeCopy.hourlyWage = event.target.value;
+    setDateRange(dateRangeCopy);
+  };
 
   const handleSubmit = (
     { dateRange }: { dateRange: RangeSchema },
@@ -63,7 +79,9 @@ const Availability = (): JSX.Element => {
     validationSchema.isValid(dateRange).then(async function (valid) {
       if (valid) {
         try {
-          await patchProfile({ availability: dateRange }, '615c048301ddad452479c963');
+          const dateRangeCopy = { ...dateRange };
+          delete dateRangeCopy.hourlyWage;
+          await patchProfile({ availability: dateRangeCopy, hourlyWage }, '615c048301ddad452479c963');
           setSubmitting(false);
           setDateRange(formSchema.dateRange);
           resetForm({ values: { dateRange: formSchema.dateRange } });
@@ -87,8 +105,8 @@ const Availability = (): JSX.Element => {
     const errors: { dateRange?: string | null } = {};
     validationSchema.isValid(values.dateRange).then(function (valid) {
       if (!valid) errors.dateRange = 'Please fill all Times.';
+      else setHourlyWage(dateRange.hourlyWage);
     });
-
     return errors;
   };
 
@@ -115,6 +133,19 @@ const Availability = (): JSX.Element => {
               {({ handleSubmit, values, touched, errors, isSubmitting }) => (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Form onSubmit={handleSubmit} className={classes.bookingForm}>
+                    <FormControl variant="outlined">
+                      <Box className={classes.hourWageWrap}>
+                        <Box className={`${classes.wageLabel} ${classes.dayLabel}`}>Hourly Rate</Box>
+                        <OutlinedInput
+                          className={classes.wageInput}
+                          id="outlined-adornment-amount"
+                          value={dateRange.hourlyWage}
+                          onChange={handleChange('amount')}
+                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                          type="number"
+                        />
+                      </Box>
+                    </FormControl>
                     {weekdays.map((day, index) => (
                       <ListItem key={index}>
                         <Box className={classes.itemWrap}>

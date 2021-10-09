@@ -29,6 +29,7 @@ export interface Props {
   birth?: string;
   description?: string;
   availability?: RangeSchema;
+  hourlyWage?: string;
 }
 
 interface ProfileApiDataSuccess {
@@ -46,6 +47,7 @@ const patchProfile = async (data: Props, profileId: string): Promise<ProfileApiD
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   };
+
   return await fetch(`/profile/${profileId}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
