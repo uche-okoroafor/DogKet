@@ -42,6 +42,13 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element 
           <AuthNavItem
             isButton
             classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
+            linkTo="/listings"
+            btnText="Listings"
+            variant="text"
+          />
+          <AuthNavItem
+            isButton
+            classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
             linkTo="/messages"
             btnText="Messages"
             variant="text"

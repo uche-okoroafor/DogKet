@@ -49,7 +49,7 @@ export default function Register(): JSX.Element {
           flexDirection="column"
           minHeight="100vh"
         >
-          <AuthHeader asideText="Become a sitter" linkTo="/listings" />
+          <AuthHeader asideText="Become a sitter" linkTo="/signup" />
           <Box className={classes.signupOuterContainer} width="100%" maxWidth={600} p={3} alignSelf="center">
             <Grid className={classes.signupContainer} container elevation={6} component={Paper}>
               <Grid item xs>

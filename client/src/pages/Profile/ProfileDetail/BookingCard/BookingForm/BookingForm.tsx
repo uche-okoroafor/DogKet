@@ -7,6 +7,10 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import * as Yup from 'yup';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { Profile } from '../../../../../interface/Profile';
+import { createRequest } from '../../../../../helpers/APICalls/request';
+import { createNotification } from '../../../../../helpers/APICalls/notifications';
+import { useSnackBar } from '../../../../../context/useSnackbarContext';
+import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 import { useHistory } from 'react-router-dom';
 import { usePayment } from '../../../../../context/usePaymentContext';
@@ -23,19 +27,18 @@ const validationSchema = Yup.object().shape({
 
 const BookingForm = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
+
   const history = useHistory();
   const { handleServiceRequestDetails } = usePayment();
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
+  const { updateSnackBarMessage } = useSnackBar();
+  const history = useHistory();
 
-  const mockRandomRating = Math.floor(1 + Math.random() * 5);
-
-  const handleSubmit = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleSubmit = async (
     { dateRange }: { dateRange: DateRange<Date> },
     { setSubmitting, resetForm }: FormikHelpers<{ dateRange: DateRange<Date> }>,
   ) => {
-
-    // 'setSubmitting' will be used when we send 'submit request' to backend
+            // 'setSubmitting' will be used when we send 'submit request' to backend
     // I guess it's related to 'isSubmitting' and 'onSubmit' in Formik
 
     const requiredDateRange: any = dateRange;
@@ -51,11 +54,32 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
     });
 
     history.push('/payment');
+    if (dateRange[0] && dateRange[1]) {
+      try {
+        await createRequest(sitter.userId, dateRange?.[0], dateRange?.[1]);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          updateSnackBarMessage(error.message);
+        }
+      }
 
+      try {
+        await createNotification(
+          'Pet Sitting',
+          `${sitter.firstName} ${sitter.lastName}'s Request`,
+          `${sitter.firstName} ${sitter.lastName} sent a Request!`,
+        );
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          updateSnackBarMessage(error.message);
+        }
+      }
+    }
 
     setSubmitting(false);
     setDateRange([null, null]);
     resetForm({ values: { dateRange: [null, null] } });
+    history.push('/listings');
   };
 
   const handleChange = (newDateRange: DateRange<Date>) => {
@@ -94,7 +118,7 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
                 <Typography component="h5" variant="h5" align="center" className={classes.hourlyWage}>
                   {`$ ${sitter.hourlyWage}/ hr`}
                 </Typography>
-                <Rating name="read-only" value={mockRandomRating} readOnly className={classes.rating} />
+                <Rating name="read-only" value={4} readOnly className={classes.rating} />
                 <Box display="flex" flexDirection="column" className={classes.inputField}>
                   <Typography variant="body2" className={classes.label}>
                     Drop In

@@ -41,7 +41,20 @@ const profileSchema = new mongoose.Schema(
       enum: ["Male", "Female", "Other"],
       default: "Male",
     },
-    availability: [String],
+    availability: {
+      type: [
+        {
+          sunday: [Date, Date],
+          monday: [Date, Date],
+          tuesday: [Date, Date],
+          wednesday: [Date, Date],
+          thursday: [Date, Date],
+          friday: [Date, Date],
+          saturday: [Date, Date],
+        },
+      ],
+      default: undefined,
+    },
     isSitter: {
       type: Boolean,
       default: false,
