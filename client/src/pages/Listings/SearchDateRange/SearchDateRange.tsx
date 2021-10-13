@@ -1,18 +1,26 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Box, TextField, Typography } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import MobileDateRangePicker from '@mui/lab/MobileDateRangePicker';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { DateRange } from '@mui/lab/DateRangePicker';
+import { searchSitters } from '../../../helpers/APICalls/profiles';
+import { useSnackBar } from '../../../context/useSnackbarContext';
 import useStyles from './useStyles';
+import { Profile } from '../../../interface/Profile';
 
 interface Props {
+  search: string;
   dateRange: DateRange<Date | null>;
   handleChange: (newDateRange: DateRange<Date>) => void;
+  setProfiles: Dispatch<SetStateAction<Profile[]>>;
 }
 
-const SearchDateRange = ({ dateRange, handleChange }: Props): JSX.Element => {
+const SearchDateRange = ({ search, setProfiles, dateRange, handleChange }: Props): JSX.Element => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+  const { updateSnackBarMessage } = useSnackBar();
 
   const formattedDateRangeText = (dateRange: DateRange<Date>): string => {
     const startYear = dateRange[0]?.getFullYear();
@@ -22,6 +30,27 @@ const SearchDateRange = ({ dateRange, handleChange }: Props): JSX.Element => {
     const endMonth = dateRange[1]?.toLocaleDateString('en-US', { month: 'short' });
     return `${startDate} ${startMonth} - ${endDate} ${endMonth} ${startYear}`;
   };
+
+  useEffect(() => {
+    try {
+      const searchByDateRange = async () => {
+        setLoading(true);
+        const response = await searchSitters({
+          city: search,
+          searchStartDate: dateRange[0]?.toISOString().split('T')[0],
+          searchEndDate: dateRange[1]?.toISOString().split('T')[0],
+        });
+        setProfiles(response);
+        setLoading(false);
+      };
+
+      searchByDateRange();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        updateSnackBarMessage(error.message);
+      }
+    }
+  }, [search, dateRange, setProfiles, updateSnackBarMessage]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -42,13 +42,18 @@ const profileSchema = new mongoose.Schema(
       default: "Male",
     },
     availability: {
-      sunday: [Date, Date],
-      monday: [Date, Date],
-      tuesday: [Date, Date],
-      wednesday: [Date, Date],
-      thursday: [Date, Date],
-      friday: [Date, Date],
-      saturday: [Date, Date],
+      type: [
+        {
+          sunday: [Date, Date],
+          monday: [Date, Date],
+          tuesday: [Date, Date],
+          wednesday: [Date, Date],
+          thursday: [Date, Date],
+          friday: [Date, Date],
+          saturday: [Date, Date],
+        },
+      ],
+      default: undefined,
     },
     isSitter: {
       type: Boolean,
