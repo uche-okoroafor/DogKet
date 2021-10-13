@@ -10,7 +10,7 @@ import useStyles from './useStyles';
 import DemoUserLogin from '../DemoUserLogin/DemoUserLogin';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 
-type LinkType = '/login' | '/signup' | '/my-jobs' | '/my-sitters' | '/profile' | '/messages' | '/listings';
+type LinkType = '/login' | '/signup' | '/my-jobs' | '/my-sitters' | '/profile' | '/messages' | '/listings' | '/';
 
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();

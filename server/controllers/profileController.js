@@ -103,6 +103,71 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   }
 });
 
+// @route PATCH /profile/:profileId
+// @access private
+// @desc patch a profile of a logged-in user. Only provided props will be updated.
+exports.patchProfile = async (req, res, next) => {
+  try {
+    const { profileId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(profileId)) {
+      res.status(400);
+      throw new Error("Invalid profileId");
+    }
+
+    const userId = req.user.id;
+    const {
+      firstName,
+      lastName,
+      gender,
+      birth,
+      phone,
+      address,
+      description,
+      isSitter,
+      title,
+      hourlyWage,
+      availability,
+    } = req.body;
+
+    const data = {
+      userId,
+      firstName: firstName ? capitalize(firstName) : firstName,
+      lastName: lastName ? capitalize(lastName) : lastName,
+      gender,
+      birth,
+      phone,
+      address: address ? formatAddress(address) : address,
+      description,
+      title,
+      isSitter,
+      hourlyWage,
+      availability,
+    };
+
+    for (const [key, value] of Object.entries(data)) {
+      if (value === undefined) delete data[key];
+    }
+
+    const updatedProfile = await Profile.findOneAndUpdate(
+      { _id: profileId, userId },
+      { $set: { ...data } },
+      { new: true }
+    );
+
+    if (!updatedProfile) {
+      res.status(403);
+      throw new Error(
+        "Couldn't find a profile with the profileId for this user"
+      );
+    }
+    res.status(200).json(updatedProfile);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @route GET /profile/:profileId
 // @route GET /profile/:profileId
 // @access private
 // @desc Get a profile with given profileId. profileId can be either a logged in user's profileId or other user's profileId.

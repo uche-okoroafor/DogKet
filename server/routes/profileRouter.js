@@ -13,6 +13,7 @@ router.put(
   validateSitterProfile,
   profileController.updateProfile
 );
+router.patch("/:profileId", protect, profileController.patchProfile);
 router.get("/my-profile", protect, profileController.userProfile);
 router.get("/search", protect, profileController.searchSitters);
 router.get("/:profileId", protect, profileController.findProfile);
