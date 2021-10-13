@@ -2,9 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   itemWrap: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
     width: '100%',
   },
   listWrap: {
@@ -13,18 +10,12 @@ const useStyles = makeStyles((theme) => ({
   },
   dates: {
     width: '40%',
-    display: 'flex',
-    flexDirection: 'row',
   },
   m5: {
     marginRight: '20px',
   },
   bookingForm: {
     padding: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   label: {
     fontWeight: 700,
@@ -58,15 +49,12 @@ const useStyles = makeStyles((theme) => ({
     margin: '50px 0px',
     fontWeight: 900,
   },
-  hourWageWrap: {
-    display: 'flex',
-    alignItems: 'center',
-  },
   wageInput: {
     width: '160px',
   },
   wageLabel: {
     marginRight: '11px',
+    textTransform: 'uppercase',
   },
 }));
 

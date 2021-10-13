@@ -10,16 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
   formWrap: {
     width: '60%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   m5: {
     marginRight: '20px',
   },
   timeLabel: {
     fontWeight: 900,
-    textDecoration: 'uppercase',
+    textTransform: 'uppercase',
   },
 }));
 

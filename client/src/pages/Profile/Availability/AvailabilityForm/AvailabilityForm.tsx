@@ -2,6 +2,7 @@ import { Box, TextField } from '@mui/material';
 import { TimePicker } from '@mui/lab';
 import useStyles from './useStyles';
 import { DateRange } from '@mui/lab/DateRangePicker';
+import Typography from '@material-ui/core/Typography';
 
 interface RangeSchema {
   sunday?: DateRange<Date | null>;
@@ -29,8 +30,10 @@ const AvailabilityForm = ({ values, touched, errors, dateRange, day, updateTime 
   const classes = useStyles();
 
   return (
-    <Box className={classes.formWrap}>
-      <Box className={`${classes.m5} ${classes.timeLabel}`}>From</Box>
+    <Box className={classes.formWrap} flexDirection="row" display="flex" alignItems="center">
+      <Typography variant="button" className={`${classes.m5} ${classes.timeLabel}`}>
+        From
+      </Typography>
       <Box className={classes.m5}>
         <TimePicker
           inputFormat="hh aaa"
@@ -50,7 +53,9 @@ const AvailabilityForm = ({ values, touched, errors, dateRange, day, updateTime 
           )}
         />
       </Box>
-      <Box className={`${classes.m5} ${classes.timeLabel}`}>To</Box>
+      <Typography variant="button" className={`${classes.m5} ${classes.timeLabel}`}>
+        To
+      </Typography>
       <Box>
         <TimePicker
           inputFormat="hh aaa"

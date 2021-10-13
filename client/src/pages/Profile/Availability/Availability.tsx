@@ -19,6 +19,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { createNotification } from '../../../helpers/APICalls/notifications';
+import { useAuth } from '../../../context/useAuthContext';
 
 createNotification('Pet Sitting', 'Mary Smith', 'Mary has requested your service for 2 days');
 const formSchema: { dateRange: RangeSchema } = {
@@ -64,8 +65,9 @@ const Availability = (): JSX.Element => {
   const [formError, setformError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [hourlyWage, setHourlyWage] = useState<string | undefined>('');
-
+  const { loggedInUser } = useAuth();
   const classes = useStyles();
+
   const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const dateRangeCopy = { ...dateRange };
     dateRangeCopy.hourlyWage = event.target.value;
@@ -81,7 +83,7 @@ const Availability = (): JSX.Element => {
         try {
           const dateRangeCopy = { ...dateRange };
           delete dateRangeCopy.hourlyWage;
-          await patchProfile({ availability: dateRangeCopy, hourlyWage }, '615c048301ddad452479c963');
+          await patchProfile({ availability: dateRangeCopy, hourlyWage }, loggedInUser?.profileId);
           setSubmitting(false);
           setDateRange(formSchema.dateRange);
           resetForm({ values: { dateRange: formSchema.dateRange } });
@@ -132,45 +134,55 @@ const Availability = (): JSX.Element => {
             >
               {({ handleSubmit, values, touched, errors, isSubmitting }) => (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Form onSubmit={handleSubmit} className={classes.bookingForm}>
-                    <FormControl variant="outlined">
-                      <Box className={classes.hourWageWrap}>
-                        <Box className={`${classes.wageLabel} ${classes.dayLabel}`}>Hourly Rate</Box>
-                        <OutlinedInput
-                          className={classes.wageInput}
-                          id="outlined-adornment-amount"
-                          value={dateRange.hourlyWage}
-                          onChange={handleChange('amount')}
-                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                          type="number"
-                        />
-                      </Box>
-                    </FormControl>
-                    {weekdays.map((day, index) => (
-                      <ListItem key={index}>
-                        <Box className={classes.itemWrap}>
-                          <Box className={classes.dates}>
-                            <Box className={`${classes.m5} ${classes.dayLabel}`}>{day}</Box>
-                          </Box>
-                          <AvailabilityForm
-                            values={values}
-                            touched={touched}
-                            errors={errors}
-                            dateRange={dateRange}
-                            day={day}
-                            updateTime={updateTime}
+                  <Form onSubmit={handleSubmit}>
+                    <Box
+                      className={classes.bookingForm}
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <FormControl variant="outlined">
+                        <Box display="flex" alignItems="center">
+                          <Typography variant="button" className={`${classes.wageLabel} ${classes.dayLabel}`}>
+                            Hourly Rate
+                          </Typography>
+                          <OutlinedInput
+                            className={classes.wageInput}
+                            id="outlined-adornment-amount"
+                            value={dateRange.hourlyWage}
+                            onChange={handleChange('amount')}
+                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            type="number"
                           />
                         </Box>
-                      </ListItem>
-                    ))}
-                    <FormHelperText className={classes.errorHelperText}>
-                      {(touched.dateRange && (errors.dateRange || errors.dateRange?.[0] || errors.dateRange?.[1])) ||
-                        null}
-                    </FormHelperText>
-                    {formError && <Box className={classes.errorHelperText}>{errorMessage}</Box>}
-                    <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-                      {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Save'}
-                    </Button>
+                      </FormControl>
+                      {weekdays.map((day, index) => (
+                        <ListItem key={index}>
+                          <Box className={classes.itemWrap} display="flex" flexDirection="row" alignItems="center">
+                            <Box className={classes.dates} display="flex" flexDirection="row">
+                              <Typography className={`${classes.m5} ${classes.dayLabel}`}>{day}</Typography>
+                            </Box>
+                            <AvailabilityForm
+                              values={values}
+                              touched={touched}
+                              errors={errors}
+                              dateRange={dateRange}
+                              day={day}
+                              updateTime={updateTime}
+                            />
+                          </Box>
+                        </ListItem>
+                      ))}
+                      <FormHelperText className={classes.errorHelperText}>
+                        {(touched.dateRange && (errors.dateRange || errors.dateRange?.[0] || errors.dateRange?.[1])) ||
+                          null}
+                      </FormHelperText>
+                      {formError && <Typography className={classes.errorHelperText}>{errorMessage}</Typography>}
+                      <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
+                        {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Save'}
+                      </Button>
+                    </Box>
                   </Form>
                 </LocalizationProvider>
               )}
