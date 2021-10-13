@@ -13,9 +13,20 @@ export interface Profile {
   address: string;
   phone: string;
   description: string;
-  birth: Date;
+  birth: string;
   title: string;
   hourlyWage: number;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface CreateProfile {
+  userId?: string;
+  firstName: string;
+  lastName: string;
+  gender: Gender;
+  address: string;
+  phone: string;
+  description: string;
+  birth: string;
 }

@@ -12,6 +12,7 @@ import useStyles from './useStyles';
 const sideBarMenus = [
   { menuItem: 'Edit Profile', linkTo: '/profile/edit' },
   { menuItem: 'Profile Photo', linkTo: '/profile/photo' },
+  { menuItem: 'Availability', linkTo: '/profile/availability' },
   { menuItem: 'Payment', linkTo: '/profile/payment' },
   { menuItem: 'Security', linkTo: '/profile/security' },
   { menuItem: 'Settings', linkTo: '/profile/settings' },

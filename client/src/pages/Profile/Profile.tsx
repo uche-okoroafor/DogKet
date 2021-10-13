@@ -5,10 +5,12 @@ import Layout from '../Layout/Layout';
 import TempProfileMain from './TempProfileMain/TempProfileMain';
 import EditProfile from './EditProfile/EditProfile';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
+import Availability from './Availability/Availability';
 import Payment from './Payment/Payment';
 import Security from './Security/Security';
 import Settings from './Settings/Settings';
 import useStyles from './useStyles';
+import Box from '@material-ui/core/Box';
 
 const Profile = (): JSX.Element => {
   const classes = useStyles();
@@ -24,6 +26,8 @@ const Profile = (): JSX.Element => {
         return <ProfilePhoto />;
       case '/profile/payment':
         return <Payment />;
+      case '/profile/availability':
+        return <Availability />;
       case '/profile/security':
         return <Security />;
       case '/profile/settings':

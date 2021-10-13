@@ -63,6 +63,14 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
+    const user = {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    };
+
+    const profile = await Profile.findOne({ userId: user._id });
+    if (profile) user.profileId = profile._id;
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -70,13 +78,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     });
 
     res.status(200).json({
-      success: {
-        user: {
-          id: user._id,
-          username: user.username,
-          email: user.email,
-        },
-      },
+      success: { user },
     });
   } else {
     res.status(401);
@@ -95,13 +97,18 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorized");
   }
 
+  const userModel = {
+    id: user._id,
+    username: user.username,
+    email: user.email,
+  };
+
+  const profile = await Profile.findOne({ userId: user._id });
+  if (profile) userModel.profileId = profile._id;
+
   res.status(200).json({
     success: {
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
+      user: userModel,
     },
   });
 });
