@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Profile = require("../models/ProfileModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 
@@ -59,18 +60,22 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+  console.log(user && (await user.matchPassword(password)));
 
-  if (user && (await user.matchPassword(password))) {
+  if (user._id && (await user.matchPassword(password))) {
+    console.log("user");
     const token = generateToken(user._id);
+    console.log("token");
     const secondsInWeek = 604800;
-    const user = {
+    const userModel = {
       id: user._id,
       username: user.username,
       email: user.email,
     };
+    console.log(user);
 
     const profile = await Profile.findOne({ userId: user._id });
-    if (profile) user.profileId = profile._id;
+    if (profile) userModel.profileId = profile._id;
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -78,7 +83,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     });
 
     res.status(200).json({
-      success: { user },
+      success: { user: userModel },
     });
   } else {
     res.status(401);
@@ -91,7 +96,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-
+  console.log("wer");
   if (!user) {
     res.status(401);
     throw new Error("Not authorized");

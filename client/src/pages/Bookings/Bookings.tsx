@@ -52,8 +52,8 @@ export default function Bookings(): JSX.Element {
     // <React.Fragment>
     <Container maxWidth="md" className={classes.container}>
       <Box className={`${classes.root} ${classes.mt}`}>
-        <Grid container>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={8}>
+          <Grid item xs={12} sm={6} spacing={2}>
             <NextBookings nextBooking={requests.nextBooking} updateStatusState={updateStatusState} />
             <ManageBookings
               currentBookings={requests.currentBookings}
