@@ -10,16 +10,17 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
   try {
     const { firstName, lastName, gender, birth, phone, address, description } =
       req.body;
+    console.log(address);
 
     const userId = req.user.id;
 
     let profile = await Profile.findOne({ userId });
-
+    console.log(profile);
     if (profile) {
       res.status(409);
       throw new Error("Profile already exists");
     }
-
+    console.log(profile);
     const data = {
       userId,
       firstName: capitalize(firstName),
@@ -30,8 +31,9 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
       address: formatAddress(address),
       description,
     };
-
+    console.log(data);
     profile = new Profile(data);
+    console.log(profile);
     await profile.save();
     res.status(201).json(profile);
   } catch (err) {
@@ -45,7 +47,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   try {
     const { profileId } = req.params;
-
+    console.log(profileId);
     if (!mongoose.Types.ObjectId.isValid(profileId)) {
       res.status(400);
       throw new Error("Invalid profileId");

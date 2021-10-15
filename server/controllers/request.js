@@ -1,4 +1,5 @@
 const Request = require("../models/Request");
+const Profile = require("../models/ProfileModel");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
@@ -8,15 +9,17 @@ const { ObjectId } = mongoose.Types;
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    // const userId = req.user.id;
 
-    const { sitterId, startDate, endDate } = req.body;
+    const { profileId, sitterProfileId, startDate, endDate } = req.body;
+    console.log(profileId, sitterProfileId);
     const requestModel = {
-      ownerId: ObjectId(userId),
-      sitterId: ObjectId(sitterId),
+      ownerId: ObjectId(profileId),
+      sitterId: ObjectId(sitterProfileId),
       startDate: new Date(startDate),
       endDate: new Date(endDate),
     };
+    console.log(profileId, sitterProfileId);
 
     const existingRequest = await Request.findOne(requestModel);
     if (existingRequest) {
@@ -24,8 +27,9 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
         .status(200)
         .json({ message: "You have already made a request", existingRequest });
     }
-
+    console.log(existingRequest);
     const newRequest = await Request.create(requestModel);
+    console.log(newRequest, "k");
     res.status(201).json({ newRequest });
   } catch (error) {
     next(error);
@@ -39,11 +43,30 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { currentTime } = req.params;
-
+    console.log(currentTime);
+    const profile = await Profile.findOne({ userId });
+    console.log(profile, userId);
     const requestsByUser = await Request.find({
-      $or: [{ ownerId: ObjectId(userId) }, { sitterId: ObjectId(userId) }],
-    }).sort({ startDate: "desc" });
-
+      $or: [
+        { ownerId: ObjectId(profile._id) },
+        { sitterId: ObjectId(profile._id) },
+      ],
+    })
+      .sort({ startDate: "desc" })
+      .populate({
+        path: "ownerId",
+        match: {
+          userId: { $ne: ObjectId(userId) },
+        },
+      })
+      .populate({
+        path: "sitterId",
+        match: {
+          userId: { $ne: ObjectId(userId) },
+        },
+      })
+      .exec();
+    console.log(requestsByUser.slice(0, 3));
     const resModel = {
       nextBooking: {},
       currentBookings: [],
@@ -91,7 +114,7 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route UPDATE /request/accepted
+// @route UPDATE /request
 // @desc Update request with approved or decline by sitter
 // @access Private
 exports.updateStatus = asyncHandler(async (req, res, next) => {

@@ -10,7 +10,16 @@ import useStyles from './useStyles';
 import DemoUserLogin from '../DemoUserLogin/DemoUserLogin';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 
-type LinkType = '/login' | '/signup' | '/my-jobs' | '/my-sitters' | '/profile' | '/messages' | '/listings' | '/';
+type LinkType =
+  | '/login'
+  | '/signup'
+  | '/my-jobs'
+  | '/my-sitters'
+  | '/profile'
+  | '/messages'
+  | '/listings'
+  | '/'
+  | '/bookings';
 
 const AuthMenu = (): JSX.Element => {
   const classes = useStyles();
@@ -93,6 +102,9 @@ const AuthMenu = (): JSX.Element => {
             </MenuItem>
             <MenuItem className={classes.menuItem} onClick={handleLogout}>
               Logout
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={() => handleMenu('/bookings')}>
+              /
             </MenuItem>
           </Box>
         ) : (

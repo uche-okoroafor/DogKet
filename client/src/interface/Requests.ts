@@ -1,6 +1,7 @@
+import { Profile } from './Profile';
 export interface Booking {
-  ownerId?: string;
-  sitterId?: string;
+  ownerId?: Profile;
+  sitterId?: Profile;
   startDate?: Date;
   endDate?: Date;
   status?: string;

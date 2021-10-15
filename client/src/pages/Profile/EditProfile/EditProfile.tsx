@@ -83,6 +83,7 @@ const EditProfile = (): JSX.Element => {
     title: string;
     hourlyWage: number;
   }) => {
+    console.log(isEditMode);
     if (isEditMode) {
       try {
         await updateProfile(profileId, values as Profile);
@@ -237,12 +238,12 @@ const EditProfile = (): JSX.Element => {
           </Box>
           <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="where-live" className={classes.label}>
-              where you live
+              city and state
             </label>
             <TextField
               type="text"
               id="where-live"
-              placeholder="Address"
+              placeholder="Toronto, Ontario"
               variant="outlined"
               className={classes.textField}
               name="address"

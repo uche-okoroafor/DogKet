@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import EditButton from './EditButton';
 import { Booking } from '../../interface/Requests';
 import TimeDisplay from './TimeDisplay';
+import { useAuth } from '../../context/useAuthContext';
 
 interface Props {
   bookings: Booking[];
@@ -15,6 +16,7 @@ interface Props {
 
 export default function ManageBookings({ bookings, sectionName, updateStatusState }: Props): JSX.Element {
   const pageClasses = bookingStyles();
+  const { loggedInUser } = useAuth();
 
   return (
     <Grid container spacing={2}>
@@ -35,7 +37,11 @@ export default function ManageBookings({ bookings, sectionName, updateStatusStat
                       {/* TEMP IMG tags */}
                       {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
                       <Box className={pageClasses.tempImg}></Box>
-                      <Box className={pageClasses.bookingNameHr}>{booking?.sitterId}</Box>
+                      {loggedInUser?.isSitter ? (
+                        <Box className={pageClasses.bookingNameHr}>{booking?.ownerId?.firstName}</Box>
+                      ) : (
+                        <Box className={pageClasses.bookingNameHr}>{booking?.sitterId?.firstName}</Box>
+                      )}
                     </Typography>
                   </Grid>
                   <Grid item xs={2} className={pageClasses.statusWrapper}>

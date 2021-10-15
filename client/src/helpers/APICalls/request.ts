@@ -1,11 +1,16 @@
 import { RequestApiData, RequestStatusApiData } from '../../interface/Requests';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-export const createRequest = async (sitterId: string, startDate: Date, endDate: Date): Promise<RequestApiData> => {
+export const createRequest = async (
+  profileId: string,
+  sitterProfileId: string,
+  startDate: Date,
+  endDate: Date,
+): Promise<RequestApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sitterId, startDate, endDate }),
+    body: JSON.stringify({ sitterProfileId, profileId, startDate, endDate }),
     credentials: 'include',
   };
 
@@ -25,9 +30,12 @@ export const getRequests = async (): Promise<RequestApiData> => {
   };
 
   const timeStamp = new Date().getTime();
+  console.log(timeStamp);
   try {
     const fetchData = await fetch(`/request/${timeStamp}`, fetchOptions);
+    console.log(fetchData);
     const { success } = await fetchData.json();
+    console.log(success);
     return success;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };

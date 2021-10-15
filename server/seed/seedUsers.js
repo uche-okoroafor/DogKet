@@ -19,6 +19,7 @@ const seedUsers = async () => {
     });
     testUsers.push(testUser);
   }
+  console.log(testUsers);
 
   return testUsers;
 };
