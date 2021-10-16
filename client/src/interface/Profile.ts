@@ -30,3 +30,8 @@ export interface CreateProfile {
   description: string;
   birth: string;
 }
+
+export interface ProfileApiData {
+  error?: string;
+  profiles?: Profile[];
+}

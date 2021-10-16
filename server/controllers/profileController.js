@@ -218,24 +218,6 @@ exports.userProfile = async (req, res, next) => {
 // @desc Get all sitter profiles only.
 exports.getAllProfiles = asyncHandler(async (req, res, next) => {
   try {
-    const profiles = await Profile.find({ isSitter: true });
-
-    if (profiles.length === 0) {
-      res.status(404);
-      throw new Error("No Sitter Profiles");
-    }
-
-    res.status(200).json(profiles);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// @route GET /profile/search
-// @desc Search by city or date ranges for sitters
-// @access Private
-exports.searchSitters = asyncHandler(async (req, res, next) => {
-  try {
     let { city, searchStartDate, searchEndDate } = req.query;
     let sitters;
 
@@ -253,7 +235,7 @@ exports.searchSitters = asyncHandler(async (req, res, next) => {
 
     if (!sitters) {
       res.status(404);
-      throw new Error("No sitters found in search");
+      throw new Error("No sitters found");
     }
 
     let searchStartDateInNum = new Date(searchStartDate).getUTCDay();
@@ -312,6 +294,11 @@ exports.searchSitters = asyncHandler(async (req, res, next) => {
         sitter.availability[0]._doc.availableSittingDaysInNum.includes(dayNum)
       );
     });
+
+    if (searchedSitters.length === 0) {
+      res.status(404);
+      throw new Error("No sitters found in search");
+    }
 
     res.status(200).json(searchedSitters);
   } catch (err) {
