@@ -33,14 +33,14 @@ function App(): JSX.Element {
               <Route path="/listings/:sitterId" component={ProfileDetail} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/profile/:setting" component={Profile} />
-              <Route exact path="/notifications" component={Bookings} />
+              <Route exact path="/notifications" component={Notifications} />
+              <Route exact path="/bookings" component={Bookings} />
+              <Route exact path="/my-sitters" component={MySitters} />
+              <Route exact path="/" component={Landing} />
               <ConvoProvider>
                 <Route exact path="/messages" component={Messages} />
               </ConvoProvider>
-              <Route exact path="/my-sitters" component={MySitters} />
-              <Route exact path="/bookings" component={Bookings} />
               <Route exact path="/my-jobs" component={MyJobs} />
-              {/* <Route exact path="/" component={Landing} /> */}
               <Route path="*">
                 <Redirect to="/login" />
               </Route>

@@ -23,12 +23,13 @@ export default function NotificationPopover(): JSX.Element {
   useEffect(() => {
     const fetchNotifications = async () => {
       const notificationRes = await getNotifications(page, 20, null);
+      console.log(notificationRes);
       const messagesCopy = returnNotificationType(notificationRes);
       if (messagesCopy) setmessagesToShow(messagesCopy);
 
       const unreadMessages = messagesCopy.filter((notifs) => !notifs.read).map((notifs) => notifs._id);
-      if (unreadMessages.length <= 0) return;
-      await updReadNotifications(unreadMessages);
+      // if (unreadMessages.length <= 0) return;
+      // await updReadNotifications(unreadMessages);
     };
     fetchNotifications();
   }, [page]);
@@ -37,6 +38,7 @@ export default function NotificationPopover(): JSX.Element {
     const fetchCount = async () => {
       const success = await getCount(null);
       if (success) {
+        console.log(success);
         const pageLimit = 20;
         const countCalc = Math.ceil(success['count'] / pageLimit);
         setCount(countCalc);
@@ -48,7 +50,7 @@ export default function NotificationPopover(): JSX.Element {
   return (
     <Box className={`${classes.root} ${classes.pageWrap}`}>
       <Paper className={classes.paper}>
-        {messagesToShow.length ? (
+        {!messagesToShow.length ? (
           <Box>
             <Typography variant="subtitle1" className={classes.title}>
               No notifications.

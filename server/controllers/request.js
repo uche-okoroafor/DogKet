@@ -9,17 +9,14 @@ const { ObjectId } = mongoose.Types;
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
   try {
-    // const userId = req.user.id;
-
     const { profileId, sitterProfileId, startDate, endDate } = req.body;
-    console.log(profileId, sitterProfileId);
+
     const requestModel = {
       ownerId: ObjectId(profileId),
       sitterId: ObjectId(sitterProfileId),
       startDate: new Date(startDate),
       endDate: new Date(endDate),
     };
-    console.log(profileId, sitterProfileId);
 
     const existingRequest = await Request.findOne(requestModel);
     if (existingRequest) {
@@ -27,9 +24,8 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
         .status(200)
         .json({ message: "You have already made a request", existingRequest });
     }
-    console.log(existingRequest);
+
     const newRequest = await Request.create(requestModel);
-    console.log(newRequest, "k");
     res.status(201).json({ newRequest });
   } catch (error) {
     next(error);
@@ -43,9 +39,9 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { currentTime } = req.params;
-    console.log(currentTime);
+
     const profile = await Profile.findOne({ userId });
-    console.log(profile, userId);
+
     const requestsByUser = await Request.find({
       $or: [
         { ownerId: ObjectId(profile._id) },
@@ -66,7 +62,7 @@ exports.userRequests = asyncHandler(async (req, res, next) => {
         },
       })
       .exec();
-    console.log(requestsByUser.slice(0, 3));
+
     const resModel = {
       nextBooking: {},
       currentBookings: [],

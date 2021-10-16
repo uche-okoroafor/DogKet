@@ -30,12 +30,9 @@ export const getRequests = async (): Promise<RequestApiData> => {
   };
 
   const timeStamp = new Date().getTime();
-  console.log(timeStamp);
   try {
     const fetchData = await fetch(`/request/${timeStamp}`, fetchOptions);
-    console.log(fetchData);
     const { success } = await fetchData.json();
-    console.log(success);
     return success;
   } catch (e) {
     return { error: { message: 'Unable to connect to server. Please try again' } };

@@ -18,7 +18,6 @@ type LinkType =
   | '/profile'
   | '/messages'
   | '/listings'
-  | '/'
   | '/bookings';
 
 const AuthMenu = (): JSX.Element => {
@@ -84,13 +83,14 @@ const AuthMenu = (): JSX.Element => {
                 My Jobs
               </MenuItem>
             ) : (
-              <MenuItem
-                className={`${classes.menuItem} ${classes.menuItemDesktop}`}
-                onClick={() => handleMenu('/my-sitters')}
-              >
-                My Sitters
-              </MenuItem>
+              <></>
             )}
+            <MenuItem
+              className={`${classes.menuItem} ${classes.menuItemDesktop}`}
+              onClick={() => handleMenu('/bookings')}
+            >
+              My Bookings
+            </MenuItem>
             <MenuItem
               className={`${classes.menuItem} ${classes.menuItemDesktop}`}
               onClick={() => handleMenu('/messages')}
@@ -102,9 +102,6 @@ const AuthMenu = (): JSX.Element => {
             </MenuItem>
             <MenuItem className={classes.menuItem} onClick={handleLogout}>
               Logout
-            </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={() => handleMenu('/bookings')}>
-              /
             </MenuItem>
           </Box>
         ) : (

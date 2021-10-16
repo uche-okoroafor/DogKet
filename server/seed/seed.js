@@ -21,7 +21,7 @@ async function deleteData() {
 
 async function seed() {
   await connectDB();
-  // await deleteData();
+  await deleteData(); //?
 
   const testUsers = await seedUsers();
 
@@ -127,7 +127,7 @@ async function runSeed() {
     process.exit();
   }
 }
-console.log(module === require.main);
+
 if (module === require.main) {
   runSeed();
 }

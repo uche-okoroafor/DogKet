@@ -60,19 +60,15 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  console.log(user && (await user.matchPassword(password)));
 
   if (user._id && (await user.matchPassword(password))) {
-    console.log("user");
     const token = generateToken(user._id);
-    console.log("token");
     const secondsInWeek = 604800;
     const userModel = {
       id: user._id,
       username: user.username,
       email: user.email,
     };
-    console.log(user);
 
     const profile = await Profile.findOne({ userId: user._id });
     if (profile) userModel.profileId = profile._id;
@@ -96,7 +92,6 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  console.log("wer");
   if (!user) {
     res.status(401);
     throw new Error("Not authorized");

@@ -1,7 +1,7 @@
 const Profile = require("../models/ProfileModel");
-console.log("seed.js");
 
 const seedProfiles = async (testUsers) => {
+  console.log("seedProfile.js");
   const testProfiles = [];
 
   const demoUserProfile = await Profile.create({
@@ -258,7 +258,6 @@ const seedProfiles = async (testUsers) => {
       saturday: [new Date(2021, 9, 9, 12), new Date(2021, 9, 9, 18)],
     },
   });
-  console.log(testProfiles);
   testProfiles.push(test8Profile);
 
   return testProfiles;

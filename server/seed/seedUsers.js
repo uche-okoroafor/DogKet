@@ -1,6 +1,7 @@
 const User = require("../models/User");
 
 const seedUsers = async () => {
+  console.log("seedUser.js");
   const testUsers = [];
 
   const demoUser = await User.create({
@@ -19,7 +20,6 @@ const seedUsers = async () => {
     });
     testUsers.push(testUser);
   }
-  console.log(testUsers);
 
   return testUsers;
 };

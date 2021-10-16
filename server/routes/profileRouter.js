@@ -5,7 +5,6 @@ const profileController = require("../controllers/profileController");
 const { validateProfile, validateSitterProfile } = require("../validate");
 // uploadController doesn't exist in the current main branch.
 // const uploadController = require("../controllers/uploadController");
-console.log(profileController.createProfile);
 
 router.post("/", protect, validateProfile, profileController.createProfile);
 router.put(
