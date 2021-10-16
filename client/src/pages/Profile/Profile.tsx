@@ -10,7 +10,6 @@ import Payment from './Payment/Payment';
 import Security from './Security/Security';
 import Settings from './Settings/Settings';
 import useStyles from './useStyles';
-import Box from '@material-ui/core/Box';
 
 const Profile = (): JSX.Element => {
   const classes = useStyles();
