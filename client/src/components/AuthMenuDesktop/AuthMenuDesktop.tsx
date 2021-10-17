@@ -11,9 +11,10 @@ interface Props {
   asideText: string;
   btnText?: string;
   notifCount: number;
+  updateCount: (change: number) => void;
 }
 
-const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element => {
+const AuthMenuDesktop = ({ asideText, linkTo, notifCount, updateCount }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 
@@ -22,7 +23,7 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element 
       <AuthNavItem asideText={asideText} classes={`${classes.accAside} ${classes.authNavMobile}`} linkTo={linkTo} />
       {loggedInUser ? (
         <>
-          <NotificationButton notifCount={notifCount} />
+          <NotificationButton notifCount={notifCount} updateCount={updateCount} />
           {loggedInUser.isSitter ? (
             <AuthNavItem
               isButton
@@ -38,7 +39,7 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element 
             isButton
             classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
             linkTo="/bookings"
-            btnText="My Bookings"
+            btnText="Bookings"
             variant="text"
           />
           <AuthNavItem

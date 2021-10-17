@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
     pageWrap: {
       margin: 'auto',
       maxWidth: '30%',
+      padding: '20px',
     },
   }),
 );

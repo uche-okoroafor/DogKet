@@ -89,7 +89,7 @@ const AuthMenu = (): JSX.Element => {
               className={`${classes.menuItem} ${classes.menuItemDesktop}`}
               onClick={() => handleMenu('/bookings')}
             >
-              My Bookings
+              Bookings
             </MenuItem>
             <MenuItem
               className={`${classes.menuItem} ${classes.menuItemDesktop}`}

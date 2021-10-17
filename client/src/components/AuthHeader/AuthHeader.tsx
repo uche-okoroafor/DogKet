@@ -21,6 +21,11 @@ const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const { loggedInUser } = useAuth();
   const [count, setCount] = useState(0);
 
+  const updateCount = async (change: number) => {
+    const newCount = Math.max(count - change, 0);
+    setCount(newCount);
+  };
+
   useEffect(() => {
     const fetchCount = async () => {
       const success = await getCount(true);
@@ -44,7 +49,7 @@ const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
       </Link>
 
       <Box height="80px" display="flex" flexWrap="wrap" alignItems="center" p={1}>
-        <AuthMenuDesktop asideText={asideText} linkTo={linkTo} notifCount={count} />
+        <AuthMenuDesktop asideText={asideText} linkTo={linkTo} notifCount={count} updateCount={updateCount} />
         <AuthMenu />
       </Box>
     </Box>

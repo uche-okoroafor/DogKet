@@ -46,7 +46,6 @@ app.use((req, res, next) => {
   next();
 });
 
-console.log(profileRouter);
 app.use("/profile", profileRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);

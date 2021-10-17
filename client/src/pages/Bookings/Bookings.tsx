@@ -9,6 +9,7 @@ import NextBookings from './NextBookings';
 import ManageBookings from './ManageBookings';
 import { RequestApiDataSuccess, Booking } from '../../interface/Requests';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import Layout from '../Layout/Layout';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
@@ -53,22 +54,24 @@ export default function Bookings(): JSX.Element {
   }, [updateSnackBarMessage]);
 
   return (
-    <Container maxWidth="md" className={classes.container}>
-      <Box className={`${classes.root} ${classes.mt}`}>
-        <Grid container spacing={8}>
-          <Grid item xs={12} sm={6} spacing={2}>
-            <NextBookings nextBooking={requests.nextBooking} updateStatusState={updateStatusState} />
-            <ManageBookings
-              currentBookings={requests.currentBookings}
-              pastBookings={requests.pastBookings}
-              updateStatusState={updateStatusState}
-            />
+    <Layout>
+      <Container maxWidth="md" className={classes.container}>
+        <Box className={`${classes.root} ${classes.mt}`}>
+          <Grid container spacing={8}>
+            <Grid item xs={12} sm={6} spacing={2}>
+              <NextBookings nextBooking={requests.nextBooking} updateStatusState={updateStatusState} />
+              <ManageBookings
+                currentBookings={requests.currentBookings}
+                pastBookings={requests.pastBookings}
+                updateStatusState={updateStatusState}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <CalendarWrap currentBookings={requests.currentBookings} />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <CalendarWrap currentBookings={requests.currentBookings} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </Layout>
   );
 }
