@@ -2,7 +2,7 @@ import { User } from './User';
 
 export interface AuthApiDataSuccess {
   message: string;
-  formattedUser: User;
+  user: User;
   token: string;
 }
 

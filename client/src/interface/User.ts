@@ -5,6 +5,7 @@ export interface User {
   username: string;
   isSitter?: boolean;
   profileImg?: string;
+  profileId?: string;
 }
 
 export interface SearchUsersApiData {

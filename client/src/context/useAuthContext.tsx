@@ -24,7 +24,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
-      setLoggedInUser(data.formattedUser);
+      setLoggedInUser(data.user);
       history.push('/dashboard');
     },
     [history],
