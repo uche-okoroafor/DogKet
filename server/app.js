@@ -12,10 +12,10 @@ const protect = require("./middleware/auth");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profileRouter");
-const notificationRouter = require("./routes/notifications");
 const conversationRouter = require("./routes/conversation");
 const messageRouter = require("./routes/message");
 const requestRouter = require("./routes/request");
+const notificationRouter = require("./routes/notifications");
 
 const { json, urlencoded } = express;
 
