@@ -4,7 +4,7 @@ import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
-
+import { useSocket } from './useSocketContext';
 interface IAuthContext {
   loggedInUser: User | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
@@ -21,7 +21,8 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
   const history = useHistory();
-
+  const { initSocket } = useSocket();
+  console.log(initSocket());
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
       setLoggedInUser(data.user);
@@ -45,6 +46,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     const checkLoginWithCookies = async () => {
       await loginWithCookies().then((data: AuthApiData) => {
         if (data.success) {
+          initSocket();
           updateLoginContext(data.success);
           history.push('/dashboard');
         } else {
@@ -55,7 +57,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       });
     };
     checkLoginWithCookies();
-  }, [updateLoginContext, history]);
+  }, [updateLoginContext, history, initSocket]);
 
   return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
 };
