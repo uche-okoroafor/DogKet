@@ -83,7 +83,6 @@ const EditProfile = (): JSX.Element => {
     title: string;
     hourlyWage: number;
   }) => {
-    console.log(isEditMode);
     if (isEditMode) {
       try {
         await updateProfile(profileId, values as Profile);

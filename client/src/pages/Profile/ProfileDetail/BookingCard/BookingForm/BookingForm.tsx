@@ -29,7 +29,6 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
   const { updateSnackBarMessage } = useSnackBar();
   const { loggedInUser } = useAuth();
-  console.log(loggedInUser, sitter);
   const history = useHistory();
 
   const handleSubmit = async (

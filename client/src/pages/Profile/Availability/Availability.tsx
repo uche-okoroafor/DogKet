@@ -66,7 +66,6 @@ const Availability = (): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [hourlyWage, setHourlyWage] = useState<string | undefined>('');
   const { loggedInUser } = useAuth();
-  console.log(loggedInUser);
 
   const classes = useStyles();
 

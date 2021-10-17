@@ -38,7 +38,7 @@ export async function createProfile(profileInfo: CreateProfile): Promise<Profile
     body: JSON.stringify(profileInfo),
     credentials: 'include',
   };
-  console.log('/profile/');
+
   return await fetch('/profile', fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
