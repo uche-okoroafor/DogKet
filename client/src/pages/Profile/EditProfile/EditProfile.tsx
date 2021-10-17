@@ -20,13 +20,23 @@ import { Gender, Profile } from '../../../interface/Profile';
 import { createProfile, getMyProfile, updateProfile } from '../../../helpers/APICalls/profiles';
 import { useHistory } from 'react-router-dom';
 
+const phoneRegExp = /[0-9]{10}/gm;
+const addressRegExp = /^[a-z]+[,]\s*[a-z]+\s*[a-z]*$/gim;
+
 const validationSchema = yup.object({
   firstName: yup.string().required('First Name is required'),
   lastName: yup.string().required('Last Name is required'),
   gender: yup.string().required('Gender is required'),
   birth: yup.string().required('Birth is required'),
-  phone: yup.string().required('Phone is required'),
-  address: yup.string().required('Address is required'),
+  phone: yup
+    .string()
+    .matches(phoneRegExp, 'Phone number is not valid (e.g., 1231231234 without "-")')
+    .required('Phone number is required'),
+  address: yup
+    .string()
+    .trim()
+    .matches(addressRegExp, 'Address is not valid (e.g., City, Province (Comma is required))')
+    .required('Address is required'),
   description: yup.string().required('Your description is required'),
 });
 
@@ -105,18 +115,12 @@ const EditProfile = (): JSX.Element => {
     history.push('/profile');
   };
 
-  const [block, setBlock] = useState('none');
-
   const formik = useFormik({
     initialValues: fetchedProfile,
     onSubmit: handleSubmit,
     validationSchema: validationSchema,
     enableReinitialize: true,
   });
-
-  const handleClick = () => {
-    setBlock('block');
-  };
 
   return (
     <Grid item xs={12} sm={9} elevation={6} component={Paper} square>
@@ -211,8 +215,8 @@ const EditProfile = (): JSX.Element => {
             </label>
             <Typography className={classes.textField}>{loggedInUser?.email}</Typography>
           </Box>
-          <Box className={classes.box} style={{ display: `${block}` }}>
-            <label className={classes.label}></label>
+          <Box display="flex" alignItems="center" className={classes.box}>
+            <label className={classes.label}>phone</label>
             <TextField
               type="text"
               id="phone"
@@ -222,18 +226,10 @@ const EditProfile = (): JSX.Element => {
               className={classes.textField}
               value={formik.values.phone}
               onChange={formik.handleChange}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
+              onBlur={formik.handleBlur}
             />
-          </Box>
-          <Box display="flex" alignItems="center" className={classes.box}>
-            <label htmlFor="phone-number" className={classes.label}>
-              phone number
-            </label>
-            <Box className={classes.boxStyle}>
-              <Typography className={classes.phone}>No Phone number entered</Typography>
-              <Button variant="outlined" color="secondary" size="large" onClick={handleClick}>
-                Add phone number
-              </Button>
-            </Box>
           </Box>
           <Box display="flex" alignItems="center" className={classes.box}>
             <label htmlFor="where-live" className={classes.label}>
@@ -242,7 +238,7 @@ const EditProfile = (): JSX.Element => {
             <TextField
               type="text"
               id="where-live"
-              placeholder="Toronto, Ontario"
+              placeholder="City, Province (Comma is required)"
               variant="outlined"
               className={classes.textField}
               name="address"

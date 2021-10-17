@@ -49,13 +49,15 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount, updateCount }: Props):
             btnText="Listings"
             variant="text"
           />
-          <AuthNavItem
-            isButton
-            classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
-            linkTo="/messages"
-            btnText="Messages"
-            variant="text"
-          />
+          {loggedInUser.profileId && (
+            <AuthNavItem
+              isButton
+              classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
+              linkTo="/messages"
+              btnText="Messages"
+              variant="text"
+            />
+          )}
         </>
       ) : (
         <>
