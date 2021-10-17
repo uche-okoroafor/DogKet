@@ -61,7 +61,7 @@ exports.validateProfile = [
   }),
   check("gender").isIn(["Male", "Female", "Other"]),
   check("birth", "date of birth is invalid (e.g., YYYY/MM/DD)").isDate(),
-  check("phone", "phone is invalid (e.g. 123-456-7890)").isMobilePhone(),
+  check("phone", "phone is invalid (e.g. 1234567890)").isMobilePhone(),
   check("address", "address is required (min:3, max:200)").isLength({
     min: 3,
     max: 200,
