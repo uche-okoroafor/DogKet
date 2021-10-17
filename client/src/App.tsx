@@ -9,8 +9,6 @@ import { ConvoProvider } from './context/useConvoContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import TempDashboardMain from './pages/TempDashboardMain/TempDashboardMain';
 import Listings from './pages/Listings/Listings';
-import MySitters from './pages/MySitters/MySitters';
-import MyJobs from './pages/MyJobs/MyJobs';
 import Profile from './pages/Profile/Profile';
 import ProfileDetail from './pages/Profile/ProfileDetail/ProfileDetail';
 import Landing from './pages/Landing/Landing';
@@ -35,12 +33,10 @@ function App(): JSX.Element {
               <Route path="/profile/:setting" component={Profile} />
               <Route exact path="/notifications" component={Notifications} />
               <Route exact path="/bookings" component={Bookings} />
-              <Route exact path="/my-sitters" component={MySitters} />
               <Route exact path="/" component={Landing} />
               <ConvoProvider>
                 <Route exact path="/messages" component={Messages} />
               </ConvoProvider>
-              <Route exact path="/my-jobs" component={MyJobs} />
               <Route path="*">
                 <Redirect to="/login" />
               </Route>

@@ -24,17 +24,6 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount, updateCount }: Props):
       {loggedInUser ? (
         <>
           <NotificationButton notifCount={notifCount} updateCount={updateCount} />
-          {loggedInUser.isSitter ? (
-            <AuthNavItem
-              isButton
-              classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
-              linkTo="/my-jobs"
-              btnText="My Jobs"
-              variant="text"
-            />
-          ) : (
-            <></>
-          )}
           <AuthNavItem
             isButton
             classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
