@@ -8,7 +8,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "DemoFname",
     lastName: "DemoLname",
     address: "Toronto, Ontario",
-    phone: "123-123-1234",
+    phone: "1231231234",
     description:
       "Hello! I am a DemoUser. Hello! I am a DemoUser. Hello! I am a DemoUser. Hello! I am a DemoUser. ",
     birth: "2021-01-01",
@@ -28,7 +28,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test1Fname",
     lastName: "Test1Lname",
     address: "Montreal, Quebec",
-    phone: "111-222-3333",
+    phone: "1112223333",
     description:
       "Hello! I am Test1. Hello! I am Test1. Hello! I am Test1. Hello! I am Test1. ",
     birth: "2021-02-02",
@@ -56,7 +56,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test2Fname",
     lastName: "Test2Lname",
     address: "Ottawa, Ontario",
-    phone: "111-222-3333",
+    phone: "1112223333",
     description:
       "Hello! I am Test2. Hello! I am Test2. Hello! I am Test2. Hello! I am Test2. ",
     birth: "2021-02-02",
@@ -85,7 +85,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test3Fname",
     lastName: "Test3Lname",
     address: "Ottawa, Ontario",
-    phone: "222-333-4444",
+    phone: "2223334444",
     description:
       "Hello! I am Test3. Hello! I am Test3. Hello! I am Test3. Hello! I am Test3. ",
     birth: "2021-03-03",
@@ -114,7 +114,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test4Fname",
     lastName: "Test4Lname",
     address: "Toronto, Ontario",
-    phone: "222-333-4444",
+    phone: "2223334444",
     description:
       "Hello! I am Test4. Hello! I am Test4. Hello! I am Test4. Hello! I am Test4. ",
     birth: "2021-03-03",
@@ -143,7 +143,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test5Fname",
     lastName: "Test5Lname",
     address: "Ottawa, Ontario",
-    phone: "222-333-4444",
+    phone: "2223334444",
     description:
       "Hello! I am Test5. Hello! I am Test5. Hello! I am Test5. Hello! I am Test5. ",
     birth: "2021-03-03",
@@ -171,7 +171,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test6Fname",
     lastName: "Test6Lname",
     address: "Vancouver, British columbia",
-    phone: "222-333-4444",
+    phone: "2223334444",
     description:
       "Hello! I am Test6. Hello! I am Test6. Hello! I am Test6. Hello! I am Test6. ",
     birth: "2021-03-03",
@@ -203,7 +203,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test7Fname",
     lastName: "Test7Lname",
     address: "Burnaby, British columbia",
-    phone: "222-333-4444",
+    phone: "2223334444",
     description:
       "Hello! I am Test7. Hello! I am Test7. Hello! I am Test7. Hello! I am Test7. ",
     birth: "2021-03-03",
@@ -232,7 +232,7 @@ const seedProfiles = async (testUsers) => {
     firstName: "Test8Fname",
     lastName: "Test8Lname",
     address: "Toronto, Ontario",
-    phone: "222-333-4444",
+    phone: "2223334444",
     description:
       "Hello! I am Test8. Hello! I am Test8. Hello! I am Test8. Hello! I am Test8. ",
     birth: "2021-03-03",
