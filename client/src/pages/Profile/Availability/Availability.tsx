@@ -66,6 +66,7 @@ const Availability = (): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [hourlyWage, setHourlyWage] = useState<string | undefined>('');
   const { loggedInUser } = useAuth();
+
   const classes = useStyles();
 
   const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {

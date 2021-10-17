@@ -6,6 +6,8 @@ import { updateStatus } from '../../helpers/APICalls/request';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { editButtonStyles } from './BookingStyles/EditButton';
+import { useAuth } from '../../context/useAuthContext';
+
 interface Props {
   requestId?: string;
   updateStatusState: (id: string, status: string, sectionName: string) => void;
@@ -15,7 +17,7 @@ interface Props {
 export default function EditButton({ requestId, updateStatusState, sectionName }: Props): JSX.Element {
   const pageClasses = editButtonStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
+  const { loggedInUser } = useAuth();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -58,8 +60,14 @@ export default function EditButton({ requestId, updateStatusState, sectionName }
         }}
       >
         <Box className={pageClasses.popoverWrapper}>
-          <Button onClick={() => onClickHandler('accepted')}>Accept</Button>
-          <Button onClick={() => onClickHandler('declined')}>Decline</Button>
+          {loggedInUser?.isSitter ? (
+            <>
+              <Button onClick={() => onClickHandler('accepted')}>Accept</Button>
+              <Button onClick={() => onClickHandler('declined')}>Decline</Button>
+            </>
+          ) : (
+            <Button>Edit</Button>
+          )}
         </Box>
       </Popover>
     </Box>

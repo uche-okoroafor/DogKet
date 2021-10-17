@@ -26,7 +26,8 @@ export async function createProfile(profileInfo: CreateProfile): Promise<Profile
     body: JSON.stringify(profileInfo),
     credentials: 'include',
   };
-  return await fetch('/profile/', fetchOptions)
+
+  return await fetch('/profile', fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },

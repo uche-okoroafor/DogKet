@@ -4,7 +4,6 @@ export interface User {
   email: string;
   username: string;
   isSitter?: boolean;
-  profileId?: string;
   profileImg?: string;
 }
 

@@ -1,6 +1,7 @@
 const Profile = require("../models/ProfileModel");
 
 const seedProfiles = async (testUsers) => {
+  console.log("seedProfile.js");
   const testProfiles = [];
 
   const demoUserProfile = await Profile.create({

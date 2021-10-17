@@ -12,6 +12,7 @@ import { createNotification } from '../../../../../helpers/APICalls/notification
 import { useSnackBar } from '../../../../../context/useSnackbarContext';
 import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
+import { useAuth } from '../../../../../context/useAuthContext';
 
 interface Props {
   sitter: Profile;
@@ -27,6 +28,7 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   const classes = useStyles();
   const [dateRange, setDateRange] = useState<DateRange<Date | null>>([null, null]);
   const { updateSnackBarMessage } = useSnackBar();
+  const { loggedInUser } = useAuth();
   const history = useHistory();
 
   const handleSubmit = async (
@@ -35,7 +37,8 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   ) => {
     if (dateRange[0] && dateRange[1]) {
       try {
-        await createRequest(sitter.userId, dateRange?.[0], dateRange?.[1]);
+        if (loggedInUser?.profileId)
+          await createRequest(loggedInUser.profileId, sitter._id, dateRange?.[0], dateRange?.[1]);
       } catch (error: unknown) {
         if (error instanceof Error) {
           updateSnackBarMessage(error.message);

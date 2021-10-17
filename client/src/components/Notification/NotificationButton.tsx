@@ -8,15 +8,17 @@ import Badge from '@mui/material/Badge';
 
 interface Props {
   notifCount: number;
+  updateCount: (change: number) => void;
 }
 
-export default function NotificationButton({ notifCount }: Props): JSX.Element {
+export default function NotificationButton({ notifCount, updateCount }: Props): JSX.Element {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!anchorEl) setAnchorEl(event.currentTarget);
     else setAnchorEl(null);
+    updateCount(3);
   };
 
   const handleClose = () => {
@@ -52,7 +54,7 @@ export default function NotificationButton({ notifCount }: Props): JSX.Element {
         }}
         onClose={handleClose}
       >
-        <NotificationPopover />
+        <NotificationPopover updateCount={updateCount} />
       </Popover>
     </Box>
   );
