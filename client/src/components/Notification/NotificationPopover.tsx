@@ -10,12 +10,15 @@ import { getNotifications, updReadNotifications } from '../../helpers/APICalls/n
 import { Notification } from '../../interface/Notifications';
 import { NavLink } from 'react-router-dom';
 
-export default function NotificationPopover(): JSX.Element {
+interface Props {
+  updateCount: (change: number) => void;
+}
+
+export default function NotificationPopover({ updateCount }: Props): JSX.Element {
   const classes = useStyles();
   const returnNotificationType = (res: any): Notification[] => res.notifications;
   const messages: Notification[] = [];
   const [messagesToShow, setmessagesToShow] = React.useState(messages);
-
   useEffect(() => {
     const fetchNotifications = async () => {
       const res = await getNotifications(1, 3, true);

@@ -4,21 +4,23 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
-import React from 'react';
 import CalendarWrap from './Calendar';
 import NextBookings from './NextBookings';
 import ManageBookings from './ManageBookings';
 import { RequestApiDataSuccess, Booking } from '../../interface/Requests';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import Layout from '../Layout/Layout';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
-  const resModel: RequestApiDataSuccess = {
+  const defaultResModel: RequestApiDataSuccess = {
     nextBooking: {},
     currentBookings: [],
     pastBookings: [],
   };
-  const [requests, setRequest] = useState(resModel);
-  const returnRequestType = (success: any): RequestApiDataSuccess => success.resModel;
+  const [requests, setRequest] = useState(defaultResModel);
+  const returnRequestType = (success: any): RequestApiDataSuccess => success['resModel'];
+  const { updateSnackBarMessage } = useSnackBar();
 
   const updateStatusState = (id: string, status: string, sectionName: string) => {
     const requestCopy: any = { ...requests };
@@ -37,20 +39,26 @@ export default function Bookings(): JSX.Element {
   };
 
   useEffect(() => {
-    const fetchRequests = async () => {
-      const success = await getRequests();
-      const resModelSuccess = returnRequestType(success);
-      if (resModelSuccess) setRequest(resModelSuccess);
-    };
-    fetchRequests();
-  }, []);
+    try {
+      const fetchRequests = async () => {
+        const success = await getRequests();
+        if (success) {
+          const resModelSuccess = returnRequestType(success);
+          if (resModelSuccess) setRequest(resModelSuccess);
+        }
+      };
+      fetchRequests();
+    } catch (error) {
+      if (error instanceof Error) updateSnackBarMessage(error.message);
+    }
+  }, [updateSnackBarMessage]);
 
   return (
-    <React.Fragment>
+    <Layout>
       <Container maxWidth="md" className={classes.container}>
         <Box className={`${classes.root} ${classes.mt}`}>
-          <Grid container spacing={10}>
-            <Grid item xs={12} sm={6} spacing={10}>
+          <Grid container spacing={8}>
+            <Grid item xs={12} sm={6} spacing={2}>
               <NextBookings nextBooking={requests.nextBooking} updateStatusState={updateStatusState} />
               <ManageBookings
                 currentBookings={requests.currentBookings}
@@ -64,6 +72,6 @@ export default function Bookings(): JSX.Element {
           </Grid>
         </Box>
       </Container>
-    </React.Fragment>
+    </Layout>
   );
 }

@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import EditButton from './EditButton';
 import { Booking } from '../../interface/Requests';
 import TimeDisplay from './TimeDisplay';
+import { useAuth } from '../../context/useAuthContext';
+import Avatar from '@material-ui/core/Avatar';
 
 interface Props {
   bookings: Booking[];
@@ -15,6 +17,7 @@ interface Props {
 
 export default function ManageBookings({ bookings, sectionName, updateStatusState }: Props): JSX.Element {
   const pageClasses = bookingStyles();
+  const { loggedInUser } = useAuth();
 
   return (
     <Grid container spacing={2}>
@@ -31,12 +34,30 @@ export default function ManageBookings({ bookings, sectionName, updateStatusStat
                 <Grid item container xs={12} sm>
                   <Grid item xs={9}>
                     <TimeDisplay endTime={booking.startDate} startTime={booking.startDate} />
-                    <Typography variant="body2" className={pageClasses.nameWrapper}>
+                    <Box className={pageClasses.nameWrapper}>
                       {/* TEMP IMG tags */}
                       {/* <Avatar alt="Remy Sharp" src="../../Images/68f55f7799df6c8078a874cfe0a61a5e6e9e1687.png" /> */}
-                      <Box className={pageClasses.tempImg}></Box>
-                      <Box className={pageClasses.bookingNameHr}>{booking?.sitterId}</Box>
-                    </Typography>
+                      {/* <Box className={pageClasses.tempImg}></Box> */}
+                      {loggedInUser?.isSitter ? (
+                        <>
+                          <Avatar
+                            alt={booking?.ownerId?.firstName}
+                            className={pageClasses.red}
+                            src={booking?.sitterId?.photos[1]}
+                          />
+                          <Box className={pageClasses.bookingNameHr}>{booking?.ownerId?.firstName}</Box>
+                        </>
+                      ) : (
+                        <>
+                          <Avatar
+                            alt={booking?.ownerId?.firstName}
+                            className={pageClasses.red}
+                            src={booking?.sitterId?.photos[1]}
+                          />
+                          <Box className={pageClasses.bookingNameHr}>{booking?.sitterId?.firstName}</Box>
+                        </>
+                      )}
+                    </Box>
                   </Grid>
                   <Grid item xs={2} className={pageClasses.statusWrapper}>
                     <Typography variant="subtitle1" className={pageClasses.statusTxt.toUpperCase()}>

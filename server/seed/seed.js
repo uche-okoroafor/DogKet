@@ -1,7 +1,7 @@
 const colors = require("colors");
-const dotenv = require("dotenv");
-dotenv.config({ path: ".env" });
-
+const dotenv = require("dotenv").config({ path: __dirname + "/../.env" });
+// dotenv.config({ path: ".env" });
+console.log("seed.js");
 const connectDB = require("../db");
 const seedUsers = require("../seed/seedUsers");
 const seedProfiles = require("../seed/seedProfiles");
@@ -21,7 +21,7 @@ async function deleteData() {
 
 async function seed() {
   await connectDB();
-  await deleteData();
+  await deleteData(); //?
 
   const testUsers = await seedUsers();
 
@@ -117,10 +117,13 @@ async function seed() {
 
 async function runSeed() {
   try {
+    console.log("starting");
     await seed();
   } catch (err) {
+    console.log("err", err);
     process.exitCode = 1;
   } finally {
+    console.log("done");
     process.exit();
   }
 }

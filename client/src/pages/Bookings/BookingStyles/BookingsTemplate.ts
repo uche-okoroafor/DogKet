@@ -1,7 +1,12 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 
 export const bookingStyles = makeStyles((theme: Theme) =>
   createStyles({
+    red: {
+      color: theme.palette.getContrastText(red[500]),
+      backgroundColor: red[500],
+    },
     paper: {
       padding: theme.spacing(2),
       margin: 'auto',
@@ -37,12 +42,14 @@ export const bookingStyles = makeStyles((theme: Theme) =>
       margin: '10px 0px',
     },
     bookingNameHr: {
-      fontWeight: 900,
+      fontWeight: 700,
+      marginLeft: '8px',
       fontSize: '13px',
     },
     nameWrapper: {
       display: 'flex',
       marginBottom: '15px',
+      alignItems: 'center',
     },
     tempImg: {
       borderRadius: '50%',

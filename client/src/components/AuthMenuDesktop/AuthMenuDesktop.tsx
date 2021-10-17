@@ -4,15 +4,17 @@ import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles';
 import AuthNavItem from '../AuthNavItem/AuthNavItem';
 import NotificationButton from '../Notification/NotificationButton';
+
 interface Props {
   loggedInUser?: User;
   linkTo: string;
   asideText: string;
   btnText?: string;
   notifCount: number;
+  updateCount: (change: number) => void;
 }
 
-const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element => {
+const AuthMenuDesktop = ({ asideText, linkTo, notifCount, updateCount }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 
@@ -21,7 +23,7 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element 
       <AuthNavItem asideText={asideText} classes={`${classes.accAside} ${classes.authNavMobile}`} linkTo={linkTo} />
       {loggedInUser ? (
         <>
-          <NotificationButton notifCount={notifCount} />
+          <NotificationButton notifCount={notifCount} updateCount={updateCount} />
           {loggedInUser.isSitter ? (
             <AuthNavItem
               isButton
@@ -31,14 +33,15 @@ const AuthMenuDesktop = ({ asideText, linkTo, notifCount }: Props): JSX.Element 
               variant="text"
             />
           ) : (
-            <AuthNavItem
-              isButton
-              classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
-              linkTo="/my-sitters"
-              btnText="My Sitters"
-              variant="text"
-            />
+            <></>
           )}
+          <AuthNavItem
+            isButton
+            classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
+            linkTo="/bookings"
+            btnText="Bookings"
+            variant="text"
+          />
           <AuthNavItem
             isButton
             classes={`${classes.authNavItemBtn} ${classes.authNavMobile}`}
