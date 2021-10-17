@@ -71,13 +71,15 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     };
 
     const profile = await Profile.findOne({ userId: user._id });
-    if (profile) userModel.profileId = profile._id;
+    if (profile) {
+      userModel.profileId = profile._id;
+      userModel.isSitter = profile.isSitter;
+    }
 
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: secondsInWeek * 1000,
     });
-
     res.status(200).json({
       success: { user: userModel },
     });

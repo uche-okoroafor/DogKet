@@ -5,7 +5,7 @@ import Layout from '../Layout/Layout';
 import SearchLocation from './SearchLocation/SearchLocation';
 import SearchDateRange from './SearchDateRange/SearchDateRange';
 import SitterCard from './SitterCard/SitterCard';
-import { getAllProfiles } from '../../helpers/APICalls/profiles';
+import { searchSitters } from '../../helpers/APICalls/profiles';
 import { Profile } from '../../interface/Profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
@@ -30,8 +30,15 @@ const Listings = (): JSX.Element => {
     try {
       const fetchProfiles = async () => {
         setLoading(true);
-        const fetchedProfiles = await getAllProfiles();
-        setProfiles(fetchedProfiles);
+        const fetchedProfiles = await searchSitters({
+          city: search,
+          searchStartDate: dateRange[0]?.toISOString().split('T')[0],
+          searchEndDate: dateRange[1]?.toISOString().split('T')[0],
+        });
+        if (fetchedProfiles.error) {
+          updateSnackBarMessage(fetchedProfiles.error);
+        }
+        setProfiles(fetchedProfiles as Profile[]);
         setLoading(false);
       };
       fetchProfiles();
@@ -41,7 +48,7 @@ const Listings = (): JSX.Element => {
       }
       setLoading(false);
     }
-  }, [updateSnackBarMessage]);
+  }, [dateRange, search, updateSnackBarMessage]);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleShowMore = () => {};

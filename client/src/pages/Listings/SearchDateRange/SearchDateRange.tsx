@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Box, TextField, Typography } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -19,7 +19,6 @@ interface Props {
 
 const SearchDateRange = ({ search, setProfiles, dateRange, handleChange }: Props): JSX.Element => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
   const { updateSnackBarMessage } = useSnackBar();
 
   const formattedDateRangeText = (dateRange: DateRange<Date>): string => {
@@ -34,14 +33,12 @@ const SearchDateRange = ({ search, setProfiles, dateRange, handleChange }: Props
   useEffect(() => {
     try {
       const searchByDateRange = async () => {
-        setLoading(true);
         const response = await searchSitters({
           city: search,
           searchStartDate: dateRange[0]?.toISOString().split('T')[0],
           searchEndDate: dateRange[1]?.toISOString().split('T')[0],
         });
-        setProfiles(response);
-        setLoading(false);
+        setProfiles(response as Profile[]);
       };
 
       searchByDateRange();

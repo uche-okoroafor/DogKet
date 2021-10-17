@@ -37,12 +37,12 @@ const SearchLocation = ({ dateRange, setProfiles, search, handleChange }: Props)
           searchStartDate: dateRange[0]?.toISOString().split('T')[0],
           searchEndDate: dateRange[1]?.toISOString().split('T')[0],
         });
-        setProfiles(response);
+        setProfiles(response as Profile[]);
 
         const sitterCities: string[] = [];
 
-        if (active && response && response.length) {
-          response.map((sitter) => sitterCities.push(sitter.address));
+        if (active && response && (response as Profile[]).length) {
+          (response as Profile[]).map((sitter) => sitterCities.push(sitter.address));
           saveOptions([...new Set(sitterCities)]);
         }
         setLoading(false);
