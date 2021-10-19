@@ -20,13 +20,15 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 
     const existingRequest = await Request.findOne(requestModel);
     if (existingRequest) {
-      return res
-        .status(200)
-        .json({ message: "You have already made a request", existingRequest });
+      return res.status(409).json({
+        error: { message: "Request already exists ", existingRequest },
+      });
     }
 
     const newRequest = await Request.create(requestModel);
-    res.status(201).json({ newRequest });
+    res.status(201).json({
+      success: { message: "Requests created", newRequest },
+    });
   } catch (error) {
     next(error);
   }

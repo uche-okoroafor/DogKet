@@ -13,7 +13,7 @@ import { useSnackBar } from '../../../../../context/useSnackbarContext';
 import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 import { useAuth } from '../../../../../context/useAuthContext';
-
+import { useSocket } from '../../../../../context/useSocketContext';
 interface Props {
   sitter: Profile;
 }
@@ -30,6 +30,7 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   const { updateSnackBarMessage } = useSnackBar();
   const { loggedInUser } = useAuth();
   const history = useHistory();
+  const { socket } = useSocket();
 
   const handleSubmit = async (
     { dateRange }: { dateRange: DateRange<Date> },
@@ -37,8 +38,12 @@ const BookingForm = ({ sitter }: Props): JSX.Element => {
   ) => {
     if (dateRange[0] && dateRange[1]) {
       try {
-        if (loggedInUser?.profileId)
-          await createRequest(loggedInUser.profileId, sitter._id, dateRange?.[0], dateRange?.[1]);
+        if (loggedInUser?.profileId) {
+          const { success } = await createRequest(loggedInUser.profileId, sitter._id, dateRange?.[0], dateRange?.[1]);
+          if (success?.newRequest) {
+            socket?.emit('notification', { recipientId: sitter._id });
+          }
+        }
       } catch (error: unknown) {
         if (error instanceof Error) {
           updateSnackBarMessage(error.message);

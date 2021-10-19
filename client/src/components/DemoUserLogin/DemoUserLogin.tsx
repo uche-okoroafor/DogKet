@@ -12,7 +12,6 @@ interface Props {
 export default function DemoUserLogin({ isMenuItem, classes }: Props): JSX.Element {
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
-
   const handleDemoUserLogin = () => {
     const { email, password } = demoUser;
     login(email, password).then((data) => {

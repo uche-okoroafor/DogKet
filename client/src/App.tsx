@@ -6,6 +6,7 @@ import Signup from './pages/SignUp/SignUp';
 import { AuthProvider } from './context/useAuthContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { ConvoProvider } from './context/useConvoContext';
+import { SocketProvider } from './context/useSocketContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import TempDashboardMain from './pages/TempDashboardMain/TempDashboardMain';
 import Listings from './pages/Listings/Listings';
@@ -21,28 +22,30 @@ function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
-        <SnackBarProvider>
-          <AuthProvider>
-            <Switch>
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
-              <Route exact path="/listings" component={Listings} />
-              <Route path="/listings/:sitterId" component={ProfileDetail} />
-              <Route exact path="/profile" component={Profile} />
-              <Route path="/profile/:setting" component={Profile} />
-              <Route exact path="/notifications" component={Notifications} />
-              <Route exact path="/bookings" component={Bookings} />
-              <Route exact path="/" component={Landing} />
-              <ConvoProvider>
-                <Route exact path="/messages" component={Messages} />
-              </ConvoProvider>
-              <Route path="*">
-                <Redirect to="/login" />
-              </Route>
-            </Switch>
-          </AuthProvider>
-        </SnackBarProvider>
+        <SocketProvider>
+          <SnackBarProvider>
+            <AuthProvider>
+              <Switch>
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <ProtectedRoute exact path="/dashboard" component={TempDashboardMain} />
+                <Route exact path="/listings" component={Listings} />
+                <Route path="/listings/:sitterId" component={ProfileDetail} />
+                <Route exact path="/profile" component={Profile} />
+                <Route path="/profile/:setting" component={Profile} />
+                <Route exact path="/notifications" component={Notifications} />
+                <Route exact path="/bookings" component={Bookings} />
+                <Route exact path="/" component={Landing} />
+                <ConvoProvider>
+                  <Route exact path="/messages" component={Messages} />
+                </ConvoProvider>
+                <Route path="*">
+                  <Redirect to="/login" />
+                </Route>
+              </Switch>
+            </AuthProvider>
+          </SnackBarProvider>
+        </SocketProvider>
       </BrowserRouter>
     </MuiThemeProvider>
   );

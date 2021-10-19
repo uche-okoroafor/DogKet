@@ -22,8 +22,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
   const history = useHistory();
-  const { initSocket } = useSocket();
-  console.log(initSocket());
+  const { socket } = useSocket();
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
@@ -37,21 +36,29 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     // needed to remove token cookie
     await logoutAPI()
       .then(() => {
+        setLoggedInUser((val) => {
+          if (val) socket?.emit('logout', val?.id);
+          return val;
+        });
         history.push('/login');
         setLoggedInUser(null);
       })
       .catch((error) => console.error(error));
-  }, [history]);
+  }, [history, socket]);
 
   // use our cookies to check if we can login straight away
   useEffect(() => {
     const checkLoginWithCookies = async () => {
       await loginWithCookies().then((data: AuthApiData) => {
         if (data.success) {
-          initSocket();
           updateLoginContext(data.success);
-          // console.log(initSocket);
-          initSocket();
+          setLoggedInUser((val) => {
+            if (val) {
+              socket?.emit('go-online', val?.id);
+              socket?.emit('join-room', val?.id);
+            }
+            return val;
+          });
           history.push('/dashboard');
         } else {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
@@ -61,7 +68,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       });
     };
     checkLoginWithCookies();
-  }, [updateLoginContext, history, initSocket]);
+  }, [updateLoginContext, history, socket]);
 
   return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
 };

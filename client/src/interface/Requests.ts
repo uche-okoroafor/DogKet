@@ -19,6 +19,10 @@ export interface RequestApiData {
   success?: RequestApiDataSuccess;
 }
 
+export interface NewRequestApiDataSuccess {
+  error?: { message: string; existingRequest?: Booking };
+  success?: { message: string; newRequest?: Booking };
+}
 export interface RequestStatusApiData {
   error?: { message: string };
   success?: RequestApiDataSuccess;
