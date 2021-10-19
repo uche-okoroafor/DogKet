@@ -6,6 +6,7 @@ import AuthMenu from '../AuthMenu/AuthMenu';
 import { User } from '../../interface/User';
 import AuthMenuDesktop from '../AuthMenuDesktop/AuthMenuDesktop';
 import { useAuth } from '../../context/useAuthContext';
+import { useSocket } from '../../context/useSocketContext';
 import { useState, useEffect } from 'react';
 import { getCount } from '../../helpers/APICalls/notifications';
 
@@ -19,12 +20,18 @@ interface Props {
 const AuthHeader = ({ asideText, linkTo }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
+  const { socket } = useSocket();
 
   const updateCount = async (change: number) => {
     const newCount = Math.max(count - change, 0);
     setCount(newCount);
   };
+
+  socket?.on('notification', () => {
+    const newCount = count + 1;
+    setCount(newCount);
+  });
 
   useEffect(() => {
     const fetchCount = async () => {

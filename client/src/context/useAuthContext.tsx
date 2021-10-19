@@ -4,6 +4,7 @@ import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
+import { useSocket } from './useSocketContext';
 
 interface IAuthContext {
   loggedInUser: User | null | undefined;
@@ -21,6 +22,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
   const history = useHistory();
+  const { socket } = useSocket();
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
@@ -34,11 +36,15 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     // needed to remove token cookie
     await logoutAPI()
       .then(() => {
+        setLoggedInUser((val) => {
+          if (val) socket?.emit('logout', val?.id);
+          return val;
+        });
         history.push('/login');
         setLoggedInUser(null);
       })
       .catch((error) => console.error(error));
-  }, [history]);
+  }, [history, socket]);
 
   // use our cookies to check if we can login straight away
   useEffect(() => {
@@ -46,6 +52,13 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       await loginWithCookies().then((data: AuthApiData) => {
         if (data.success) {
           updateLoginContext(data.success);
+          setLoggedInUser((val) => {
+            if (val) {
+              socket?.emit('go-online', val?.id);
+              socket?.emit('join-room', val?.id);
+            }
+            return val;
+          });
           history.push('/dashboard');
         } else {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
@@ -55,7 +68,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       });
     };
     checkLoginWithCookies();
-  }, [updateLoginContext, history]);
+  }, [updateLoginContext, history, socket]);
 
   return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
 };

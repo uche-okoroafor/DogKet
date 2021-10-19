@@ -24,6 +24,97 @@ app.set("port", port);
 var server = require("../app").server;
 
 /**
+ * Socket connection.
+ */
+const onlineUserSockets = require("../onlineUser");
+const io = require("socket.io")(server);
+const jwt = require("jsonwebtoken");
+
+io.use((socket, next) => {
+  const rawCookies = socket.handshake.headers.cookie.split("; ");
+
+  const parsedCookies = {};
+  rawCookies.forEach((rawCookie) => {
+    const parsedCookie = rawCookie.split("=");
+    parsedCookies[parsedCookie[0]] = parsedCookie[1];
+  });
+
+  const token = parsedCookies.token;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) return next(new Error("Authentication error"));
+
+      socket.decoded = decoded;
+      next();
+    });
+  } else {
+    next(new Error("Authentication error"));
+  }
+}).on("connection", (socket) => {
+  let userId = null;
+
+  socket.on("go-online", (id) => {
+    userId = id;
+
+    if (!(id in onlineUserSockets)) {
+      onlineUserSockets[id] = [];
+    }
+    onlineUserSockets[id].push(socket.id);
+    // send the user who just went online to everyone else who is already online
+    socket.join("online");
+    // socket.broadcast.to("online").emit("add-online-user", id);
+  });
+
+  socket.on("join-room", (id) => {
+    // add user to room with ID to send message if they are the reciver when "new-message" is emited
+    if (id) socket.join(id.toString());
+  });
+
+  socket.on("new-message", (data) => {
+    const recipientId = data.recipientId.toString();
+
+    // send message to user/room if they are the receiver
+    socket.broadcast.to(recipientId).emit("new-message", {
+      message: data.message,
+      sender: data.sender,
+    });
+  });
+
+  socket.on("notification", (data) => {
+    console.log(data);
+    const recipientId = data.recipientId.toString();
+
+    // send notification to user-room if they are the receiver
+    socket.broadcast.to(recipientId).emit("notification", {
+      data: "notification",
+    });
+  });
+
+  socket.on("logout", (id) => {
+    if (id) removeOfflineSocket(id);
+  });
+
+  socket.on("disconnect", () => {
+    if (userId) removeOfflineSocket(userId);
+  });
+
+  function removeOfflineSocket(id) {
+    if (!(id in onlineUserSockets)) return;
+
+    const userIndex = onlineUserSockets[id].indexOf(socket.id);
+    if (userIndex >= 0) onlineUserSockets[id].splice(userIndex, 1);
+
+    if (onlineUserSockets[id].length === 0) {
+      delete onlineUserSockets[id];
+      socket.broadcast.to("online").emit("remove-offline-user", id);
+      socket.leave(id.toString());
+      socket.leave("online");
+    }
+  }
+});
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 

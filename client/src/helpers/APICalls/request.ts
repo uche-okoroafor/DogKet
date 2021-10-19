@@ -1,4 +1,4 @@
-import { RequestApiData, RequestStatusApiData } from '../../interface/Requests';
+import { RequestApiData, RequestStatusApiData, NewRequestApiDataSuccess } from '../../interface/Requests';
 import { FetchOptions } from '../../interface/FetchOptions';
 
 export const createRequest = async (
@@ -6,7 +6,7 @@ export const createRequest = async (
   sitterProfileId: string,
   startDate: Date,
   endDate: Date,
-): Promise<RequestApiData> => {
+): Promise<NewRequestApiDataSuccess> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
