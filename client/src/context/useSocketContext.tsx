@@ -14,7 +14,6 @@ export const SocketContext = createContext<ISocketContext>({
 
 export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => {
   const { loggedInUser } = useAuth();
-  console.log(loggedInUser);
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
 
   const initSocket = useCallback(() => {
