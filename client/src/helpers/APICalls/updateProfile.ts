@@ -59,29 +59,21 @@ export const patchProfile = async (data: Props, profileId?: string): Promise<Pro
 };
 
 export const updateProFile = async (profile: Profiles): Promise<IApiResponse> => {
-  // console.log(profile, 'profile');
-  const fetchOptions: FetchOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(profile),
-  };
-
-  return await fetch(`/profile/update-profile`, fetchOptions)
-    .then((res) => res.json())
+  return await axios
+    .post(`/profile/update-profile`, { profile: profile })
+    .then((response) => response.data)
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
-  // return await axios.post(`/profile/update-profile`, { profile });
 };
-
-export const getProfile = async (userId: string | undefined): Promise<{ _id: string; profile: Profiles }> => {
-  const fetchOptions: FetchOptions = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-  };
-  return await fetch(`/profile/get_profile/${userId}`, fetchOptions)
-    .then((res) => res.json())
+export const getProfile = async (userId: string | undefined): Promise<any> => {
+  console.log('response');
+  return await axios
+    .get(`/profile/get-profile/${userId}`)
+    .then((response) => {
+      console.log(response, 'response');
+      return response.data;
+    })
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));

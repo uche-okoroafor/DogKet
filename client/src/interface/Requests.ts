@@ -30,4 +30,6 @@ export interface RequestStatusApiData {
 
 export interface IApiResponse {
   data: { success?: boolean; error?: { message: string } };
+  error?: { message: string };
+  success?: boolean;
 }

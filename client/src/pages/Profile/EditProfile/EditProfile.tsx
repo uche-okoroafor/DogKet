@@ -401,34 +401,36 @@ export default function EditProfile(): JSX.Element {
   ];
 
   useEffect(() => {
-    // getUserProfile();
+    getUserProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedInUser]);
 
   const getUserProfile = async (): Promise<void> => {
-    const user: any = loggedInUser;
-    setUserId(user.id);
-    const response = await getProfile(userId);
-    console.log(response);
-    if (response.profile) {
-      const { profile } = response;
-      setUserData({
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        gender: profile.gender,
-        birthDate: profile.birthDate,
-        phoneNumber: profile.phoneNumber,
-        email: profile.email,
-        address: profile.address,
-        description: profile.description,
-        month: profile.month,
-        year: profile.year,
-        day: profile.day,
-        _id: profile._id,
-        city: profile.city,
-        country: profile.country,
-        available: profile.available,
-      });
+    const userId = loggedInUser?.id;
+    try {
+      const { profile } = await getProfile(userId);
+      console.log(profile, 'loaded');
+      if (profile) {
+        setUserData({
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          gender: profile.gender,
+          birthDate: profile.birthDate,
+          phoneNumber: profile.phoneNumber,
+          email: profile.email,
+          address: profile.address,
+          description: profile.description,
+          month: profile.month,
+          year: profile.year,
+          day: profile.day,
+          _id: profile._id,
+          city: profile.city,
+          country: profile.country,
+          available: profile.available,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -440,8 +442,9 @@ export default function EditProfile(): JSX.Element {
     userData.birthDate = birthDate;
     setSubmitting(true);
     try {
-      const { data } = await updateProFile(userData);
-      if (data.success) {
+      const { success } = await updateProFile(userData);
+      console.log(success);
+      if (success) {
         updateSnackBarMessage('Profile updated');
       } else {
         updateSnackBarMessage('something went wrong ,please try again');

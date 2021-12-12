@@ -72,6 +72,7 @@ export default function EditProfileForm({ handleSubmit, userData, months }: prop
 
       <Formik
         validateOnChange={true}
+        enableReinitialize
         initialValues={userData}
         validationSchema={yup.object().shape({
           firstName: yup.string().required(' Your first name is required'),
@@ -252,7 +253,7 @@ export default function EditProfileForm({ handleSubmit, userData, months }: prop
             <Box className={classes.fieldContainer}>
               <label className={classes.label}>PHONE NUMBER</label>
               <Box className={classes.inputphoneNumberContainer}>
-                <label style={{ fontFamily: 'italic' }}>
+                <label style={{ fontStyle: 'italic', fontSize: '0.9rem' }}>
                   {values.phoneNumber ? 'Your Phone Number Is' : 'No Phone Number Entered'}
                 </label>
 

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState, useContext, createContext, FunctionComponent } from 'react';
 import { Profile } from '../interface/Profile';
 

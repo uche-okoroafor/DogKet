@@ -23,49 +23,6 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ users: users });
 });
 
-exports.updateProfile = asyncHandler(async (req, res) => {
-  console.log("here");
-  const userId = req.user.id;
-
-  const {
-    firstName,
-    lastName,
-    gender,
-    birthDate,
-    phoneNumber,
-    email,
-    address,
-    description,
-  } = req.body;
-
-  const profile = new Profile({
-    firstName,
-    lastName,
-    gender,
-    birthDate,
-    phoneNumber,
-    email,
-    address,
-    description,
-  });
-
-  const updateStatus = await User.updateOne(
-    { _id: userId },
-    {
-      $set: {
-        profile,
-      },
-    }
-  );
-  if (updateStatus.nModified === 1) {
-    return res.status(201).json({ success: true });
-  } else {
-    return res.status(201).json({ success: false });
-  }
-
-  throw new Error("something went wrong");
-});
-
 exports.getProfile = asyncHandler(async (req, res) => {
   try {
     const userProfile = await User.findById({ _id: req.params.userId }).select(

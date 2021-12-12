@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,6 +22,7 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    profile: { type: Schema.Types.Object, ref: "profile" },
   },
   { versionKey: false }
 );

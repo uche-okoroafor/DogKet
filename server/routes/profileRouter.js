@@ -8,6 +8,7 @@ const {
   getAllProfiles,
   createProfile,
   setProfile,
+  getProfile,
 } = require("../controllers/profileController");
 
 const { validateProfile, validateSitterProfile } = require("../validate");
@@ -23,6 +24,7 @@ router.put(
   updateProfile
 );
 router.post("/update-profile", protect, setProfile);
+router.get("/get-profile/:userId", protect, getProfile);
 router.get("/my-profile", protect, userProfile);
 router.get("/:profileId", protect, findProfile);
 router.get("/", protect, getAllProfiles);
