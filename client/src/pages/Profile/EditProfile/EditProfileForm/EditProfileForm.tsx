@@ -88,6 +88,7 @@ export default function EditProfileForm({ handleSubmit, userData, months }: prop
           //     .trim()
           //     .matches(addressRegExp, 'Address is not valid (e.g., City, Province (Comma is required))')
           //     .required('Address is required'),
+          description: yup.string().required('Your description is required'),
         })}
         onSubmit={handleSubmit}
       >
