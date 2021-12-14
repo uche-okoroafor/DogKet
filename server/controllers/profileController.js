@@ -1,7 +1,82 @@
 const Profile = require("../models/ProfileModel");
+const User = require("../models/User");
 const mongoose = require("mongoose");
 const { capitalize, formatAddress } = require("../utils/helperFunctions");
 const asyncHandler = require("express-async-handler");
+const ObjectID = require("mongodb").ObjectID;
+// @route PUT /profile/:profileId
+// @access private
+// @desc Update a profile of a logged-in user ONLY. It should not be able to update other user's profile.
+
+exports.setProfile = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  const {
+    firstName,
+    lastName,
+    gender,
+    birthDate,
+    phoneNumber,
+    email,
+    address,
+    description,
+  } = req.body.profile;
+  console.log(
+    firstName,
+    lastName,
+    gender,
+    birthDate,
+    phoneNumber,
+    email,
+    address,
+    description
+  );
+  const profile = new Profile({
+    firstName,
+    lastName,
+    gender,
+    birthDate,
+    phoneNumber,
+    email,
+    address,
+    description,
+  });
+
+  const updateStatus = await User.updateOne(
+    { _id: userId },
+    {
+      $set: {
+        profile: profile,
+      },
+    }
+  );
+
+  console.log(updateStatus, profile);
+  if (updateStatus.nModified === 1) {
+    return res.status(201).json({ success: true });
+  }
+  res.status(500);
+  throw new Error("something went wrong");
+});
+
+// @route PUT /profile/get-profile/:userId
+// @access private
+// @desc get a user's profile.
+
+exports.getProfile = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const user = await User.findById(userId);
+  if (user) {
+    const profile = {
+      ...user.profile,
+      username: user.username,
+      email: user.email,
+    };
+
+    return res.status(201).json({ profile });
+  }
+  res.status(500);
+  throw new Error("Something went wrong");
+});
 
 // @route POST /profile
 // @access private
@@ -37,9 +112,6 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route PUT /profile/:profileId
-// @access private
-// @desc Update a profile of a logged-in user ONLY. It should not be able to update other user's profile.
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   try {
     const { profileId } = req.params;

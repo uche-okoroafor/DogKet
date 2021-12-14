@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const Profile = require("../models/ProfileModel");
 
 // @route POST /users
 // @desc Search for users
@@ -10,7 +11,7 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
   let users;
   if (searchString) {
     users = await User.find({
-      username: { $regex: searchString, $options: "i" }
+      username: { $regex: searchString, $options: "i" },
     });
   }
 
@@ -20,4 +21,24 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({ users: users });
+});
+
+exports.getProfile = asyncHandler(async (req, res) => {
+  try {
+    const userProfile = await User.findById({ _id: req.params.userId }).select(
+      "profile"
+    );
+    return res.status(200).json(userProfile);
+  } catch (err) {
+    return res.status(404).send(err);
+  }
+});
+
+exports.getAllProfiles = asyncHandler(async (req, res) => {
+  try {
+    const allProfiles = await User.find().select("profile");
+    return res.status(200).json(allProfiles);
+  } catch (err) {
+    return res.status(404).send(err);
+  }
 });

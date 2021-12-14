@@ -1,5 +1,23 @@
 const { check, validationResult, oneOf } = require("express-validator");
 
+const handleParams = (params) => {
+  return check(params, ` ${params} is not defined`).not().isEmpty();
+};
+const handleError = (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty())
+    return res.status(400).json({ errors: errors.array() });
+  next();
+};
+
+exports.validateGetUserProfile = [
+  handleParams("boardTitle"),
+  (req, res, next) => {
+    handleError(req, res, next);
+  },
+];
+
 exports.validateRegister = [
   check("username", "Please enter a username").not().isEmpty(),
   check("email", "Please enter a valid email address").isEmail(),
